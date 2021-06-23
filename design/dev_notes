@@ -1,0 +1,9 @@
+Main Menu:
+* design, load & add title, background texture, menu items, bible quote.
+* implement button functionality and submenus
+* implement bible quote cycling functionality
+* pick fonts
+* setup responsive design for three layouts: small-portrait, small-landscape, large
+** setup scaling
+* setup loading screen
+

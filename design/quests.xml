@@ -1,0 +1,330 @@
+<mod id="core">
+ <!-- tags: [NAME] -->
+ <campaign id="faith_of_the_apostles">
+  <!--
+*pray for second chances
+
+quest: person cursed with a curse tablet seeks to identify the person who cursed them
+quest: plead for the accused during a trial, uncovering evidence of their innocence and bringing witnesses
+quest: Crossing the Distance
+quest: The Wayward Flock
+quest: Heresies of Hope
+quest: Lifelong Bonds
+quest: Adrift in the Swamp - the questgiver seeks an item from a swamp, but the title is also a metaphor for the questgiver's willingness to drift in a moral swamp. The item is a rare herb, which the questgiver intends to trade for drugs to an apothecary
+quest: Destiny's Cage
+quest: Aurora's Suitors - where multiple characters offer to purchase a ship in need of repairs, the Aurora
+
+
+
+
+  Troas:
+Lycus Mavroluludi - protagonist's friend
+Hermogenes - protagonist's friend
+Methodius - arch enemy, underworld leader
+Kallias Chrysostomos - Methodius' nephew
+Rezon - Methodius' thug
+Hanan - Christian medic
+Shelach - church leader
+
+  Adramyttium:
+Shobek - church bishop, hebrew
+Hosea - church elder, hebrew
+Azarel - church elder, hebrew
+Xenophon - church elder, greek, slave
+Zenon - poisoner
+Cornelius Granius - centurion
+therapeuta
+
+  Pergamum (5 sidequests):
+Amnon - church bishop, hebrew
+Kenanyahu - church member, hebrew, barber
+Erasmos - church member, greek
+
+
+Alexis - Sprightly Satyr patron, fence
+Eustorgios - Sprightly Satyr patron, burglar
+Karpos - Sprightly Satyr patron, assassin
+Lysimachos - former Sprightly Satyr patron, pimp
+Nikandros - former Sprightly Satyr patron, oil and pitch trader; also in [TODO][city name]
+Meliton - Sprightly Satyr patron, burglar
+Claudius - Sprightly Satyr patron, black magic practicioner
+Nikolaos - demon-possessed man
+
+Quests:
+Infernal Interloper
+Arson in Pergamum
+
+
+
+Ephesus:
+Caius Fonteius - [TODO]
+
+
+
+Thyatira, Smyrna, Sardis, Philadelphia, Ephesus, Tralles, Laodicea, Hierapolis
+
+11 cities, 4 sidequests / city on average + 20 villages with 1 sidequest on average => 64 sidequests
+
+Ephesus is an important center of the slave trade => slavery-related quests
+
+Major story arcs
+Exposing Methodius - the main story until Imperial Condemnation; the protagonist decides to uncover the criminal activities of Methodius and reveal them to the authorities after earning their trust
+Quests:
+Lute and Lyre - sing for three nights at the Spotted Duck Inn
+A Friend in Need - get Lycus to safety
+Allies Abroad - discuss Zenon's offer
+The Baptism - become baptised
+
+
+
+Talking points:
+* the Mithridatic Wars
+
+
+Professions:
+* fuller (describes the fulling process, see https://en.wikipedia.org/wiki/Fullo)
+	-> sulfur destroys colors
+* barber
+
+
+
+Sidequests:
+The Family Workshop
+Homecoming
+For all the Riches
+The Missing Caravan
+To the Seaside
+
+Infernal Interloper
+Oath of Bondage
+Arson in Pergamum
+
+
+Imperial Condemnation - countering the Roman persecution of Christians after the fire of Rome; 
+those of Methodius' thugs that have avoided prosecution continue to harass the protagonist
+
+Gilad's Hatred - occurs alongside Exposing Methodius and Imperial Condemnation; the pharisee Gilad, driven by a hatred of non-Jews, seeks to end the efforts to convert people to Christianity but is ultimately driven back by members of his own synagogues including his own son
+
+
+
+
+This is the story of a greek musician who learns about Christianity when he attempts to save the life of his comrade Lycus in the city of Troas. Lycus becomes targeted by the local underworld boss Methodius over Lycus' lampooning of the boss' nephew Kallias, and is assaulted as the protagonist travels with Lycus and his fellow musician Hermogenes to the Spotted Duck Inn. Methodius' thugs, including the syrian Rezon, leave Lycus for dead and severely beat the other two, goading them to sing about their defeat so others might be warned not to cross the underworld boss. The protagonist carries the comatose body back to the inn, prays to Apollo, Asclepius ("Great Paeon, Asclepius") and Zeus for healing, prays to Athena for wisdom on how to address the matter, and brings medics over to tend his injuries. One of the medics, Hanan, is a Christian, who invites him to pray to God in the name of Jesus Christ as he works. Desperate, the protagonist agrees, and offers to worship Christ alongside the other gods if the medic can heal Lycus. The medic does heal him, and offers to bring Lycus to his own house with the help of a friend, another Christian (Shelach) who owns a cart and can conceal him inside it. The protagonist visits the church, which is in fact Shelach's house, gets Shelach to bring the cart over and, as he brings out the comatose Lycus, is confronted by a beggar whom he knows works for Methodius. After persuading the beggar that Lycus is dead, or (more difficult) convincing him not to speak about this situation, the protagonist brings Lycus to Shelach's house and lets him rest there. Hanan visits and teaches the protagonist some of the basics of medicine, notably the pulse and artificial ventilation, as well as the details on how a few major poisons work (in case Methodius wants to use them). The protagonist's new goal is to buy smelling salts and healing herbs at the marketplace, where he is confronted by one of Methodius' goons, Rezon, who asks him if he sang about the beating yet. Importantly, Rezon sees him buying the smelling salts and herbs. Later at the Spotted Duck, Kallias visits and asks the protagonist about his health, then sends him a veiled threat that if Lycus is still alive, he will soon be dead (from his wounds, of course). He offers money to have the protagonist sing his praises, which the protagonist can refuse. Hermogenes counseils the protagonist that they should all flee Troas, and they do so with the help of Shelach, who carries Lycus in his cart to the area beyond the gates and instructs them to reach the city of Adramyttium, with a letter to the local Christian elders that they are to receive material and spiritual aid, but cautioning them that Lycus may be a wanted man. 
+
+On the way to Adramyttium, at an inn, Hermogenes further discusses with the protagonist, who can vow revenge, promise to seek justice for the crime against them or profess that he merely wishes to escape with his life. Hermogenes confesses his skepticism towards Christianity, and the two can have their first spiritual debate (completing all spiritual debates within the game converts Hermogenes to Christianity).
+
+Once in Adramyttium, the protagonist and Hermogenes decide to learn whether Methodius' reach extends to this city and continue their efforts to see Lycus recover. This also involves getting acquainted with the local Christian community and adopting Christianity. When Lycus recovers, before the protagonist can be baptised, Lycus talks a bit too loudly about their situation at the local tavern (The Golden Dove) and one of Methodius' goons, Zenon, overhears this. He offers to help them find refuge with one of Methodius' rivals, but in fact wants to learn why they were discussing Methodius; despite the protagonist's possible protests, Hermogenes welcomes Zenon and vaguely tells him (at Zenon's continuous questioning) that they were fleeing after having lampooned Kallais. Armed with this information, Zenon promises to go to the rival and asks that the group come back later. Lycus refuses, and informs the group that he will withdraw for the time being as he considers the situation too dangerous. Hermogenes, however, is intrigued.
+
+When Hermogenes does return to the tavern, Zenon invites him and the protagonist to go somewhere private. In the tavern's private room, Zenon offers them hemlock-poisoned wine and spins up a story of the fictitious rival, then gives them a fake mission for the rival (the protagonist refuses, but Hermogenes agrees) and leaves, explaining that they should never speak to the legionaries about this, as the duo have essentially agreed to get involved with a criminal element (irrespective of whether the protagonist himself has agreed). The wine causes Hermogenes to fall unconscious and stop breathing, but the protagonist, noticing these effects (and his own hypothermia of the calves) before they overtake him, calls for help. He drags Hermogenes into the common room, applying artificial respiration as he learned from Hanan, and persuades a pair of off-duty vigiles to also give him and Hermogenes artificial respiration for after the time when he inevitably falls unconscious.
+
+During his state of unconsciousness, the protagonist has a dream of Jesus rescuing a sheep from a ravine where it had fallen. On the side of the ravine are statues of the various Greek gods, reaching towards the ravine but remaining petrified. A storm comes and lightning shatters the statues in turn, while the sheep remains safely under Jesus' embrace. This symbolizes the inability of the Greek gods to rescue the worshipper from perdition. The dream continues with metaphors aimed to convince the protagonist to abandon the Greek gods and join Jesus. When the protagonist wakes up, he finds himself in the temple of Asclepius, with Hermogenes still recovering. The local therapeutae insist that he visit one of the centurions and report the crime against him. If he later visits the local church, he meets Lycus, who informs him that he will be spending the last of his money to sail to an unstated part of the Empire and live his life in secrecy, fearing the pursuit of Methodius' men. He will later resurface in the city of [TODO].
+
+The church in Adramyttium meets at the blacksmith's shop owned by one of the members, church elder Hosea, and is run by bishop Shobek, who inquires about the protagonist's situation but offers no support beyond advising him to seek the vigiles and offering to let the protagonist know should news arrive concerning Methodius. Shobek advises that the protagonist seek out the church elders - Hosea, Azarel and Xenophon - to learn about the Christian faith before he can decide whether to pursue conversion further. He also explains that he cannot worship God as just another one of the gods, but must give them up altogether. The protagonist can reject or offer to consider this, but will not leap into the faith immediately. Once he has spoken with the elders, he learns that there will be a sermon the next day, and is advised to attend.
+
+At the guardhouse, the protagonist discusses the poisoning with the centurion Cornelius Granius, who explains that since the appointment of Caius Fonteius to the role of [TODO], there has been a considerable increase in crime in the provice of Asia. Cornelius speculates that if Methodius has such a wide reach that he operates in two different cities, he must have the support Caius Fonteius or some other high-ranking dignitary, which places him beyond the scope of the law unless the governor of Asia can get involved, and then only if Methodius commits a crime worthy of the death penalty. He nonetheless offers to send men to the Golden Dove to investigate the poisoning, and to the local vigile barracks to interview the protagonist's rescuers.
+
+Hermogenes proposes that he and the protagonist raise enough money to travel to the port city of Smyrna, and from there to Athens, where they might be able to find refuge. By asking around at the market, they learn that another tavern called the Den of the Lily Leaf has no singers at the moment, and they decide to sing there to acquire the money.
+
+After securing a position in the Den of the Lily Leaf for later in the evening, the protagonist must speak to the presbyters and convert. For this, the protagonist must demonstrate:
+1) to the presbyter Hosea, a belief in God as the only god in the universe, as well as a belief in the divinity of Jesus, i.e. that He is the Son of God, having been born on Earth in human form, having died for our sins and having been resurrected.
+
+2) to the presbyter Xenophon, who is also a slave to a local merchant, an adherence to Christian morals - chastity, an honest living, an opposition to theft and murder, an attitude of love towards one's fellow man, a lack of gossip or malicious speech, an attitude of truthfulness, as well as abstinence from drinking blood and eating strangled animals.
+
+3) to the presbyter Azarel, a belief in the controversial aspects of the Old Testament - that God called for and caused genocides among the Egyptians (the 10th plague), the Amalekites and their cattle (1 Samuel 15:3, 15:9-11), and the Canaanites (Joshua 10:28-40); that God commanded the killing of an Egyptian for having cursed Him (Leviticus 24:11, 14, 16); that the psalm 137 praises infanticide and is considered part of the holy scriptures; that God approved and was appeased by the act of Phineas, who killed a Jew and a Midianite woman who were married because he believed such women were driving the Jews away from their religion; that God mandated the death penalty for unruly children (Deuteronomy 21:18-21); that He mandated the marriage of girls who were raped with their rapist (Deuteronomy 22:28-29); and that illegitimate children and eunuchs were forbidden from taking part in the assembly (Deuteronomy 23:1-2). Azarel states that another gentile, who had learned the Hebrew alphabet and language in order to read the scriptures, was so shocked at these passages in the Torah that he gave up on Christianity and convinced others to give up on it as well. Thus, the elder insists on an acceptance of these passages.
+
+At least two of the elders must be convinced of the protagonist's faith in order for the baptism to proceed. Following this acceptance, the bishop Shobek schedules the baptism ceremony for the following day. The protagonist vows that he will come, but the bishop chides him, saying vows are unnecessary, as taught by the Lord. That night, as the protagonist goes to the Den of the Lily Leaf to sing together with Hermogenes, a stranger waylays him near the entrance and tells him that he should leave the city that very evening and never return, either to Adramyttium or to Troas. Hermogenes protests that they do not have the money to leave either way. After they sing, however, another man approaches them and tells them he can offer them a free trip to Ephesus if they agree to sing for his brother, a tavernkeeper there, at the Merry Tankard. He insists that he is leaving that night. Hermogenes eagerly asks to come, but the protagonist refuses, either out of suspicion or because of the vow he had made.
+
+The following day, the protagonist sets out to the church / blacksmith's workshop, where Shobek informs him that they must go to a pond outside the city to perform the baptism. He and the priest can have a conversation on Hermogenes and the meaning of friendship, and can have a social encounter about their views on whether it's good to still embrace a friend who has deserted one's company (the bishop asserts that it is).
+
+After they leave the city, they carry out the baptism ceremony at the very edge of the pond, but just as they are about to complete the baptism, as he plunges into the water, the protagonist discovers Hermogenes' dead body a mere meter away, tied to two rocks with ropes around the neck and feet, with a curse tablet with his name on it pinned to his brow. Identifying the body, the protagonist can vow to bring the perpetrators to justice, and Shobek quickly ends the baptism, choosing to instead discuss the protagonist's need for safety and urging him to leave the city, in spite of any protestations on his part to stay. The protagonist states that he has no more money for the trip, and the bishop offers to raise money amongst the congregation for his journey. Shobek further advises the protagonist to inform the authorities (Cornelius Granius) about the murder in the meantime.
+
+Going to Cornelius Granius and reporting the new crime (including the fact that it took place at a Christian baptism), the protagonist learns that Cornelius has located Zenon, the culprit of the poisoning, based on the protagonist's description, but that he could not torture him to get information about the crime as he presented papers showing he was a roman citizen (unbeknownst to Cornelius, the papers were a forgery). Cornelius requests that the protagonist wait at the guardhouse for Zenon, and as the protagonist does so, Zenon arrives for the protagonist to confirm. Zenon cunningly states that he has met the protagonist, but that the protagonist offered to enlist him in committing a crime and he refused, hence leaving the meeting early. He suggests that people in the criminal underworld have many enemies, and one of them could have poisoned the protagonist for working for a rival group. The protagonist can question Zenon over the incident, producing more lies from him, but afterwards, Corenlius himself interrogates the protagonist over the alleged crime that Zenon said he wanted to commit. After defending himself successfully, the protagonist is told that he is still under suspicion, but that he may leave the city if he so desires.
+
+At the church, the bishop Shobek gives a gift of food to the protagonist, enough to get him to Pergamum, and a letter to Amnon, the bishop there. From this point on, the game becomes open-world, with the protagonist refusing to set foot in Troas and Adramyttium but otherwise free to access the remainder of the province of Asia. Amnon invites him to further study the faith with him and suggests that he visit two inns in the city, the Sprightly Satyr and the Purple Lantern Inn, which need extra singers. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+As it turns out, Methodius governs a variety of underworld groups such as a black magic cabal and black market for magical ingredients, a gang of thieves and, most importantly, a smuggling ring that exports kidnapped, illegal slaves to the Scythians and imports furs and other goods from Tanais at the northern edge of the Black Sea, goods for which he avoids customs duties.
+
+
+
+
+
+
+
+-->
+
+  <quest id="lute_and_lyre" name="Lute and lyre">
+   <description>
+The protagonist starts in the city of Troas, where he works as a singer at the local inn, The Spotted Duck. His friends Lycus and Hermogenes sing with him.
+
+
+   </description>
+
+
+  </quest>
+
+  <quest id="the_family_workshop" name="The family workshop">
+   <!--
+Two sons squabble over the inheritance of a workshop. One of them, prone to spend his money on trifles and neglect the family business, took a loan that he was unaware was a compound interest loan to pay for purchasing his own house, and has been a burden to the family ever since. Were he to receive the workshop, he would sell it to pay off the debt and leave his family destitute. His brother, being more business-savvy, wants the workshop for himself. When the protagonist sings in the marketplace, the indebted brother gives him some money, and his brother harshly condemns this, arguing that the money - however little - should go towards paying off his debt instead. The argument gives the protagonist the opportunity to intervene and learn about the family's situation. Upon doing so, he can speak to either of the two brothers to learn about and offer to support their claim, as well as speak to the father to convince him to support one brother or the other. There are a third and fourth options provided as compromises, the third involving making the brothers co-owners and allowing neither brother to sell it off without the other's permission, and the fourth being the apples-and-oranges compromise of persuading the business-savvy brother to keep the workshop but give up half the workshop's profits to the indebted brother (who would then work inside the workshop, on the condition that he would then spend them on paying off his debt. The business-savvy brother can be persuaded to agree to the third and fourth option, provided that the protagonist can convince his brother to be more mindful of his financial affairs. Regardless of whether the brothers are persuaded of either option, the father, who can be reached at the workshop itself, must be convinced in the end.
+   -->
+   <description>
+Two brothers argue over the inheritance of a workshop.
+   </description>
+  </quest>
+
+  <quest id="homecoming" name="Homecoming">
+   <!--
+Having no money left and in fear of losing his house, an elderly widower at a marketplace in Laodicea seeks to travel to Attalia to live at his son's house. During the voyage, the widower asks to rest at a roadside inn, where the protagonist may preach to him about Christianity, especially as the widower talks about the need for forgiveness (foreshadowing his meeting with his son). Upon arriving at the house, the widower's daughter-in-law confronts him and spitefully asks him to leave. It turns out, as she explains, that the widower had rejected the marriage between his son and her, considering it a source of shame as the couple had had an illegitimate relationship prior to the marriage, resulting in the daughter-in-law's premarital pregnancy. The protagonist can convince the married couple to let the widower stay in their house (this is difficult) and have them pay for his expenses (this is very difficult), or failing that, the protagonist can find the widower support amongst the Christian community. In the local church at Attalia, [NAME] offers to employ him as a waiter at the Radiant Rose tavern. This makes it easier to convince the couple to let him stay.
+   -->
+   <description>
+An old widower in Laodicea wants to move in with his son in Attalia.
+   </description>
+  </quest>
+
+  <quest id="the_missing_caravan" name="The missing caravan">
+   <!--
+A merchant in the city of [TODO] has sent one of his underlings to the nearby city of [TODO] to sell some cargo and deliver a letter. As the underling has been missing for too long and all of the merchant's couriers are tied up with other affairs, the merchant asks the protagonist to travel to the destination city and inquire about the underling's whereabouts, noting that the cargo contained precious spices with distinct, potent aromas. He gives the protagonist the name and general description of the underling along with a piece of parchment with the brand of the underling's camel etched onto it. The protagonist can travel directly to the underling's destination, where after showing a stable boy at the caravansary the brand and spice sample, he learns that the camel has arrived but that it was escorted by a group of people in leather armor, who headed off into the city with it. The stable boy suggests that the underling might be found in the inn between this city and [TODO][the previous one]; chatting with him reveals that he has a sense of spiritual emptiness, which the protagonist can fill by explaining Christ to him in a social encounter. At the marketplace inside [TODO][the destination city], the protagonist can search for the merchant's camel, and upon finding it, discovers that the spices and the camel have already been sold. The protagonist can persuade the camel's buyer (in a social encounter) to serve as a witness before the urban cohorts and to not sell the camel, as it is evidence. Enquiries within the marketplace give the location of the person who was supposed to receive the letter, and visiting this person to hand him the letter (after speaking to the underling) prompts him to ask the protagonist what is better - to have been rich and have lost all of one's wealth or to have not had the wealth in the first place. Answering this leads to an optional social encounter. The underling can be found at the inn between [TODO][the starting city] and [TODO][the destination city], where he has been gravely injured. After handing the protagonist the letter, he describes that a group of armed men in leather armor cut him down and took his camel, along with its cargo.
+   -->
+  </quest>
+
+  <quest id="for_all_the_riches" name="For all the riches">
+   <!--
+A merchant's partner in [TODO][city] is worried that the merchant has not returned with their donkey from a trip to the nearby city of [TODO]. In the latter city, the merchant informs the protagonist that he has remained there because the love of his youth, which he had been courting, is to have an arranged marriage with someone else, and he intends to persuade the girl's family to marry him instead. The girl's father has asked for a large dowry in return for the daughter, and the merchant could not pay for it unless he sold all his wares for it, rendering him unable to buy new merchantise and continue his trade. He could, with great difficulty, gather them from his profits in a year and from a small, manageable loan, but this would take far more time than he has until the wedding. The merchant can be persuaded to leave the girl and return to his partner; the protagonist can go to the partner and inform him about the situation; or the protagonist can help the merchant win the daughter from her parents. Fully pursuing either of these options completes the quest.
+
+If helping the merchant, the protagonist can visit the girl to learn the whereabouts of the merchant's rival and the girl's father, as well as to support her with the words of Christ. He learns that the rival, on finding out from the girl (who regrets telling him) that the merchant has made a counter-offer, has decided to pay an extra dowry to the father. He can speak to the rival to convince him (in a social encounter) either that the merchant and girl are in love and the two should therefore be wed (extremely difficult) or that the girl costs too much money already and he could get a girl twice as beautiful for half as much money (easier). Winning the former encounter causes him to drop the marriage altogether, while winning the latter encounter convinces him not to increase the dowry. In the latter case, the protagonist can also speak to the girl's father to convince him to delay the wedding until the merchant can pay (easy) or convince him to lower the bride price and let the merchant pay it (very difficult). Delaying the wedding is only effective towards completing the quest if the protagonist also convinces the rival not to pay a larger dowry.
+   -->
+  </quest>
+
+  <quest id="infernal_interloper" name="Infernal interloper">
+   <!--
+Claudius, a customer in the Sprightly Satyr tavern in Pergamum, wants someone to deal with a stranger who always accosts him on his way back home, uttering curses at him. It makes no difference what path home he chooses, the stranger is always there. He asks the protagonist to escort him towards his home, then, once the stranger appears follow the stranger from a distance and find out where he lives, so that he can send the vigiles after him. The protagonist does as instructed, and when they meet the stranger in a pitch-black street, touching the fanned fingers of the stranger's outstretched hands, a demon that hints at its own existence within the stranger calls out to the customer, claiming that it will personally torment him for all his life unless the customer gives it a more suitable host. The customer immediately offers up the protagonist as a host, and the demon refuses because the protagonist is a Christian. The demon threatens to call ten other demons into the customer unless a suitable host is found the following week, then departs.
+
+The protagonist can at this point pursue the demon-possessed man, Nikolaos, who goes to a private residence, and confront him there, or speak to the customer and convince him to explain the situation (failing to do so allows retries in a separate conversation back at the tavern). If the customer explains the situation, he reveals that he knew the demon-possessed man because someone else paid him to put a curse on the man, and he decided to summon a demon to haunt him. However, the demon identified the customer as the summoner and chose to exact revenge for placing him in the possessed man's body. The customer can then be asked to bring the protagonist to the demon-possessed man's house, where he can confront the demon as above. At the house, the protagonist finds the possessed man in tears, and can persuade him to have Amnon, the Christian bishop, perform an exorcism ritual on him, or to allow the protagonist to perform the ritual himself. The former option includes Amnon as an ally in the exorcism social encounter.
+
+After learning the situation from the customer, the protagonist can also convince him in a social encounter to give up on putting curses on people. Further discussion on this topic reveals his reasons for putting curses: the sense of safety that black magic brings him. He believes that the afterlife is horrible for all involved and that only those who build up their strength in the spiritual realm, by learning black magic and wielding the forces that pervade the afterlife, can have a better afterlife than the rest. The protagonist can convince him in a second, more difficult social encounter to embrace Christ as an alternative, so that he can win eternal life in paradise. This will make him interested in becoming a Christian.
+
+Exorcising the demon, together with convincing the customer that Christianity is better than black magic, ends the quest. 
+   -->
+  </quest>
+
+
+
+
+
+  <quest id="arson_in_pergamum" name="Arson in Pergamum">
+   <!--
+The tavernkeeper of the [TODO][tavern name] in [TODO][city name] offers the protagonist a reward on behalf of two patrons if he can find out who has been burning down their houses. The modus operandi of the arsonist is always the same: pick the lock, with no sign of forced entry; pile all the flammable items together and set them alight; then make off with enough goods to be stored in a large pack.
+
+The first arson victim, Alexis (male), is a barfly that knows all of the tavern's patrons. The tavernkeeper directs the protagonist to him, suggesting that he should be informed whenever new evidence is discovered. His house is on the first floor above his pawn shop, which was also set ablaze. Unbeknownst to the protagonist at first, Alexis is also a fence, selling the stolen goods procured from a variety of thieves including Eustorgios, the second burglary victim, and Hermolaos, a deceased thief. Alexis is on friendly terms with all other fences in the city, and so has been puzzled as to why the goods stolen during the arsons have not surfaced anywhere, though he does not express this to the protagonist at first.
+
+Alexis offers to show the protagonist the pawn shop, and there, in the cellar, the protagonist uncovers a rag soaked in resin that the arsonist had meant to use as fuel, as well as shoeprints in the spices carelessly tossed about, showing that the arsonist had small feet. In the pawn shop itself, all crates are sealed, and nothing was taken except from the front of the shop. As Alexis explains, only small valuables that could be carried in a backpack had been stolen, despite the abundance of wealth in the shop, although it appears that an amphora of resin was also missing, and no wheel-prints exist on the ground outside the house, showing that the arsonist did not bring a cart. The arsonist struck on a Dies Veneris (Friday), and Alexis mentions that he always stayed at the tavern all night on Dies Veneris, but this was the only day of the week when he did so. When asked about it, he notes that most folks wouldn't pick fridays randomly for breaking into houses, leading the protagonist to suggest that the arsonist was aware of his movements.
+
+The second arson victim, Eustorgios, had his wooden house burn down completely. The fire would have turned the neighbouring houses to ruins were it not for the efforts of the vigiles. As before, the arsonist stole enough to fit in a large backpack, but no more. A search reveals a poorly-closed amphora full of expensive red wine next to an open, half-full amphora of cheaper white wine that contains soot from the fire. Eustorgios notes that the arsonist must have taken half the white wine for himself but probably sampled both (implying that he likes white wine). He casually mentions that he got some of the red wine from Meliton, a friend of his. There is also an amphora of expensive, high-quality flammable resin, decorated with symbols identical to those in the pawn shop, that has been nearly emptied and discarded on the floor. Asking Alexis about it later reveals that it belonged to him and was stashed at the back of the shop, having been purchased two weeks before. The protagonist can ask if the arsonist could have stumbled upon it randomly, and Alexis notes that while it was visible to the customers, he did not mention its contents to anyone and the only one who knew it contained resin was Hermolaos, a personal friend (in fact, an accomplice, though Alexis does not say this) who had sold him the resin. Asking about Hermolaos reveals that he went missing a week before the arsons took place.
+
+When suggesting that the arsonist may have known where both victims lived, Alexis directs the protagonist to Karpos, the gambler (and assassin), the only one they know of who does; when suggesting that the arsonist may have known Hermolaos, Alexis claims that, to the best of his knowledge, he is Hermolaos' only friend, but that his brother, Meliton, is also in the tavern.
+
+The only enemy Alexis and Eustorgios claim they both have is a former fellow taverngoer, Lysimachos, a large and violent man who was kicked out of the tavern a week ago for beating up Alexis. When asked about Lysimachos, Alexis condemns him as a thug and a pimp who uses his strength to push his prostitutes around. Eustorgios further notes that Nikandros, the local oil and pitch trader, stopped being on friendly terms with Eustorgios four days before the arsons started (note: this was when Nikandros and Meliton learned that Alexis, Eustorgios and Karpos had killed Hermolaos, and the day after this, Meliton followed Karpos to Eustorgios' house and to Karpos' own house), and has not visited the tavern since. Both Lysimachos and Nikandros can be found in the marketplace.
+
+So far, there are several hints about the arsonist's identity. The arsonist:
+* picked the lock, i.e. is a professional burglar or arsonist
+* knew both victims and knew the shop's contents
+* may have known Hermolaos, the purveyor of the resin
+* has small feet, therefore a small frame
+* prefers white wine over red
+* does not own or, at least, did not bring a cart
+The protagonist can ask about or check for each of these things to the four suspects - Lysimachos, Nikandros, Meliton and Karpos. Lysimachos is too large for the footprints, Nikandros owns a cart and Karpos will ask for red wine when offered a drink, which hints at their innocence. All suspects wear poor, shabby clothing, showing that they could not afford to have hired an arsonist.
+
+Speaking to Lysimachos shows that he is very talkative, and will harshly condemn the patrons at the [TODO] tavern as a "buncha thieves, the lot o'em." and claim that just about everyone who visits the tavern is involved in seedy dealings or outright crime. He will go into a tirade at how Alexis and Eustorgios cheated him at dice, causing him to lose a small fortune, and how he would "grind'em up like a mill" for it (he performs a crushing gesture with his large foot to emphasize this, a hint that he is not the culprit). He confesses to hating Alexis and Eustorgios but claims he would never commit arson, as that isn't his style. He claims to have been with his prostitutes on the nights of the arsons, as he always is. Attempting to persuade him to turn away from his life as a pimp will earn his laughter and scorn, without triggering a social encounter.
+
+Speaking to Nikandros, who gladly displays his collection of oils, balms and other goods, reveals that he is planning to leave the city of [TODO] altogether and has no interest in frequenting the tavern anymore. When asked about it, he claims that he has no idea what he will be working on in the city of [TODO], where he plans to move, or indeed if he will find work there; suggesting that this is suspicious will ease the later social encounter where he can be convinced to reveal his knowledge about the criminal dealings in the tavern, notably Hermolaos' murder. Further discussion about his departure will reveal that he has learned from his stay at the [TODO] tavern that all his herbalist clients produce poisons or goods used in black magic, something he has begun to frown upon. He confesses that the world seems bleak without moral guidelines and wishes there were decent people to help him into a better life. A social encounter can get him to learn about Christianity, and if successful, provided that he has not already mentioned the criminal dealings in the tavern, this will also get him to reveal them.
+
+Nikandros can be questioned like any other suspect (for instance, he can be invited to partake in white wine at the tavern). When asked about the arsons (the protagonist outright says that Alexis and Eustorgios were the victims), Nikandros claims he doesn't know anything. He says that he was probably sound asleep on the nights of both arsons. When asked about his friendship with Eustorgios, he claims that he is generally shying away from the people in the [TODO][tavern name]. This prompts the protagonist to ask about the tavern, and a successful social encounter will reveal that the patrons are mostly criminals, and that he learned a great deal of sordid things from them while they were drunk. He hesitates, but the protagonist can, following this thread of conversation, learn from him that Alexis is a fence and Eustorgios is a burglar, and furthermore, that Eustorgios confessed to helping kill Hermolaos to Nikandros while severely inebriated. After a successful burglary, Eustorgios had lured Hermolaos to Alexis' pawn shop, where the assassin Karpos posioned him with a dagger whose poisons were supplied by Alexis, then set the body ablaze in flaming oil. The charred skeleton is still in Karpos' house, according to Eustorgios. Nikandros claims that his oils were used for the murder, both in extracting the poisons and in setting the body on fire, something that has bothered him severely. He also claims that Hermolaos' brother, Meliton, overheard Eustorgios' drunken confession despite the fact that the conversation took palce in a secluded area, and so Meliton may have sought revenge. He insists that he will not turn the three murderers in to the legion, but another (difficult) social encounter can lead him to serve as a witness if Meliton also agrees (which Nikandros says will be impossible).
+
+After the quest is completed, if Nikandros is not outed to the murderers, he will move to the city of [TODO], where he can be persuaded about Christianity if he has not been persuaded already. Convincing him to seek out Christianity will get him to join the local church, where he provides the protagonist with the quest [TODO]. Outing Nikandros to the murderers causes him to disappear (he is in fact killed), and the protagonist will be informed that the has vanished, though his cart and goods are still there.
+
+At any time after learning about the murder from Nikandros, the protagonist can confront Alexis, Eustorgios or Karpos about it, with the same outcome: they deny everything and ask who it was that told the protagonist about this. The protagonist can expose Nikandros as the informer, causing him to be killed, or expose Meliton, in which case they ridicule the protagonist for believing "that lowlife" Meliton. Confronting the murderers causes the reward to be waived and the quest to proceed to its bad ending, where Alexis and Karpos catch Meliton trying to burn down Karpos' house.
+
+Karpos is of small stature, as the protagonist can assess, and does not own a cart, but offering him wine reveals that he prefers red wine, having a dislike for white wine. He can be asked about Alexis and Eustorgios, and he responds that they are good, upstanding citizens, and suggests that he speak to them to assure himself of their character. He describes himself as an honest laborer, despite sounding as though he were shooing a fly when he says this, and claims to have stayed in the tavern on the night of the first arson, with Alexis himself, though he claims to have been at home on the night of the second arson. Alexis can corroborate his story. He claims he saw a stalker who may have been the arsonist follow Eustorgios and himself to Eustorgios' house three days before the arsons started taking place.
+
+Meliton shows himself to be of small stature, and on being offered wine, he asks for some "white Corinthian"; pressed about it, he reveals that he prefers white wine to red wine. He does not own a cart. When asked about his brother, and specifically whether Hermolaos had brought some resin to Alexis, he quickly changes the subject. He claims to be interested in where his brother might have gone, though his tone does not suggest particular curiosity or anxiousness. He further claims that he doesn't know Alexis all that well and that Eustorgios is a personal friend, though he doesn't sound particularly fond of the man. He says he was sleeping, sound asleep when the arsons took place, sounding as though he wants to wave away the protagonist as quickly as possible.
+
+If the protagonist knows about Hermolaos' murder from Nikandros, he can question Meliton about it, and though he denies everything at first, he can be persuaded in a social encounter to confess (this is easier if he is first told that the fact that they killed Hermolaos makes him look suspicious). He does not admit to the arsons, but admits that he heard Eustorgios confess to the murder. At this point, he can be persuaded to inform the legionaries about the murder in a difficult social encounter. If persuaded, he asks the protagonist to convince Nikandros to serve as a witness, and asks the protagonist to come see him after Nikandros has done so. Speaking to him after both he and Nikandros have agreed to inform the legionaries results in the good ending.
+
+Once the protagonist has confronted Meliton and received his confession, he can return to Alexis or Karpos and expose Meltion by suggesting that he will go after Karpos. When asked how he knows this, the protagonist can either claim that Meltion simply blurted it out, or state that Meliton wants revenge for the murder of his brother. In the latter case, Alexis / Karpos will flatly deny having killed Hermolaos, and state that they will deal with the matter of the arsons themselves. Pressing them about the murder causes them to become hostile and prompts Alexis to waive the reward. Exposing Meliton either way leads to the bad ending of the quest, where the protagonist is informed that Alexis and Karpos have caught Meliton at Karpos' house.
+
+The day after the good ending, Meliton remains in the tavern while Alexis, Eustorgios and Karpos disappear from the game, and Nikandros moves to [TODO]. Lysimachos has limited dialog. Meliton informs the protagonist that the legionaries searched Karpos' house and found the skeleton of Hermolaos, and with that, Meliton achieved his revenge. Meliton may be persuaded in a further social encounter to explore Christianity, and if successful, he says that, while unconvinced, he has more respect for Christians now that he has heard the protagonist's points.
+
+The day after the bad ending, Meliton disappears from the game, while Lysimachos, Alexis, Karpos and Eustorgios have limited dialog. Nikandros moves to [TODO] unless killed by the murderers. When spoken to, if the protagonist did not incur the anger of the murderers, Alexis informs the protagonist that Meliton was caught at Karpos' house and that he was killed as he attempted to murder Karpos.
+
+   -->
+  </quest>
+
+  <quest id="to_the_seaside" name="To the Seaside">
+   <!--
+An old man in the village of [TODO] near Troas, who suffers from arthritis, asks the protagonist to convince someone to carry him by cart to the seaside, as he cannot leave the village on his own. He recommends two potential helpers: a callous, wealthy farmer and a poorer but more sympathetic peasant. The farmer offers to lend his cart to the old man for the price of a cartful of wheat [TODO][consult the list of maximum prices in ancient Rome to identify the actual cost], as this is what he would normally sell in one of his trips to the city; through a social encounter, arguing that the cart is not in use anyway since the harvest has yet to come, the protagonist can drastically reduce the price, but will still have to pay for the journey himself. 
+
+The peasant, upon a successful social encounter, offers to let the old man use the cart for free, on condition that the protagonist convince his son, who has gone to live in Troas and can sometimes be found at the Spotted Duck Inn, to come back and tend the farm. Traveling to the Spotted Duck, the protagonist learns that the son has not gone to the inn in some time, but can be found at his residence in the city. At the residence, the protagonist encounters the son's wife, who is hostile to the idea of letting her husband go back to the farm, because she claims they have a good life in the city. However, it is obvious that the husband, who arrives at the door during the conversation, is hen-pecked by his wife and has no say in family matters. The protagonist is warned that he has only one chance to discuss things with the couple, and has to choose between attempting to convince the wife to let her family move to the village, or attempting to convince the husband to assert himself. If he suceeds at the latter, he still has to engage in an easy social encounter to persuade the husband to bring his family back to the village.
+
+The protagonist can also seek out Shelach and convince him to supply the cart. This does not require a social encounter, and Shelach quotes Jesus (Matthew 25:35) as his inspiration for helping.
+
+Speaking to the old man after the cart is secured creates a new location that can only be visited once, where the protagonist brings the old man to the sea. When they arrive, they have a conversation about the meaning of life and the importance of having special experiences (the protagonist can argue, for instance, that these are not important as they pale in comparison with heaven).
+   -->
+  </quest>
+
+<!--
+    SMYRNA
+-->
+
+  <quest id="chains_of_misery" name="Chains of misery">
+   <!--
+A slave in Smyrna called Porphyros seeks respite from his master, Lucius, who has beaten him severely out of sheer sadism. This is the same master as the one who can be persuaded to hire [TODO][prospective slave's name] in Oath of Bondage. The protagonist meets him in the church in Smyrna, where the protagonist can remark upon the whip-scars on Porphyros' face. The slave is reluctant to talk about the scars at first, but a successful social encounter causes him to admit that his master had been beating him, simply because he takes pleasure in beating his slaves. He names another slave, Constantinus, who has been contemplating suicide because of the torment inflicted on him, and another, Hesiod, who died because of Lucius' beatings. As Lucius owns a vast orchard of myrrh trees and is prominent in the city's patrician class, he is very unlikely to be investigated for it. 
+
+   -->
+  </quest>
+
+  <quest id="oath_of_bondage" name="Oath of Bondage">
+   <!--
+A merchant in Smyrna was successfully exporting myrrh to Rome for many years by sea. However, a suddent storm sank his only ship abreast a cliff and promptly put him out of business. Our merchant, who was also the only provider for his family, consisting of a wife with a newborn, two elder parents and a younger brother, was consequently in a difficult situation. Before the ship's final voyage, the merchant had accrued a large debt to fully stock the ship in hopes of earning a large profit in Rome, and the debt now hangs over his family's heads. The difficulties have been already trailing for more than a year, so the younger brother, deciding to take matters into his hands and save his family, decided to sell himself as slave. The brother offers himself to the protagonist at the marketplace in Smyrna, and failing the sale, asks the protagonist to find him a buyer.
+
+Asking the citizens of Smyrna for a potential buyer reveals three suggestions. The merchant [TODO] in the marketplace suggests a wealthy landowner called Lucius who is looking to replace his recently deceased  house slave called Hesiod. The merchant knows the slave was healthy, as the slave often came to him on his errands, but the slave suddenly and inexplicably disappeared. The master claimed that he succombed to a merciless and deadly illness in a matter of days, but the merchant doubts this scenario. However, knowing Lucius' influence in the city, the merchant was too afraid to question him. Visiting Lucius reveals that he feigns a very dubious grief for the former slave; he states that he is looking for a slave who can take a good beating and knows better than to refuse anything of his master. He requires a social encounter to convince him that the brother is a good fit.
+
+A second option, suggested by the innkeeper [TODO], is to seek out prospective slaveowners in other towns. The Jewish merchant [TODO] in Sardis, a pharisee, is looking for a slave and will buy the brother, but demands that the brother perform a circumcision and convert to Judaism. This will ensure that the brother will be freed after [TODO] years, but raises issues with the protagonist's Christian belief that circumcision is unnecessary.
+
+The protagonist can also learn of a third option from [TODO], one of the presbyters of the church in Smyrna. The presbyter suggests a lime manufacturer, Marcellus, whose business was seemingly flourishing recently, so he urgently needed some extra help to meet the delivery requirements. This manufacturer also shows up in the quest Looking for Workers. The work is not slavery; however, the job at this merchant will only cover the interest on the loan.
+
+After convincing any (or all) of the prospective masters, returning to the brother and telling him to join a given master ends the quest.
+   -->
+  </quest>
+
+  <quest id="looking_for_workers" name="Looking for Workers">
+   <!--
+
+
+
+Marcellus can also be asked about how lime is made.
+   -->
+  </quest>
+
+
+
+
+  <quest id="" name="">
+   <!--
+
+
+   -->
+  </quest>
+ </campaign>
+</mod>

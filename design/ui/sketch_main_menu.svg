@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="112mm"
+   height="63mm"
+   viewBox="0 0 112 63.000005"
+   version="1.1"
+   id="svg5"
+   sodipodi:docname="sketch_main_menu.svg"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
+  <metadata
+     id="metadata1036">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#111111"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:document-units="px"
+     showgrid="false"
+     units="mm"
+     showguides="false"
+     inkscape:guide-bbox="true"
+     inkscape:snap-global="false"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:zoom="0.99999999"
+     inkscape:cx="-121.32139"
+     inkscape:cy="158.59819"
+     inkscape:window-width="1848"
+     inkscape:window-height="1016"
+     inkscape:window-x="72"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     inkscape:snap-page="false">
+    <sodipodi:guide
+       position="-4.2333335,4.7625002"
+       orientation="0,1"
+       id="guide2796"
+       inkscape:label=""
+       inkscape:locked="false"
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="4.7625002,-2.7119793"
+       orientation="1,0"
+       id="guide5651"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-2.9999996)">
+    <rect
+       style="fill:#5599ff;stroke-width:0.26458335"
+       id="rect5653"
+       width="42.333336"
+       height="7.4083338"
+       x="4.7625003"
+       y="53.829166" />
+    <rect
+       style="fill:#80b3ff;stroke-width:0.26458335"
+       id="rect5653-3"
+       width="42.333336"
+       height="7.4083338"
+       x="4.2717776"
+       y="46.427605" />
+    <text
+       xml:space="preserve"
+       style="font-size:5.00000048px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;stroke-width:0.26458335"
+       x="5.6331382"
+       y="12.987631"
+       id="text6390"><tspan
+         sodipodi:role="line"
+         id="tspan6388"
+         x="5.6331382"
+         y="12.987631"
+         style="font-size:10px;line-height:6.25000048px;stroke-width:0.26458335">Faith of the apostles</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:5.00000048px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;stroke-width:0.26458335"
+       x="-85.499527"
+       y="7.2541575"
+       id="text873"><tspan
+         sodipodi:role="line"
+         x="-85.499527"
+         y="7.2541575"
+         style="stroke-width:0.26458335"
+         id="tspan877">New Campaign</tspan><tspan
+         sodipodi:role="line"
+         x="-85.499527"
+         y="13.504158"
+         style="stroke-width:0.26458335"
+         id="tspan882"> &gt; Official campaigns</tspan><tspan
+         sodipodi:role="line"
+         x="-85.499527"
+         y="19.754158"
+         style="stroke-width:0.26458335"
+         id="tspan888"> &gt; Campaign from file</tspan><tspan
+         sodipodi:role="line"
+         x="-85.499527"
+         y="26.00416"
+         style="stroke-width:0.26458335"
+         id="tspan1745"> &gt; Back</tspan><tspan
+         sodipodi:role="line"
+         x="-85.499527"
+         y="32.254158"
+         style="stroke-width:0.26458335"
+         id="tspan885">Load game</tspan><tspan
+         sodipodi:role="line"
+         x="-85.499527"
+         y="38.504162"
+         style="stroke-width:0.26458335"
+         id="tspan893"> &gt; Load from server</tspan><tspan
+         sodipodi:role="line"
+         x="-85.499527"
+         y="44.754162"
+         style="stroke-width:0.26458335"
+         id="tspan901">    (save game should be titled</tspan><tspan
+         sodipodi:role="line"
+         x="-85.499527"
+         y="51.004162"
+         style="stroke-width:0.26458335"
+         id="tspan905">     &quot;save to server&quot; and</tspan><tspan
+         sodipodi:role="line"
+         x="-85.499527"
+         y="57.254162"
+         style="stroke-width:0.26458335"
+         id="tspan907">     &quot;save to file&quot;)</tspan><tspan
+         sodipodi:role="line"
+         x="-85.499527"
+         y="63.504162"
+         style="stroke-width:0.26458335"
+         id="tspan903"> &gt; Load from file</tspan><tspan
+         sodipodi:role="line"
+         x="-85.499527"
+         y="69.754166"
+         style="stroke-width:0.26458335"
+         id="tspan897"> &gt; Back</tspan><tspan
+         sodipodi:role="line"
+         x="-85.499527"
+         y="76.004166"
+         style="stroke-width:0.26458335"
+         id="tspan883">Play vignette</tspan><tspan
+         sodipodi:role="line"
+         x="-85.499527"
+         y="82.254166"
+         style="stroke-width:0.26458335"
+         id="tspan915">Options</tspan><tspan
+         sodipodi:role="line"
+         x="-85.499527"
+         y="88.504166"
+         style="stroke-width:0.26458335"
+         id="tspan981">Extras</tspan><tspan
+         sodipodi:role="line"
+         x="-85.499527"
+         y="94.754166"
+         style="stroke-width:0.26458335"
+         id="tspan879">  &gt; Social arena</tspan><tspan
+         sodipodi:role="line"
+         x="-85.499527"
+         y="101.00417"
+         style="stroke-width:0.26458335"
+         id="tspan1747">  &gt; Back</tspan><tspan
+         sodipodi:role="line"
+         x="-85.499527"
+         y="107.25417"
+         style="stroke-width:0.26458335"
+         id="tspan923">Login / register / logout</tspan></text>
+    <rect
+       style="fill:#5599ff;stroke-width:0.26458335"
+       id="rect5653-35"
+       width="42.333336"
+       height="7.4083338"
+       x="4.2717776"
+       y="39.019272" />
+    <rect
+       style="fill:#80b3ff;stroke-width:0.26458335"
+       id="rect5653-3-6"
+       width="42.333336"
+       height="7.4083338"
+       x="4.2717776"
+       y="31.610937" />
+    <rect
+       style="fill:#5599ff;stroke-width:0.26458335"
+       id="rect5653-35-2"
+       width="42.333336"
+       height="7.4083338"
+       x="4.2717776"
+       y="24.202602" />
+    <rect
+       style="fill:#80b3ff;stroke-width:0.26458335"
+       id="rect5653-3-6-9"
+       width="42.333336"
+       height="7.4083338"
+       x="4.2717776"
+       y="16.794268" />
+    <text
+       xml:space="preserve"
+       style="font-size:5.00000048px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;stroke-width:0.26458335"
+       x="11.635954"
+       y="22.318502"
+       id="text963"><tspan
+         sodipodi:role="line"
+         id="tspan961"
+         x="11.635954"
+         y="22.318502"
+         style="stroke-width:0.26458335">New Game</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:5.00000048px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;stroke-width:0.26458335"
+       x="11.09152"
+       y="29.770782"
+       id="text967"><tspan
+         sodipodi:role="line"
+         id="tspan965"
+         x="11.09152"
+         y="29.770782"
+         style="stroke-width:0.26458335">Load Game</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:5.00000048px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;stroke-width:0.26458335"
+       x="15.774137"
+       y="36.6945"
+       id="text975"><tspan
+         sodipodi:role="line"
+         id="tspan973"
+         x="15.774137"
+         y="36.6945"
+         style="stroke-width:0.26458335">Options</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:5.00000048px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;stroke-width:0.26458335"
+       x="17.413542"
+       y="44.510548"
+       id="text979"><tspan
+         sodipodi:role="line"
+         id="tspan977"
+         x="17.413542"
+         y="44.510548"
+         style="stroke-width:0.26458335">Extras</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:5.00000048px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;stroke-width:0.26458335"
+       x="6.3759437"
+       y="51.511166"
+       id="text985"><tspan
+         sodipodi:role="line"
+         id="tspan983"
+         x="6.3759437"
+         y="51.511166"
+         style="stroke-width:0.26458335">Login / register</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:5.00000048px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;stroke-width:0.26458335"
+       x="-155.04584"
+       y="9.3791666"
+       id="text848"><tspan
+         sodipodi:role="line"
+         id="tspan846"
+         x="-155.04584"
+         y="9.3791666"
+         style="stroke-width:0.26458335">Quickstart</tspan><tspan
+         sodipodi:role="line"
+         x="-155.04584"
+         y="15.629168"
+         style="stroke-width:0.26458335"
+         id="tspan850">Party designer</tspan><tspan
+         sodipodi:role="line"
+         x="-155.04584"
+         y="21.879168"
+         style="stroke-width:0.26458335"
+         id="tspan854"> &gt; player</tspan><tspan
+         sodipodi:role="line"
+         x="-155.04584"
+         y="28.129168"
+         style="stroke-width:0.26458335"
+         id="tspan852"> &gt; AI</tspan><tspan
+         sodipodi:role="line"
+         x="-155.04584"
+         y="34.379169"
+         style="stroke-width:0.26458335"
+         id="tspan860">Tutorial</tspan><tspan
+         sodipodi:role="line"
+         x="-155.04584"
+         y="40.629169"
+         style="stroke-width:0.26458335"
+         id="tspan862">Battle</tspan><tspan
+         sodipodi:role="line"
+         x="-155.04584"
+         y="46.879169"
+         style="stroke-width:0.26458335"
+         id="tspan874"> &gt; Set battle</tspan><tspan
+         sodipodi:role="line"
+         x="-155.04584"
+         y="53.129169"
+         style="stroke-width:0.26458335"
+         id="tspan870"> &gt; Random battle</tspan><tspan
+         sodipodi:role="line"
+         x="-155.04584"
+         y="59.379173"
+         style="stroke-width:0.26458335"
+         id="tspan876">Options</tspan></text>
+  </g>
+</svg>

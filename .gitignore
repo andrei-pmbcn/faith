@@ -1,0 +1,8 @@
+
+
+*.swp
+*.swo
+src/Session.vim
+
+node_modules
+dist

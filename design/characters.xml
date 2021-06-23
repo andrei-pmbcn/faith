@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<mod id="default">
+  <campaign id="faith_of_the_apostles">
+    <character id="hostus" name="Hostus">
+      <!--Preceded by a "chat with the crowds" response in a marketplace-->
+      <message id="intro">
+        <text>
+Your attempt to converse with the crowds is interrupted by a rather loud beggar donning an old cloak and holding a poorly-carved staff. He wags his free hand at you, palm-up in a panhandling gesture, while yelling "Alms for the rich!" in a hoarse, creaking voice.
+  </text>
+        <response id="are_you_rich">
+          <text>
+"Alms for the rich? You mean you're wealthy?"
+    </text>
+          <message id="i_am_rich">
+            <text>
+The cloaked beggar clasps a hand heartily to his chest and utters: "The richest man alive! Richer than Caesar, bless his soul, and richer than all the governors together. For you see," he leans in, emitting the foul odor of a man unused to bathing, "I have a treasure no one else has ever set their eyes upon, ambrosia no one else has tasted."
+      </text>
+            <response id="ambrosia">
+              <text>
+"Ambrosia? You mean something like opium?"
+        </text>
+              <message id="opium_the_worm">
+                <text>
+"Opium is like a worm tied to the hook of craving.", the man says, waving his arm to his side for emphasis. He leans on his staff and declares: "And the fisherman, misery, eagerly baits you with opium. No, I mean nothing like opium. Nothing at all of the kind. For you see, my treasure is not something you smoke, or drink, or snort up through your jolly nostrils." A faint smile hints at his amusement as he sways from side to side, though the expression on his face seems otherwise infused with seriousness.
+          </text>
+                <response id="intro_confluence_continue">
+                  <text>
+              [continue]
+            </text>
+                  <message id="intro_confluence">
+                    <text>
+"My treasure, you see, is the gift of abolition, the splendor of abandonment, the joy of living in tune with one's nature and the swirling, dancing love of owning nothing but a rag and a stick." He hops from side to side to emphasize this. "Power? Nature needs no power! Riches? Those with true wealth need no riches! Fame? My name is but a drop of water in an ocean of indifference, blended memories of nothingness into which nothingness dissolves. Let me forget my name, and to forget yours, too. I'm Hostus, by the way. Philosopher and friend to all."
+              </text>
+                  </message>
+                </response>
+              </message>
+            </response>
+            <response id="what_is_your_treasure">
+              <text>
+"And what exactly is your treasure?"
+        </text>
+              <message_ref message_id="intro_confluence" />
+            </response>
+            <response id="i_hold_a_treasure">
+              <text>
+"I hold a treasure, too. Salvation through Christ. Would you like to hear about it?"
+        </text>
+              <message id="christians_like_ants">
+                <text>
+"Christ? Are you one of those so-called Christians who are spreading through the empire like ants?" He says this with hardly any contempt in his voice, as though merely talking about the weather. "But anyway, since we are talking, will you respond to my plea or not? Alms for the rich!" The end of his statement leaves him grinning a yellow-toothed grin.
+          </text>
+              </message>
+            </response>
+            <response id="no_time_goodbye">
+              <text>
+"I have no time for this, sorry."
+        </text>
+            </response>
+            <response id="no_time_goodbye_coin">
+              <text>"I have no time for this, sorry. Here's a coin."</text>
+              <!--[TODO] Add action of subtracting a coin-->
+            </response>
+          </message>
+        </response>
+        <response id="why_not_work">
+          <text>
+"You look healthy and strong. Why are you begging instead of working?"
+    </text>
+          <message id="behind_beggar_clothes">
+            <text>"Don't you know? Behind such beggar clothes", he says - and as he is talking, shaking his rags, the foul odor of a man unused to bathing reaches your nostrils - "lie the labors of philosophers. My work is nobler than that of all these insatiable people around. If you are working, can you say the same of your work?"</text>
+            <response id="labors_of_philosophers">
+              <text>
+"The labors of philosophers? Tell me more."
+        </text>
+              <message id="work_that_enlivens">
+                <text>
+"Work that enlivens the body, while good enough for what it does, can't hold a candle to the work of strengthening your soul, of gaining and preserving virtue. To stand steadfast when contempt and insults come your way, to build a heart of temperance and inner peace, to do without the artefacts of luxury and live a life of minimal desire, caring not for silver or for social standing, that is the most precious fruit one's labors can impart." Excitement coats his voice as he keeps speaking.</text>
+                <response_ref response_id="intro_confluence_continue" />
+              </message>
+            </response>
+            <response id="you_seem_arrogant">
+              <text>
+"You seem to be very arrogant for a beggar."
+        </text>
+              <message id="not_arrogant">"Arrogant?", the beggar asks, taken aback. "If I seem arrogant, it is only because I take pride in my work, next to which I am nothing; the work of building virtue and developing the spirit, and of teaching others what matters in life. My crown is dust, but to the man who needs nothing, dust is as precious as gold." His voice booms with wonder and might.<response_ref response_id="intro_confluence_continue" /></message>
+            </response>
+            <response id="my_mission_is_noble">
+              <text>
+Yes. I was entrusted with a very noble mission - spreading the good news that will save the souls of people. Would you like to hear the news?
+        </text>
+              <message id="what_can_tell_soul_no_odor">
+                <text>"Are you one of those Platonists who sever the body from the soul, like the head of the cattle from their trunk?", the beggar utters in a verbal clash. "What can you tell me that I don't already know?"</text>
+                <response id="christ_given_life">"No, I'm not a Platonist. I am a Christian, and I've come to spread the news that our lord Christ has offered us eternal life."</response>
+                <response id="talking_about_salvation">I am not severing the soul from the body; I am talking about the eternal salvation of your soul after all riches in this world will disappear.</response>
+              </message>
+            </response>
+            <response_ref id="no_time_goodbye" />
+            <response_ref id="no_time_goodbye_coin" />
+          </message>
+        </response>
+        <response id="save_your_soul">
+          <text>
+"I can give you one sestertius, but this will save your body only for a day or two. Would you like to hear something that can save your soul?"
+    </text>
+          <message id="what_can_tell_soul">
+            <text>"Are you one of those Platonists who sever the body from the soul, like the head of the cattle from their trunk? What can you tell me that I don't already know?", he says, gesturing and shaking his rags, so the foul odor of a man unused to bathing reaches your nostrils.</text>
+          </message>
+        </response>
+      </message>
+    </character>
+  </campaign>
+</mod>
