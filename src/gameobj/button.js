@@ -1,3 +1,9 @@
+/*
+* @author Andrei Pambuccian
+* @copyright 2021 Andrei Pambuccian
+* @license {https://www.gnu.org/licenses/gpl-3.0.en.html|GPL3.0 license}
+*/
+
 import cfg from '../config.js';
 
 //[TODO] adjust ease functions, try cubic
@@ -11,17 +17,36 @@ export default class TextButton
 	*
 	* After being clicked, the button will call its `action` member.
 	*
-	* @param {Phaser.Scene} scene the button's Scene 
-	* @param {number} [x] the button's x position 
-	* @param {number} [y] the button's y position 
-	* @param {string} [text] the button's text
-	* @param {string} [image] the name of the loaded image for the button
-	* @param {string} [font] the name of the loaded font for the button
+	* @param {Phaser.Scene} scene - the button's Scene 
+	* @param {number} [x] - the button's x position 
+	* @param {number} [y] - the button's y position 
+	* @param {string} [text] - the button's text
+	* @param {string} [image] - the name of the loaded image for the button
+	* @param {string} [font] - the name of the loaded font for the button
 	*/
-    constructor(scene, x = 0.0, y = 0.0, text = '', image = 'text-button', font = 'button-BMF')
+    constructor(scene, x = 0, y = 0, text = '', image = 'text-button', font = 'button-BMF')
 		{
-		//[TODO] check whether the specified font and image file have been loaded
 		this.scene = scene;		
+
+		//check whether the specified font and image file have been loaded
+		let errstr;
+		if (!this.scene.textures.exists(image)) {
+			errstr = 'image texture ' + image + ' not found: cannot create button.'
+			alert(errstr);
+			throw errstr;
+			return;
+		}
+
+		if (!this.scene.textures.exists(font)) {
+			errstr = 'font texture ' + font + ' not found: cannot create button.'
+			alert(errstr);
+			throw errstr;
+			return;
+		}
+
+		this.x = x;
+		this.y = y;
+		this.scale = 1;
 
 		this.base = this.scene.add.image(x, y, image, cfg.ui.textButton.frameBase);
 		this.base.setInteractive();
@@ -50,16 +75,28 @@ export default class TextButton
 /*
 	/**
 	* the function called by default when the button is clicked but is disabled
+	*
+	* @name disabledAction
+	* @type {function}
+	* @default an empty function
 	*/
 	disabledAction = function() {}
 
 	/**
 	* the function called when the button is clicked
+	*
+	* @name action
+	* @ype {function}
+	* @default null
 	*/
 	action = null;
 
 	/**
 	* whether the button is disabled, i.e. cannot be interacted with
+	* 
+	* @name isDisabled
+	* @type {boolean}
+	* @default false
 	*/
 	isDisabled = false;
 
@@ -87,16 +124,31 @@ export default class TextButton
 		this._tweenButton('enable');
 	}
 
+	/*
+	* sets the button's scale
+	* 
+	* @param {number} sf - the new scale of the panel
+	*/
 	setScale(sf) {
+		this.scale = sf;
+
 		this.base.setScale(sf);
 		this.hover.setScale(sf);
 		this.pressed.setScale(sf);
 		this.disabled.setScale(sf);
 		this.text.setScale(sf);
-
 	}
 
+	/*
+	* sets the button's x and y position
+	* 
+	* @param {number} x - the button's new x coordinate
+	* @param {number} y - the button's new y coordinate
+	*/
 	setPosition(x, y) {
+		this.x = x;
+		this.y = y;
+
 		this.base.setPosition(x, y);
 		this.hover.setPosition(x, y);
 		this.pressed.setPosition(x, y);
@@ -107,7 +159,7 @@ export default class TextButton
 	/**
 	* Instantly sets the text for the button.
 	*
-	* @param {string} text the text to be set
+	* @param {string} - text the text to be set
 	*/
 	setText(newText) {
 		this.text.setText(newText);
@@ -117,7 +169,7 @@ export default class TextButton
 	* Makes the text transparent via tweening, replaces the words in the text,
 	* then makes the text opaque again.
 	*
-	* @param {string} text the text to be written
+	* @param {string} - text the text to be written
 	*/
 	tweenText(newText) {
 		let textTween = this.text.getData('tween');
@@ -149,6 +201,8 @@ export default class TextButton
 
 	/**
 	* internal callback called when the button is hovered over
+	*
+	* @access private
 	*/
 	_pointOver() {
 		if(this.isDisabled)
@@ -158,7 +212,9 @@ export default class TextButton
 	}
 
 	/**
-	* internal callback called when the button is no longer hovered over
+	* Internal callback called when the button is no longer hovered over
+	*
+	* @access private
 	*/
 	_pointOut() {
 		if(this.isDisabled)
@@ -169,7 +225,9 @@ export default class TextButton
 	}
 
 	/**
-	* internal callback called when the button has stopped being clicked
+	* Internal callback called when the button has stopped being clicked
+	*
+	* @access private
 	*/
 	_pointUp() {
 		if(this.isDisabled)
@@ -184,12 +242,14 @@ export default class TextButton
 	}
 
 	/*
-	* internal method that performs a transition to or from the base, pressed and hover versions of the given
+	* Internal method that performs a transition to or from the base, pressed and hover versions of the given
 	* button image, showing or hiding these versions via their alpha values as needed. 
 	*
 	* The hover version is always created above the default version of the same item, and the pressed version
 	* goes above the hover version; the alpha values of the hover and pressed versions default to 0.0. Because
 	* of this, only the hover and pressed versions need to have their alpha values tweened.
+	*
+	* @access private
 	*
 	* @param {string} type - a string indicating the type of tween to be executed; can be either 'pointerOver',
 	*   'pointerOut', 'pointerUp', 'enable' or 'disable'.

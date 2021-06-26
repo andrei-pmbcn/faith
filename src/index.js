@@ -1,3 +1,9 @@
+/*
+* @author Andrei Pambuccian
+* @copyright 2021 Andrei Pambuccian
+* @license {https://www.gnu.org/licenses/gpl-3.0.en.html|GPL3.0 license}
+*/
+
 import Phaser from 'phaser';
 import mainMenu from './scenes/mainMenu.js';
 import cfg from './config.js'
@@ -36,9 +42,4 @@ window.onresize = function() {
 };
 */
 
-/*
-window._game = game;
-window._gs = function() {
-	return window._game.scene.getScenes()[0];
-}
-*/
+//[TODO] Webpack - include code only in debug / production version?
