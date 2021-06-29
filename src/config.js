@@ -30,22 +30,22 @@ cfg.ui.title.height = 96;
 cfg.ui.title.marginHeight = 24;
 
 cfg.ui.quotePanel = {};
-cfg.ui.quotePanel.marginHeight = 32; //used in the portrait orientation
+cfg.ui.quotePanel.marginHeight = 24;
+cfg.ui.quotePanel.marginWidth = 24;
 cfg.ui.quotePanel.paddingWidth = 64;
 cfg.ui.quotePanel.paddingHeight = 64;
-cfg.ui.quotePanel.wrapWidth = cfg.ui.fonts.cursive.size * 20;
-cfg.ui.quotePanel.textHeight = cfg.ui.fonts.cursive.size * 10;
+cfg.ui.quotePanel.fontSize = 28;
+cfg.ui.quotePanel.wrapWidth = cfg.ui.quotePanel.fontSize * 20;
+cfg.ui.quotePanel.textHeight = cfg.ui.quotePanel.fontSize * 10;
 cfg.ui.quotePanel.innerMargin = 16;
-cfg.ui.quotePanel.referenceXOffset = 16;
 	// (the space between the quote and its reference)
-cfg.ui.quotePanel.newQuoteInterval = 15000; //in milliseconds
+cfg.ui.quotePanel.timePerCharacter = 130; //in milliseconds
 cfg.ui.quotePanel.tweenDuration = 1000;
 
 cfg.ui.menu = {};
 cfg.ui.menu.marginWidth = 32;
 cfg.ui.menu.marginHeight = 32;
 cfg.ui.menu.itemMarginHeight = 6;
-
 
 cfg.ui.textButton = {};
 

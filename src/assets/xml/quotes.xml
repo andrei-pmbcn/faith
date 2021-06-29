@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
  <quote>
- <content>Jesus said to his disciples: Things that cause people to stumble are bound to come, but woe to anyone through whom they come. It would be better for them to be thrown into the sea with a millstone tied around their neck than to cause one of these little ones to stumble.
-</content>
-  <reference>Luke 17:1-2</reference>
-</quote>
+  <content>To fear the LORD is to hate evil; I hate pride and arrogance, evil behavior and perverse speech.</content>
+  <reference>proverbs 8:13</reference>
+ </quote>
 
+ <quote>
+  <content>Blessed are the peacemakers, for they will be called children of God.</content>
+  <reference>Matthew 5:9</reference>
+ </quote>
+ 
  <quote>
   <content>Therefore go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit, and teaching them to obey everything I have commanded you. And surely I am with you always, to the very end of the age.</content>
   <reference>Matthew 28:19-20</reference>
  </quote>
+
+ <quote>
+ <content>Jesus said to his disciples: Things that cause people to stumble are bound to come, but woe to anyone through whom they come. It would be better for them to be thrown into the sea with a millstone tied around their neck than to cause one of these little ones to stumble.
+</content>
+  <reference>Luke 17:1-2</reference>
+</quote>
 
  <quote>
   <content>For our struggle is not against flesh and blood, but against the rulers, against the authorities, against the powers of this dark world and against the spiritual forces of evil in the heavenly realms.</content>
@@ -30,10 +40,5 @@
   <content>See what great love the Father has lavished on us, that we should be called children of God! And that is what we are! The reason the world does not know us is that it did not know him.
  </content>
   <reference>1 John 3:1</reference>
- </quote>
-
- <quote>
-  <content>To fear the LORD is to hate evil; I hate pride and arrogance, evil behavior and perverse speech.</content>
-  <reference>proverbs 8:13</reference>
  </quote>
 </root>

@@ -33,6 +33,8 @@ import xmlQuotes from '../assets/xml/quotes.xml';
 
 
 //[TODO] Test scaling at different resolutions for button and panel
+//[TODO] Options menu: bible quote duration
+
 
 /**
  * The main menu scene for Faith of the Apostles
@@ -96,7 +98,6 @@ export default class MainMenu extends FaithScene
 		quoteRequest.send();
 		quoteRequest.onload = function() {
 			this.quotes = quoteRequest.responseXML.firstChild.children;
-			this._pickQuote();
 		}.bind(this);
 
 		//[TODO] complete loading screen
@@ -139,6 +140,7 @@ export default class MainMenu extends FaithScene
 		} else {
 			// we are in portrait mode
 			panelCenterX = this.scale.width / 2;
+
 			panelCenterY = cfg.ui.title.marginHeight * 2 + cfg.ui.title.height
 				+ cfg.ui.quotePanel.marginHeight
 				+ (cfg.ui.quotePanel.paddingHeight * 2 + cfg.ui.quotePanel.textHeight) / 2;
@@ -154,16 +156,18 @@ export default class MainMenu extends FaithScene
 		this.quoteContent = this.add.text(panelCenterX, panelCenterY, '')
 			.setFontFamily('faith-callig')
 			.setColor('black')
-			.setFontSize(cfg.ui.fonts.cursive.size)
+			.setFontSize(cfg.ui.quotePanel.fontSize)
 			.setAlign('center')
 			.setWordWrapWidth(cfg.ui.quotePanel.wrapWidth)
 			.setOrigin(0.5, 0.5)
 			.setName('quote-content');
 		this.quotePanel.contents.push(this.quoteContent);
 
-		this.quoteReference = this.add.bitmapText(panelCenterX, panelCenterY, 'faith-callig-BMF')
+		this.quoteReference = this.add.bitmapText(panelCenterX, panelCenterY, 'faith-callig-BMF', '',
+			cfg.ui.quotePanel.fontSize)
 			.setOrigin(0.5, 0.5)
-			.setName('quote-reference');
+			
+.setName('quote-reference');
 		this.quotePanel.contents.push(this.quoteReference);
 
 		this._pickQuote();
@@ -299,19 +303,37 @@ export default class MainMenu extends FaithScene
 		// the title goes at the top-center of the screen
 		this.title.setX(this.scale.width / 2);
 		this.title.setY(cfg.ui.title.height / 2 * sf + cfg.ui.title.marginHeight * sf);
+		
+		let menuHeight = (6 * cfg.ui.textButton.largeHeight + 12 * cfg.ui.menu.itemMarginHeight) * sf;
 
 		if (this.scale.width > this.scale.height) {
 			//we are in landscape mode
 			this.title.setScale(sf);
 				// (the title's scale is the same as the scene's in landscape mode)
 
-			// place the bible quote on the bottom-right side of the window
+			// place the bible quote on the center-right side of the window
+
+			// the block consists of the panel and the menu
+			let blockWidth = (cfg.ui.textButton.largeWidth + cfg.ui.menu.marginWidth
+				+ cfg.ui.quotePanel.marginWidth + cfg.ui.quotePanel.paddingWidth * 2
+				+ cfg.ui.quotePanel.wrapWidth) * sf
+
+			// there are two empty areas, one on each side of the block
+			let emptyArea = (this.scale.width - blockWidth) / 2
+
+			// the buttons go on the left side of the block
+			let buttonX = emptyArea + cfg.ui.textButton.largeWidth / 2 * sf
+
+			// the panel goes on the right side of the block
+			let quotePanelX = emptyArea + (cfg.ui.textButton.largeWidth
+				+ cfg.ui.menu.marginWidth + cfg.ui.quotePanel.marginWidth
+				+ (cfg.ui.quotePanel.paddingWidth * 2 + cfg.ui.quotePanel.wrapWidth) /2) * sf
+
+			let quotePanelY = this.scale.height / 2 + (cfg.ui.title.height + cfg.ui.title.marginHeight) / 2 * sf
+			let menuY = quotePanelY;
 
 			this.quotePanel.setScale(sf, true);
-			this.quotePanel.setPosition(
-				this.scale.width / 2 + (cfg.ui.menu.marginWidth + cfg.ui.textButton.largeWidth) / 2 * sf,
-				this.scale.height / 2 + (cfg.ui.title.height + cfg.ui.title.marginHeight) / 2 * sf,
-			);
+			this.quotePanel.setPosition(quotePanelX, quotePanelY);
 
 			// place the menu items on the bottom-left side of the window
 			for (let k = 0; k < 6; k++) {
@@ -320,9 +342,7 @@ export default class MainMenu extends FaithScene
 				button.setScale(sf);
 
 				// all menu items go in the bottom-left corner
-				let buttonX = cfg.ui.menu.marginWidth + cfg.ui.textButton.largeWidth / 2 * sf;
-				let buttonY = this.scale.height
-					- cfg.ui.menu.marginHeight
+				let buttonY = menuY + menuHeight / 2
 					- cfg.ui.textButton.largeHeight / 2 * sf
 					- k * cfg.ui.textButton.largeHeight * sf
 					- (2 * k + 1) * cfg.ui.menu.itemMarginHeight * sf;
@@ -335,14 +355,30 @@ export default class MainMenu extends FaithScene
 				// because the width of the title is greater than the default screen width in
 				// portrait mode, scale it by a further 0.8
 
+			let titleAreaHeight = (cfg.ui.title.marginHeight * 2 + cfg.ui.title.height) * sf
+
+			let quotePanelHeight = (cfg.ui.quotePanel.paddingHeight * 2 + cfg.ui.quotePanel.textHeight) * sf
+
+			// the block consists of the panel and the menu
+			let blockHeight = quotePanelHeight + (cfg.ui.quotePanel.marginHeight + cfg.ui.menu.marginHeight) * sf
+				+ menuHeight
+
+			// there are two empty areas, one on each side of the block
+			let emptyArea = (this.scale.height - titleAreaHeight - blockHeight) / 2
+
+			// the panel goes at the top of the block
+			let quotePanelY = titleAreaHeight + emptyArea + quotePanelHeight / 2
+
+			// the menu goes at the bottom of the block
+			let menuY = titleAreaHeight + emptyArea + quotePanelHeight
+				+ (cfg.ui.quotePanel.marginHeight + cfg.ui.menu.marginHeight) * sf + menuHeight / 2
+
+			let quotePanelX = this.scale.width / 2;
+			let buttonX = this.scale.width / 2;
+
 			// place the bible quote in the center of the window
 			this.quotePanel.setScale(sf, true);
-			this.quotePanel.setPosition(
-				this.scale.width / 2,
-				(cfg.ui.title.marginHeight * 2 + cfg.ui.title.height
-				+ cfg.ui.quotePanel.marginHeight
-				+ (cfg.ui.quotePanel.paddingHeight * 2 + cfg.ui.quotePanel.textHeight) / 2) * sf,
-			);
+			this.quotePanel.setPosition(quotePanelX, quotePanelY);
 
 			// place the menu items on the bottom-center side of the window
 			for (let k = 0; k < 6; k++) {
@@ -350,15 +386,7 @@ export default class MainMenu extends FaithScene
 
 				button.setScale(sf);
 
-				// the height of the rest of the items, besides the menu
-				let restHeight = (2 * cfg.ui.title.marginHeight + cfg.ui.title.height
-					+ 2 * cfg.ui.quotePanel.marginHeight + 2 * cfg.ui.quotePanel.paddingHeight
-					+ cfg.ui.quotePanel.textHeight) * sf;
-				let menuHeight = (6 * cfg.ui.textButton.largeHeight + 12 * cfg.ui.menu.itemMarginHeight) * sf;
-				let menuBase = (this.scale.height + restHeight + menuHeight) / 2
-
-				let buttonX = this.scale.width / 2;
-				let buttonY = menuBase
+				let buttonY = menuY + menuHeight / 2
 					- cfg.ui.menu.marginHeight * sf
 					- k * cfg.ui.textButton.largeHeight * sf
 					- (2 * k + 1) * cfg.ui.menu.itemMarginHeight * sf;
@@ -377,7 +405,7 @@ export default class MainMenu extends FaithScene
 			return;
 
 		// _pickQuote may have been called before create() finished
-		if (this.quoteContent && this.quoteReference) {
+		if (this.quotes && this.quoteContent && this.quoteReference) {
 			let kQuote = this.data.get('kQuote');
 			let roll = Math.floor(Math.random() * this.quotes.length);
 
@@ -391,6 +419,7 @@ export default class MainMenu extends FaithScene
 				}
 			}
 			kQuote = roll;
+			this.data.set('kQuote', kQuote);
 
 			let content, reference;
 			if (this.quotes[kQuote].children[0].nodeName === 'content') {
@@ -401,7 +430,6 @@ export default class MainMenu extends FaithScene
 				reference = this.quotes[kQuote].children[0].textContent;
 			}
 
-			console.log('bp1');
 			// render the quote invisible
 			let tween = this.add.tween({
 				targets: [this.quoteContent, this.quoteReference],
@@ -410,8 +438,6 @@ export default class MainMenu extends FaithScene
 				duration: cfg.ui.quotePanel.tweenDuration,
 			})
 			tween.setCallback('onComplete', function() {
-				console.log('bp2');
-
 				// set the quote's text
 				this.quoteContent.setText(content);
 				this.quoteReference.setText(reference);
@@ -435,11 +461,11 @@ export default class MainMenu extends FaithScene
 					+ emptyArea + (this.quoteContent.height 
 					+ cfg.ui.quotePanel.innerMargin + this.quoteReference.height) * sf
 
-				console.log(blockHeight, emptyArea, quoteContentY, quoteReferenceY);
-
 				this.quoteContent.setPosition(this.quotePanel.x, quoteContentY);
 				this.quoteReference.setPosition(
-					this.quotePanel.x + cfg.ui.quotePanel.referenceXOffset,
+					this.quotePanel.x + this.quotePanel.baseWidth / 2 * sf
+						- cfg.ui.quotePanel.paddingWidth * sf
+						- this.quoteReference.width / 2,
 					quoteReferenceY);
 
 				// show the quote again
@@ -451,7 +477,10 @@ export default class MainMenu extends FaithScene
 				});
 			}.bind(this), []);
 
-			setTimeout(this._pickQuote.bind(this), cfg.ui.quotePanel.newQuoteInterval);
+			let timeoutTime = cfg.ui.quotePanel.timePerCharacter
+				* (content.length + reference.length);
+
+			setTimeout(this._pickQuote.bind(this), timeoutTime);
 		} else {
 			setTimeout(this._pickQuote.bind(this), 1000);
 		}
