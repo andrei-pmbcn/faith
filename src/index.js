@@ -1,4 +1,4 @@
-/*
+/**
 * @author Andrei Pambuccian
 * @copyright 2021 Andrei Pambuccian
 * @license {https://www.gnu.org/licenses/gpl-3.0.en.html|GPL3.0 license}
@@ -18,8 +18,6 @@ const phaserConfig = {
     scene: mainMenu,
 };
 
-//[TODO] Configure game for multiple aspect ratios, portrait and landscape
-
 const game = new Phaser.Game(phaserConfig);
 
 //[TODO] handle login and registration
@@ -31,10 +29,10 @@ game.registry.set('username', null);
 game.registry.set('gameWidth', null);
 game.registry.set('gameHeight', null);
 
-//[TODO] When setting resolution in the options menu, this resolution applies
-// to both mobile and desktop versions; ideally, an option should be made
-// to save for all devices, and the resolution should only save for the current
-// device by default
+//[TODO] When setting resolution in the options menu, this resolution
+// applies to both mobile and desktop versions; ideally, an option should
+// be made to save for all devices, and the resolution should only save
+// for the current device by default
 
 /*
 window.onresize = function() {
@@ -42,4 +40,4 @@ window.onresize = function() {
 };
 */
 
-//[TODO] Webpack - include code only in debug / production version?
+//[TODO] Webpack - include some code only in debug / production version?

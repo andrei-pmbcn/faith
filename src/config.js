@@ -1,4 +1,4 @@
-/*
+/**
 * @author Andrei Pambuccian
 * @copyright 2021 Andrei Pambuccian
 * @license {https://www.gnu.org/licenses/gpl-3.0.en.html|GPL3.0 license}

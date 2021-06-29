@@ -1,4 +1,4 @@
-/*
+/**
 * @author Andrei Pambuccian
 * @copyright 2021 Andrei Pambuccian
 * @license {https://www.gnu.org/licenses/gpl-3.0.en.html|GPL3.0 license}
@@ -32,16 +32,14 @@ import fntxmlCallig from '../assets/graphics/fonts/Blenda.xml';
 import xmlQuotes from '../assets/xml/quotes.xml';
 
 
-//[TODO] Test scaling at different resolutions for button and panel
 //[TODO] Options menu: bible quote duration
-
 
 /**
  * The main menu scene for Faith of the Apostles
  *
  * @extends FaithScene
  */
-export default class MainMenu extends FaithScene
+class MainMenu extends FaithScene
 {
     constructor()
     {
@@ -62,7 +60,8 @@ export default class MainMenu extends FaithScene
 
 		if (!this.textures.exists('text-button')) {
 			this.load.spritesheet('text-button', imgTextButton,
-				{ frameWidth: cfg.ui.textButton.largeWidth, frameHeight: cfg.ui.textButton.largeHeight },
+				{ frameWidth: cfg.ui.textButton.largeWidth,
+				frameHeight: cfg.ui.textButton.largeHeight },
 			);
 		}
 
@@ -80,16 +79,19 @@ export default class MainMenu extends FaithScene
 
 		if (!this.textures.exists('panel-border')) {
 			this.load.spritesheet('panel-border', imgPanelBorder,
-				{ frameWidth: cfg.ui.panel.pieceWidth, frameHeight: cfg.ui.panel.pieceHeight }
+				{ frameWidth: cfg.ui.panel.pieceWidth,
+				frameHeight: cfg.ui.panel.pieceHeight }
 			);
 		}
 
 		if (!this.textures.exists('button-BMF')) {
-			this.load.bitmapFont('button-BMF', fntpngBlock, fntxmlBlock);
+			this.load.bitmapFont('button-BMF',
+				fntpngBlock, fntxmlBlock);
 		}		
 
 		if (!this.textures.exists('faith-callig-BMF')) {
-			this.load.bitmapFont('faith-callig-BMF', fntpngCallig, fntxmlCallig);
+			this.load.bitmapFont('faith-callig-BMF',
+				fntpngCallig, fntxmlCallig);
 		}
 
 		// Use an XMLHttpRequest to extract the quotes from the URL
@@ -129,28 +131,36 @@ export default class MainMenu extends FaithScene
 		let calligFont = new FontFace('faith-callig', `url(${fntCallig})`);
 		
 		await calligFont.load(); 
-			document.fonts.add(calligFont);
+		document.fonts.add(calligFont);
 
 		let panelCenterX, panelCenterY;
 
 		if (this.scale.width > this.scale.height) {
 			// we are in landscape mode
-			panelCenterX = (this.scale.width + cfg.ui.menu.marginWidth + cfg.ui.textButton.largeWidth) / 2;
-			panelCenterY = (this.scale.height + cfg.ui.title.height + cfg.ui.title.marginHeight) / 2;
+			panelCenterX = (this.scale.width
+				+ cfg.ui.menu.marginWidth
+				+ cfg.ui.textButton.largeWidth) / 2;
+			panelCenterY = (this.scale.height
+				+ cfg.ui.title.height
+				+ cfg.ui.title.marginHeight) / 2;
 		} else {
 			// we are in portrait mode
 			panelCenterX = this.scale.width / 2;
 
-			panelCenterY = cfg.ui.title.marginHeight * 2 + cfg.ui.title.height
+			panelCenterY = cfg.ui.title.marginHeight * 2
+				+ cfg.ui.title.height
 				+ cfg.ui.quotePanel.marginHeight
-				+ (cfg.ui.quotePanel.paddingHeight * 2 + cfg.ui.quotePanel.textHeight) / 2;
+				+ (cfg.ui.quotePanel.paddingHeight * 2
+				+ cfg.ui.quotePanel.textHeight) / 2;
 		}
 
 		this.quotePanel = new Panel(this,
 			panelCenterX,
 			panelCenterY,
-			cfg.ui.quotePanel.paddingWidth * 2 + cfg.ui.quotePanel.wrapWidth,
-			cfg.ui.quotePanel.paddingHeight * 2 + cfg.ui.quotePanel.textHeight
+			cfg.ui.quotePanel.paddingWidth * 2
+				+ cfg.ui.quotePanel.wrapWidth,
+			cfg.ui.quotePanel.paddingHeight * 2
+				+ cfg.ui.quotePanel.textHeight
 		);
 
 		this.quoteContent = this.add.text(panelCenterX, panelCenterY, '')
@@ -163,11 +173,14 @@ export default class MainMenu extends FaithScene
 			.setName('quote-content');
 		this.quotePanel.contents.push(this.quoteContent);
 
-		this.quoteReference = this.add.bitmapText(panelCenterX, panelCenterY, 'faith-callig-BMF', '',
-			cfg.ui.quotePanel.fontSize)
-			.setOrigin(0.5, 0.5)
-			
-.setName('quote-reference');
+		this.quoteReference = this.add.bitmapText(
+				panelCenterX,
+				panelCenterY,
+				'faith-callig-BMF',
+				'',
+				cfg.ui.quotePanel.fontSize)
+			.setOrigin(0.5, 0.5)	
+			.setName('quote-reference');
 		this.quotePanel.contents.push(this.quoteReference);
 
 		this._pickQuote();
@@ -185,7 +198,9 @@ export default class MainMenu extends FaithScene
 
 		let resizeEvent =  this.handleResize.bind(this);
 		window.addEventListener('resize', resizeEvent);
-		this.events.on('destroy', function() { window.removeEventListener(resizeEvent) });
+		this.events.on('destroy', function() {
+			window.removeEventListener(resizeEvent)
+		});
 
 		//position all UI elements
 		this.handleResize();
@@ -194,18 +209,21 @@ export default class MainMenu extends FaithScene
 		this.assignMenuButtons(true);
     }
 
-	/*
-	* @method assignMenuButtons
-	* Assign text to the menu buttons, set their frames (greying out disabled buttons etc)
-	* and assign the functions they will call when clicked
+	/**
+	* Assign text to the menu buttons, set their frames (greying out
+	* disabled buttons etc) and assign the functions they will call when
+	* clicked
 	* 
-	* @param {boolean} areNamesInstant - whether the buttons instantly receive their new names
+	* @param {boolean} areNamesInstant - whether the buttons instantly
+	* receive their new names
 	*/
 	assignMenuButtons(areNamesInstant = false)
 	{
-		// replace the entries in the following arrays as needed in your submenu
+		// replace the entries in the following arrays as needed in your
+		// submenu
 
-		// the button frames, which should indicate here whether or not the buttons are disabled
+		// the button frames, which should indicate here whether or not the
+		// buttons are disabled
 		let disabled = [false, false, false, false, false, false];
 
 		// the text on the buttons
@@ -233,10 +251,9 @@ export default class MainMenu extends FaithScene
 				actions[5] = this._runNewGame;
 				break;
 			case 'new':
-				disabled[0] = true;
-
-				names = ['', 'Back', 'Extra Vignettes',
-					'Extra Campaigns', 'Official Vignettes', 'Official Campaigns'];
+				names = ['Back', 'Start From File', 'Extra Vignettes',
+					'Extra Campaigns', 'Official Vignettes',
+					'Official Campaigns'];
 
 				actions[1] = this._runBackToMain;
 				break;
@@ -245,7 +262,8 @@ export default class MainMenu extends FaithScene
 				disabled[1] = true;
 				disabled[2] = true;
 
-				names = ['', '', '', 'Back', 'Load From File', 'Load From Server'];
+				names = ['', '', '', 'Back', 'Load From File',
+					'Load From Server'];
 
 				actions[3] = this._runBackToMain;
 				break;
@@ -281,9 +299,9 @@ export default class MainMenu extends FaithScene
 		}
 	}
 
-	/*
-	* the scene's callback for the window resize event, which adjusts the scene to fit the new portrait
-	* or landscape resolution
+	/**
+	* the scene's callback for the window resize event, which adjusts
+	* the scene to fit the new portrait or landscape resolution
 	*/
 	handleResize() {
 		super.handleResize();
@@ -302,9 +320,11 @@ export default class MainMenu extends FaithScene
 
 		// the title goes at the top-center of the screen
 		this.title.setX(this.scale.width / 2);
-		this.title.setY(cfg.ui.title.height / 2 * sf + cfg.ui.title.marginHeight * sf);
+		this.title.setY(cfg.ui.title.height / 2 * sf
+			+ cfg.ui.title.marginHeight * sf);
 		
-		let menuHeight = (6 * cfg.ui.textButton.largeHeight + 12 * cfg.ui.menu.itemMarginHeight) * sf;
+		let menuHeight = (6 * cfg.ui.textButton.largeHeight
+			+ 12 * cfg.ui.menu.itemMarginHeight) * sf;
 
 		if (this.scale.width > this.scale.height) {
 			//we are in landscape mode
@@ -510,3 +530,4 @@ export default class MainMenu extends FaithScene
 
 }
 
+export default MainMenu;

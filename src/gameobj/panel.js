@@ -1,4 +1,4 @@
-/*
+/**
 * @author Andrei Pambuccian
 * @copyright 2021 Andrei Pambuccian
 * @license {https://www.gnu.org/licenses/gpl-3.0.en.html|GPL3.0 license}
@@ -7,15 +7,22 @@
 // script imports
 import cfg from '../config.js';
 
-export default class Panel
+/**
+* The panel is a basic user interface element with a border, a background
+* and optional contents. It will rescale and move these contents as it
+* itself is rescaled or moved.
+*/
+class Panel
 {
 	/**
-	* {number} the width of a single piece of border, e.g. one corner or one vertical tile
+	* {number} the width of a single piece of border, e.g. one corner
+	* or one vertical tile
 	**/
 	static pieceWidth = cfg.ui.panel.pieceWidth;
 
 	/**
-	* {number} the height of a single piece of border, e.g. one corner or one vertical tile
+	* {number} the height of a single piece of border, e.g. one corner
+	* or one vertical tile
 	**/ 
 	static pieceHeight = cfg.ui.panel.pieceHeight;
 	
@@ -25,15 +32,17 @@ export default class Panel
 	* @param {Phaser.Scene} scene
 	* @param {number} [x] the panel's x position
 	* @param {number} [y] the panel's y position
-	* @param {number} width the panel's width, a minimum of 32; should be a multiple of
-	*   16 in order for the panel to look good
+	* @param {number} width the panel's width, a minimum of 32;
+	* should be a multiple of 16 in order for the panel to look good
 	* @param {number} height the panel's height, a minimum of 32
-	* @param {string} [borderImage] the name of the loaded image for the panel's border
-	* @param {string} [cornerShadowImage] the name of the loaded image for the panel's
-	*   corner shadow
-	* @param {string} [bgImage] the name of the loaded image for the panel's background
-	* @param {string} [bgDisabledImage] the name of the loaded image for the panel's
-	*   background in disabled mode
+	* @param {string} [borderImage] the name of the loaded image for the
+	* panel's border
+	* @param {string} [cornerShadowImage] the name of the loaded image
+	* for the panel's corner shadow
+	* @param {string} [bgImage] the name of the loaded image for the
+	* panel's background
+	* @param {string} [bgDisabledImage] the name of the loaded image for
+	* the panel's background in disabled mode
 	*/
     constructor(scene, x = 0, y = 0,
 		width = 2 * cfg.ui.panel.pieceWidth,
@@ -48,7 +57,8 @@ export default class Panel
 		//check whether the needed image files have been loaded
 		let errstr;
 		if (!this.scene.textures.exists(borderImage)) {
-			errstr = 'border texture ' + borderImage + ' not found: cannot create panel.'
+			errstr = 'border texture ' + borderImage
+				+ ' not found: cannot create panel.'
 			alert(errstr);
 			throw errstr;
 			return;
@@ -103,7 +113,7 @@ export default class Panel
 		* The panel's base (unscaled) width
 		*
 		* @name baseWidth
-		* type {number}
+		* @type {number}
 		*/
 		this.baseWidth = width;
 
@@ -111,7 +121,7 @@ export default class Panel
 		* The panel's base (unscaled) height
 		*
 		* @name baseHeight
-		* type {number}
+		* @type {number}
 		*/
 		this.baseHeight = height;
 
@@ -231,7 +241,6 @@ export default class Panel
 	/**
 	* the objects placed within the panel
 	* 
-	* @name contents
 	* @type {Array}
 	* @default []
 	*/
@@ -239,7 +248,7 @@ export default class Panel
 
 	/**
 	* whether the panel is disabled
-	* @name isDisabled
+	*
 	* @type {boolean}
 	* @default false
 	*/
@@ -248,7 +257,6 @@ export default class Panel
 	/**
 	* the panel's previous scale
 	* 
-	* @name oldScale
 	* @type {number}
 	* @default 1
 	*/
@@ -257,7 +265,6 @@ export default class Panel
 	/**
 	* the panel's current scale
 	*
-	* @name scale
 	* @type {number}
 	* @default 1
 	*/
@@ -266,13 +273,12 @@ export default class Panel
 	/**
 	* the panel's current tween, used for clearing the tween when a new tween occurs
 	*
-	* @name tween
 	* @type {Phaser.Tweens.Tween}
 	* @default null
 	*/
 	tween = null;
 
-	/*
+	/**
 	* enable the panel, making it show its normal background and border images
 	*/
 	enable() {
@@ -291,7 +297,7 @@ export default class Panel
 		this.isDisabled = true;
 	}
 
-	/*
+	/**
 	* sets the panel's scale, along with the scales of all its contents
 	* 
 	* @param {number} sf - the new scale of the panel
@@ -526,3 +532,4 @@ export default class Panel
 	}
 }
 
+export default Panel;

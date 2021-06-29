@@ -1,4 +1,4 @@
-/*
+/**
 * @author Andrei Pambuccian
 * @copyright 2021 Andrei Pambuccian
 * @license {https://www.gnu.org/licenses/gpl-3.0.en.html|GPL3.0 license}
@@ -6,16 +6,18 @@
 
 import cfg from '../config.js';
 
-//[TODO] adjust ease functions, try cubic
-
-export default class TextButton
+/**
+* The TextButton class contains a button image and text overlayed on top
+* of it. It has a hover animation, a pressed animation and an animation
+* to and from its disabled state, which can be toggled on and off.
+*
+* After being clicked, the button will call its `action` method.
+*/
+class TextButton
 {
-
-	/*
-	* Generates a text button, complete with images for its base, pressed, hover and
-	* disabled states, and text.
-	*
-	* After being clicked, the button will call its `action` member.
+	/**
+	* Generates a text button, complete with images for its base,
+	* pressed, hover and disabled states, and text.
 	*
 	* @param {Phaser.Scene} scene - the button's Scene 
 	* @param {number} [x] - the button's x position 
@@ -24,21 +26,29 @@ export default class TextButton
 	* @param {string} [image] - the name of the loaded image for the button
 	* @param {string} [font] - the name of the loaded font for the button
 	*/
-    constructor(scene, x = 0, y = 0, text = '', image = 'text-button', font = 'button-BMF')
+    constructor(
+			scene,
+			x = 0,
+			y = 0,
+			text = '',
+			image = 'text-button',
+			font = 'button-BMF')
 		{
 		this.scene = scene;		
 
 		//check whether the specified font and image file have been loaded
 		let errstr;
 		if (!this.scene.textures.exists(image)) {
-			errstr = 'image texture ' + image + ' not found: cannot create button.'
+			errstr = 'image texture ' + image
+				+ ' not found: cannot create button.'
 			alert(errstr);
 			throw errstr;
 			return;
 		}
 
 		if (!this.scene.textures.exists(font)) {
-			errstr = 'font texture ' + font + ' not found: cannot create button.'
+			errstr = 'font texture ' + font
+				+ ' not found: cannot create button.'
 			alert(errstr);
 			throw errstr;
 			return;
@@ -48,20 +58,24 @@ export default class TextButton
 		this.y = y;
 		this.scale = 1;
 
-		this.base = this.scene.add.image(x, y, image, cfg.ui.textButton.frameBase);
+		this.base = this.scene.add.image(x, y, image,
+			cfg.ui.textButton.frameBase);
 		this.base.setInteractive();
 		this.base.on('pointerout', this._pointOut.bind(this));
 		this.base.on('pointerover', this._pointOver.bind(this));
 		this.base.on('pointerup', this._pointUp.bind(this));
 		this.action = this.disabledAction;
 
-		this.hover = this.scene.add.image(x, y, image, cfg.ui.textButton.frameHover)
+		this.hover = this.scene.add.image(x, y, image,
+				cfg.ui.textButton.frameHover)
 			.setAlpha(0.0);
 
-		this.pressed = this.scene.add.image(x, y, image, cfg.ui.textButton.framePressed)
+		this.pressed = this.scene.add.image(x, y, image,
+				cfg.ui.textButton.framePressed)
 			.setAlpha(0.0);
 
-		this.disabled = this.scene.add.image(x, y, image, cfg.ui.textButton.frameDisabled)
+		this.disabled = this.scene.add.image(x, y, image,
+				cfg.ui.textButton.frameDisabled)
 			.setAlpha(0.0);
 
 		this.text = this.scene.add.bitmapText(x, y, font)
@@ -74,9 +88,9 @@ export default class TextButton
 
 /*
 	/**
-	* the function called by default when the button is clicked but is disabled
+	* the function called by default when the button is clicked but is
+	* disabled
 	*
-	* @name disabledAction
 	* @type {function}
 	* @default an empty function
 	*/
@@ -85,7 +99,6 @@ export default class TextButton
 	/**
 	* the function called when the button is clicked
 	*
-	* @name action
 	* @ype {function}
 	* @default null
 	*/
@@ -94,15 +107,14 @@ export default class TextButton
 	/**
 	* whether the button is disabled, i.e. cannot be interacted with
 	* 
-	* @name isDisabled
 	* @type {boolean}
 	* @default false
 	*/
 	isDisabled = false;
 
 	/**
-	* disables the button, preventing it from being clicked and disabling its
-	* hover animation
+	* disables the button, preventing it from being clicked and disabling
+	* its hover animation
 	*/
 	disable() {
 		if(this.isDisabled)
@@ -124,7 +136,7 @@ export default class TextButton
 		this._tweenButton('enable');
 	}
 
-	/*
+	/**
 	* sets the button's scale
 	* 
 	* @param {number} sf - the new scale of the panel
@@ -139,7 +151,7 @@ export default class TextButton
 		this.text.setScale(sf);
 	}
 
-	/*
+	/**
 	* sets the button's x and y position
 	* 
 	* @param {number} x - the button's new x coordinate
@@ -165,9 +177,9 @@ export default class TextButton
 		this.text.setText(newText);
 	}
 
-	/*
-	* Makes the text transparent via tweening, replaces the words in the text,
-	* then makes the text opaque again.
+	/**
+	* Makes the text transparent via tweening, replaces the words in
+	* the text, then makes the text opaque again.
 	*
 	* @param {string} - text the text to be written
 	*/
@@ -241,27 +253,35 @@ export default class TextButton
 		this._tweenButton('pointerUp');
 	}
 
-	/*
-	* Internal method that performs a transition to or from the base, pressed and hover versions of the given
-	* button image, showing or hiding these versions via their alpha values as needed. 
+	/**
+	* Internal method that performs a transition to or from the base,
+	* pressed and hover versions of the given button image, showing or
+	* hiding these versions via their alpha values as needed. 
 	*
-	* The hover version is always created above the default version of the same item, and the pressed version
-	* goes above the hover version; the alpha values of the hover and pressed versions default to 0.0. Because
-	* of this, only the hover and pressed versions need to have their alpha values tweened.
+	* The hover version is always created above the default version of the
+	* same item, and the pressed version goes above the hover version; the
+	* alpha values of the hover and pressed versions default to 0.0. Because
+	* of this, only the hover and pressed versions need to have their alpha
+	* values tweened.
 	*
 	* @access private
 	*
-	* @param {string} type - a string indicating the type of tween to be executed; can be either 'pointerOver',
-	*   'pointerOut', 'pointerUp', 'enable' or 'disable'.
+	* @param {string} type - a string indicating the type of tween to be
+	* executed; can be either 'pointerOver', 'pointerOut', 'pointerUp',
+	* 'enable' or 'disable'.
 	*/
 	_tweenButton(type) {
 		let pressedTween = this.pressed.getData('tween');
 		let hoverTween = this.hover.getData('tween');
 		let disabledTween = this.disabled.getData('tween');
 
-		// if the item's pointerOver tween is ongoing, clear it and, if another type of tween is being started
-		// by this function, initiate a quick tween to clear the ongoing hover graphics
-		if (hoverTween && (type === 'pointerUp' || type === 'disable' || type === 'enable')) {
+		// if the item's pointerOver tween is ongoing, clear it and, if
+		// another type of tween is being started by this function,
+		// initiate a quick tween to clear the ongoing hover graphics
+		if (hoverTween && (
+				type === 'pointerUp'
+				|| type === 'disable'
+				|| type === 'enable')) {
 			this.hover.data.remove('tween');
 			hoverTween.remove();
 
@@ -320,11 +340,12 @@ export default class TextButton
 					});
 					this.pressed.setData('tween', secondPressedTween);
 
-					secondPressedTween.setCallback('onComplete', function() {
-						this.pressed.data.remove('tween');
-						this.scene.data.set('buttonActive', false);
-						this.action();
-					}.bind(this), []);
+					secondPressedTween.setCallback('onComplete',
+						function() {
+							this.pressed.data.remove('tween');
+							this.scene.data.set('buttonActive', false);
+							this.action();
+						}.bind(this), []);
 				}.bind(this), []);
 			break;
 
@@ -361,3 +382,5 @@ export default class TextButton
 		}
 	}
 }
+
+export default TextButton;
