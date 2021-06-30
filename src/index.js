@@ -4,6 +4,10 @@
 * @license {https://www.gnu.org/licenses/gpl-3.0.en.html|GPL3.0 license}
 */
 
+/**
+* @namespace Faith
+*/
+
 import Phaser from 'phaser';
 import mainMenu from './scenes/mainMenu.js';
 import cfg from './config.js'

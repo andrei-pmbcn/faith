@@ -5,100 +5,86 @@
 */
 
 import encounterConfig from './config.js';
+import Side from './side.js';
+
+/**
+* @namespace Faith.Encounter
+*/
 
 /**
 * The EncounterManager singleton class handles the logic of the entire
 * encounter, applying effects to the various entities in the game
 * (characters, boosters, arguments and traits), processing research and
-* probing 
+* probing and carrying out commands.
 */
 class EncounterManager {
 	/**
-	* The config object is the only parameter needed, but must include
-	* the charSide1 and charSide2 parameters if these are not specified
-	* in the config object
-	*
-	* @constuctor
+	* Creates the EncounterManager.
+	* 
+	* @constuctor Faith.Encounter.EncounterManager
 	* @param {EncounterConfig} config - a config object specifying all the
-	* parameters for creating the encounter; can be set to `{}` if the
-	* characters are specified in the following two arguments to the
-	* constructor 
-	* @param {Array.Character} charsSide1 - the characters on side 1
-	* @param {Array.Character} charsSide2 - the characters on side 2
+	* parameters for creating the encounter; its charsSide1 and charsSide2
+	* array members must each contain at least one Character.
 	*/
-	constructor(config,
-		charsSide1,
-		charsSide2,
-	) {
-
+	constructor(config) {
 		if (!config) {
-			config = encounterConfig;
+			this.raiseAlertOnErrors = true;
+			this._throw('missing config object for the '
+				+ 'EncounterManager\'s constructor');
+			return;
 		}
 
-	 	this.raiseAlertOnBugs = config.raiseAlertOnBugs ?? true;
+	 	this.raiseAlertOnErrors = config.raiseAlertOnErrors ?? true;
+		this.eventPrefix = config.eventPrefix ?? 'Encounter-';
 
-		if (config.charsSide1) {
-			this.chars.side1 = config.charsSide1;
-		} else if (charsSide1) {
-			this.chars.side1 = charsSide1;
-		} else {
-			this.chars.side1 = [];
+		/**
+		* Side 1 for the encounter
+		* 
+		* @type {Faith.Encounter.Side}
+		*/
+		this.side1 = config.side1;
+
+		if (!this.side1) {
+			this._throw('missing Side object of side1 in the '
+				+ 'encounter\'s config object');
 		}
-		if (this.chars.side1 === []) {
+
+		/**
+		* Side 2 for the encounter
+		* 
+		* @type {Faith.Encounter.Side}
+		*/
+		this.side2 = config.side2;
+
+		if (!this.side2) {
+			this._throw('missing Side object of side2 in the '
+				+ 'encounter\'s config object');
+		}
+
+		/**
+		* The neutral side for the encounter
+		*
+		* @type {Faith.Encounter.Side}
+		*/
+		this.neutral = config.neutral;
+
+		if (!(Array.isArray(config.charsSide1)
+				&& config.charsSide1.length > 0)) {
 			this._throw('no characters specified for side 1; please '
-				+ 'include a non-empty <config>.charsSide1 array, where '
-				+ '<config> is your encounter configuration object, or '
-				+ 'specify a charsSide1 argument in your encounter\'s '
-				+ 'constructor.');
+				+ 'include a non-empty charsSide1 array in your '
+				+ 'EncounterConfig object.');
 		}
 
-		if (config.charsSide2) {
-			this.chars.side2 = config.charsSide2;
-		} else if (charsSide2) {
-			this.chars.side2 = charsSide2;
-		} else {
-			this.chars.side2 = [];
-		}
-		if (this.chars.side2 === []) {
+		if (!(Array.isArray(config.charsSide2)
+				&& config.charsSide2.length > 0)) {
 			this._throw('no characters specified for side 2; please '
-				+ 'include a non-empty <config>.charsSide2 array, where '
-				+ '<config> is your encounter configuration object, or '
-				+ 'specify a charsSide2 argument in your encounter\'s '
-				+ 'constructor.');
+				+ 'include a non-empty charsSide2 array in your '
+				+ 'EncounterConfig object.');
 		}
-		
-	/**
-	* The list of `Arguments` (game arguments, not code arguments) in the
-	* encounter, divided into a `side1` array and a `side2` array.
-	* [Argument]{@link Argument}
-	* Get the `Arguments` with e.g. args.side1[5] or args.side2[3]
-	*
-	* @type {Object.Array.Argument}
-	* @default {side1: [], side2: []}
-	*/
-	this.args = {side1: [], side2: []};
 
-		this.args.side1 = config.argsSide1 ?? [];
-
-		this.args.side2 = config.argsSide2 ?? [];
-		this.gboosters.side1 = gboostersSide1 ?? [];
-		this.gboosters.side2 = gboostersSide2 ?? [];
-
-		
-
-
+		this.props = config.props ?? {},
+		this.traits = config.traits ?? [],
 	}
-
-	/**
-	* The list of characters in the encounter, divided into a `side1`
-	* array and a `side2` array.
-	*
-	* Get characters with e.g. chars.side1[5] or chars.side2[3]
-	*
-	* @type {Object}
-	* @default {side1: [], side2: []}
-	*/
-	chars = {side1: [], side2: []};
 
 	/**
 	* The index of the current turn, e.g. turn 1, turn 2 etc.
@@ -109,26 +95,30 @@ class EncounterManager {
 	currentTurn = 1;
 
 	/**
-	* The list of global boosters in the encounter, divided into a `side1`
-	* array and a `side2` array.
+	* A prefix string appended to the start of every event fired by the
+	* event manager.
 	*
-	* Get boosters with e.g. gboosters.side1[5] or gboosters.side2[3]
-	*
-	* @type {Object}
-	* @default {side1: [], side2: []}
+	* @type {string}
+	* @default 'Encounter-'
 	*/
-	gboosters = {side1: [], side2: []};
+	eventPrefix = 'Encounter-';
+
 
 	/**
-	* The encounter's game-related properties, such as the number of
-	* research points a given side has. Custom properties may be added
-	* to this.
+	* The encounter's custom game-related properties
 	* 
-	* @type {Array}
-	* @default {research1: 0, research2: 0, probing1: 0, probing2: 0}
+	* @type {object.<number>}
+	* @default {}
 	*/
-	props = [];
+	props = {};
 
+	/**
+	* The encounter's traits
+	*
+	* @type {Array.<Faith.Encounter.Trait>}
+	* @default []
+	*/
+	traits = [];
 
 	//[TODO] implement and test
 	/**
@@ -191,22 +181,29 @@ class EncounterManager {
 	}
 
 	//[TODO] implement and test
+	//[TODO] change the docs if using some other class than javascript
+	// events
 	/**
-	* processes a single turn.
+	* processes a single turn. Events will be fired by the EncounterManager
+	* during this turn, and a list of these events, in the order of their
+	* creation, will be returned, allowing the game's graphics and audio
+	* to play through the turn after it has been computed.
+	*
+	* @return {Array} the array of the encounter's events
 	*/
 	runTurn() {
-
+		
 	}
 
 	/**
-	* Throws an error and, if this.raiseAlertOnBugs is true, an alert 
+	* Throws an error and, if this.raiseAlertOnErrors is true, an alert 
 	*
 	* @access private
 	*
 	* @param {string} err - the error message
 	*/
 	_throw(err) {
-		if (this.raiseAlertOnBugs == true) {
+		if (this.raiseAlertOnErrors === true) {
 			alert('Error in social encounter manager: ' + err);
 		}
 		throw err;

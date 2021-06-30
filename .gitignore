@@ -1,8 +1,7 @@
-
-
 *.swp
 *.swo
-src/Session.vim
+Session.vim
 
 node_modules
 dist
+doc

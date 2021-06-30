@@ -4,6 +4,12 @@
 * @license {https://www.gnu.org/licenses/gpl-3.0.en.html|GPL3.0 license}
 */
 
+/**
+* Faith's global configuration object, containing the game's hard-wired
+* configuration data, such as the sizes of user interface objects.
+*
+* @var Faith.cfg
+*/
 var cfg = {};
 
 cfg.defaultGameWidth = 1280;
