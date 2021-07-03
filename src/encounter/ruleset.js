@@ -4,17 +4,17 @@
 * @license {https://www.gnu.org/licenses/gpl-3.0.en.html|GPL3.0 license}
 */
 
-import Action from './action.js';
-import Argument from './argument.js';
-import Booster from './booster.js';
-import Character from './character.js';
-import Effect from './effect.js';
-import Trait from './trait.js';
+import { Action } from './action.js';
+import { Argument } from './argument.js';
+import { Booster } from './booster.js';
+import { Character } from './character.js';
+import { Effect } from './effect.js';
+import { Trait } from './trait.js';
 
 import List from './list.js';
 
-//[TODO] Use Object.assign(dest, src) to copy entity types into their
-// respective entities
+//[TODO] Replace 'entity' with 'entityKind' etc. where appropriate
+
 
 /**
 * A ruleset, parsed from one or more xml files, containing all the rules
@@ -63,7 +63,7 @@ class Ruleset {
 		* The list of argument types in the ruleset.
 		* @type {Faith.Encounter.List<Faith.Encounter.Argument>}
 		*/
-		this.args = new list();
+		this.args = new List();
 
 		/**
 		* The list of argument trait types in the ruleset.
@@ -116,14 +116,19 @@ class Ruleset {
 	}	
 
 	/**
-	* Adds the specified entity or entities to the ruleset.
+	* Adds the specified entity kind or entity kinds to the ruleset.
 	* @example
-	* ruleset.add(entity1, entity2, entity3);
-	* @param {...Faith.Encounter.Action|Faith.Encounter.Argument
-	*	|Faith.Encounter.Booster|Faith.Encounter.Effect
-	*	|Faith.Encounter.Trait} entity - the entities to be added
+	* ruleset.add(entityKind1, entityKind2, entityKind3);
+	* @param {...Faith.Encounter.ActionKind
+	* |Faith.Encounter.ArgumentKind
+	* |Faith.Encounter.BoosterKind
+	* |Faith.Encounter.EffectKind
+	* |Faith.Encounter.TraitKind} entity - the entities to be added
 	*/
 	add(...entities) {
+		//[TODO] First check that the id of the entity kind to be added
+		// does not clash with those of other entity kinds
+
 		for (let entity of entities) {
 			if (entity instanceof Action) {
 				this.actions.add(entity);
@@ -138,7 +143,7 @@ class Ruleset {
 			} else if (entity instanceof Trait) {
 				//[TODO]
 			} else {
-				throw 'Invalid entity type to be added: must be an Action,
+				throw 'Invalid entity type to be added: must be an Action, '
 					+ 'Argument, Booster, Character, Effect or Trait.';
 			}
 
@@ -185,8 +190,9 @@ class Ruleset {
 				//[TODO] account for different trait Lists; also ensure
 				// that the loops skips over this entity if it is not found
 			} else {
-				throw 'Invalid entity type to be added: must be an Action,
-					+ 'Argument, Booster, Character, Effect or Trait.';
+				throw 'Invalid entity type to be added: must be an '
+					+ 'Action, Argument, Booster, Character, Effect or '
+					+ 'Trait.';
 			}
 			this.all.splice(this.all.indexOf(entity), 1);
 		}

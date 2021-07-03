@@ -1,10 +1,11 @@
-//[TODO] labels - set string labels on the effect via XML to cue the
+//[TODO] classes - set classes on the effect via XML to cue the
 // effect to trigger specific visual and audio updates
+// e.g. the effect creates an image of flowing angel wings in front of the
+// effect's targets
 
-class Effect {
+export class Effect {
 	constructor() {
 
 	};
 	
 }
-export default Effect;

@@ -1,4 +1,6 @@
-import fs from 'fs';
+const fs = require('fs');
+import Ruleset from '~/src/encounter/ruleset.js'
+
 
 const casesParser = function() {
 	it('raises an error if the XML ruleset contains no relevant elements',
@@ -22,15 +24,15 @@ const casesParseAction = function() {
 
 
 const cases = function() {
-	before() {
+	before(function() {
 		this.xml = fs.readFileSync('test/encounter/rules.xml').toString();
-	}
-	beforeEach() {
+	});
+	beforeEach(function() {
 		this.ruleset = new Ruleset();
-	}
-	afterEach() {
+	});
+	afterEach(function() {
 		this.ruleset = null;
-	}
+	});
 	describe('parser', casesParser);
 	describe('parse action', casesParseAction);
 

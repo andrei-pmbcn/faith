@@ -4,17 +4,35 @@
 * @license {https://www.gnu.org/licenses/gpl-3.0.en.html|GPL3.0 license}
 */
 
-import Entity from './entity.js'
+import { Entity, EntityKind } from './entity.js';
 
-class Action {
+export class Action extends Entity {
+//[TODO]
+	constructor(encounter, kind, name, id=null, classes=[]) {
+		super(encounter, kind, name, id, classes)
+
+		this.targets = [];
+	}
+
+	addTarget(target) {
+		//[TODO] check the action target to confirm that it
+		// belongs to the category specified in its ActionKind
+		this.targets.push(target);
+	}
+
+}
+
+export class ActionKind extends EntityKind {
 	constructor(id, name, classes=[]) {
+		// add the 'action' class if not already present
 		if (classes.indexOf('action') === -1) {
 			classes.push('action');
 		}
 		super(id, name, classes);
 
 	}
-	
+	//[TODO]
 
 
 }
+

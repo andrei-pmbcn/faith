@@ -4,9 +4,9 @@
 * @license {https://www.gnu.org/licenses/gpl-3.0.en.html|GPL3.0 license}
 */
 
-import Entity from './entity.js';
+import { Entity, EntityKind } from './entity.js';
 
-/* A list that can be searched by entity name and entity id.
+/* A list that can be searched by name and id.
 * Get its entries by id using its `get` method,
 * access the whole list using its `list` member.
 * 
@@ -16,23 +16,27 @@ class List {
 	constructor() {
 		/**
 		* The list itself.
+		*
 		* @type {Array}
 		*/
 		this.list = [];
 	}
 
 	/**
-	* Adds any number of entities to the list
+	* Adds any number of entities or entityKinds to the list
 	* 
-	* @param {...Faith.Encounter.Entity} args - the entities to be added
+	* @param {...Faith.Encounter.Entity|Faith.Encounter.EntityKind}
+	* args - the entities or entityKinds to be added
 	* @return {Faith.Encounter.List} the list itself
 	*/
 	add(...args) {
 		for (let arg of args) {
-		if (!args instanceof Entity) {
-			throw 'invalid entity type to be added: must be of type '
-				+ 'Faith.Encounter.Entity or one of its subclasses, '
-				+ 'e.g. Faith.Encounter.Argument.'
+		if (!args instanceof Entity && !args instanceof EntityKind) {
+			throw 'invalid entity or entityKind to be added: must be of '
+				+ 'type Faith.Encounter.Entity or '
+				+ 'Faith.Encounter.EntityKind or one of their subclasses, '
+				+ 'e.g. Faith.Encounter.Argument or '
+				+ 'Faith.Encounter.ArgumentKind'
 			}
 		}
 		this.list.push(...args);
@@ -40,10 +44,10 @@ class List {
 	}
 
 	/**
-	* Returns the entry that has a specified id. All game entities must
-	* have distinct ids.
+	* Returns the entry that has a specified id. All game entity kinds must
+	* have distinct ids, while entities may not have ids.
 	*
-	* @param {string} id - the id of the entry to be returned
+	* @param {String} id - the id of the entry to be returned
 	* @return {Faith.Encounter.Entity} the entry returned
 	*/
 	getById(id) {
@@ -58,8 +62,9 @@ class List {
 	/**
 	* Returns a list of the entries that have a specified name.
 	*
-	* @param {string} name - the name of the entries to be returned
-	* @return {Array.<Faith.Encounter.Entity>} the entries returned
+	* @param {String} name - the name of the entries to be returned
+	* @return {Array.<Faith.Encounter.Entity|Faith.Encounter.EntityKind>}
+	* the entries returned
 	*/
 	getByName(name) {
 		var entries = [];
@@ -71,3 +76,4 @@ class List {
 		return entries;
 	}
 }
+export default List;

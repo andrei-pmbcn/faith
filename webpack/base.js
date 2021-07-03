@@ -1,16 +1,19 @@
-const webpack = require("webpack");
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const webpack = require('webpack');
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 console.log('path join:', path.join(__dirname, '../dist'));
 
 module.exports = {
-  mode: "development",
-  devtool: "eval-source-map",
+  mode: 'development',
+  devtool: 'eval-source-map',
   output: {
     filename: 'faith-[contenthash].js',
     path: path.join(__dirname, '../dist'),
+  },
+  externals: {
+    'fs': 'require("fs")',
   },
   module: {
     rules: [
@@ -18,16 +21,16 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
+          loader: 'babel-loader'
         }
       },
       {
         test: [/\.vert$/, /\.frag$/],
-        use: "raw-loader"
+        use: 'raw-loader'
       },
       {
         test: /\.(gif|png|jpe?g|svg|xml|ttf|otf)$/i,
-        use: "file-loader"
+        use: 'file-loader'
       }
     ]
   },
@@ -38,7 +41,7 @@ module.exports = {
       WEBGL_RENDERER: JSON.stringify(true)
     }),
     new HtmlWebpackPlugin({
-      template: "./index.html"
+      template: './index.html'
     })
   ]
 };
