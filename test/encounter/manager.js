@@ -1,3 +1,9 @@
 import '../../src/encounters/manager.js';
 
-console.log('mocha working');
+export default function() {
+	describe('test', function() {
+		it('test', function() {
+
+		});
+	});
+};

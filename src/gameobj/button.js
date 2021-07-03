@@ -12,6 +12,8 @@ import cfg from '../config.js';
 * to and from its disabled state, which can be toggled on and off.
 *
 * After being clicked, the button will call its `action` method.
+*
+* @memberof Faith.UI
 */
 class TextButton
 {

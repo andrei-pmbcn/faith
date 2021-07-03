@@ -16,15 +16,18 @@ import Side from './side.js';
 * encounter, applying effects to the various entities in the game
 * (characters, boosters, arguments and traits), processing research and
 * probing and carrying out commands.
+*
+* @memberof Faith.Encounter
 */
 class EncounterManager {
 	/**
 	* Creates the EncounterManager.
 	* 
 	* @constuctor Faith.Encounter.EncounterManager
-	* @param {EncounterConfig} config - a config object specifying all the
-	* parameters for creating the encounter; its charsSide1 and charsSide2
-	* array members must each contain at least one Character.
+	* @param {Faith.Encounter.EncounterConfig} config - a config object
+	* specifying all the parameters for creating the encounter; its
+	* side1.chars and side2.chars arrays must each contain at least one
+	* Character.
 	*/
 	constructor(config) {
 		if (!config) {
@@ -82,8 +85,8 @@ class EncounterManager {
 				+ 'EncounterConfig object.');
 		}
 
-		this.props = config.props ?? {},
-		this.traits = config.traits ?? [],
+		this.props = config.props ?? {};
+		this.traits = config.traits ?? [];
 	}
 
 	/**

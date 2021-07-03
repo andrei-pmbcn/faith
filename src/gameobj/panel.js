@@ -4,6 +4,10 @@
 * @license {https://www.gnu.org/licenses/gpl-3.0.en.html|GPL3.0 license}
 */
 
+/**
+* @namespace Faith.UI
+*/
+
 // script imports
 import cfg from '../config.js';
 
@@ -11,6 +15,8 @@ import cfg from '../config.js';
 * The panel is a basic user interface element with a border, a background
 * and optional contents. It will rescale and move these contents as it
 * itself is rescaled or moved.
+*
+* @memberof Faith.UI
 */
 class Panel
 {

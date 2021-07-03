@@ -4,15 +4,13 @@
 * @license {https://www.gnu.org/licenses/gpl-3.0.en.html|GPL3.0 license}
 */
 
-/** 
+/**
 * The data about a given side, stored in the EncounterManager.
-* @type {Faith.Encounter.EncounterSide}
+*
+* @memberof Faith.Encounter
 */
 class Side {
 	/**
-	* creates a new side.
-	*
-	* @constructor Faith.Encounter.Side
 	* @param {boolean} isNeutral - whether this side is neutral
 	*/
 	constructor(isNeutral = false) {
@@ -78,7 +76,7 @@ class Side {
 		* @type {Array.<Faith.Encounter.Effect>}
 		* @default []
 		*/
-		this.researchedBoosters = [];
+		this.researchedBonuses = [];
 
 		/**
 		* The boosters researched by this side.

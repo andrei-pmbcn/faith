@@ -1,1 +1,3 @@
-import './encounter.js';
+import casesEncounter from './encounter.js';
+
+describe('encounters', casesEncounter);

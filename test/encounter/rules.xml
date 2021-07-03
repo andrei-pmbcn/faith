@@ -1,0 +1,16 @@
+<action>
+ <id>action-add-interest</id>
+ <class>interest-increasing</class>
+ <class>interest-recovering</class>
+ <cost basic="true">
+  <property>energy</property>
+  <value>10</value>
+ </cost>
+ <cost>
+  <property>conviction</property>
+  <target></target>
+  <value></value>
+ </cost>
+ <condition>
+ </condition>
+</action>
