@@ -249,13 +249,29 @@ class ExistsCondition {
 	*/
 	check(encounter, elem) {
 		//[TODO] see if elem can be other types besides Entity and Cost
+		let entities = [];
 
-		for (
+		if (this._rel !== null) {
+			switch (this._rel) {
+				case 'same':
+					entities.push(elem);
+					break;
+				case 'target':
+					if (elem instanceof Action) {
+						for (let target in elem.targets
+					}
+
+
+
+			}
+
+		}
+
 
 	/*
 	* @param {String|null} [rel=null] - the relationship between the
 	* entities checked and the condition's encapsulating game element (
-	* which is usually another entity). Can be null, or 'same' (the entity
+	* which is usually another entity). Can be null, or 'this' (the entity
 	* that passes will be the same as the encapsulating element), or
 	* 'target' (all targets of the encapsulating game element will pass),
 	* or 'holder' (the entity holding the encapsulating element, such as		* the action holding a cost, the argument holding a booster or the

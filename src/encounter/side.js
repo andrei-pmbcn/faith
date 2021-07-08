@@ -13,14 +13,14 @@ class Side {
 	/**
 	* @param {boolean} isNeutral - whether this side is neutral
 	*/
-	constructor(isNeutral = false) {
+	constructor(index) {
 		/**
-		* Whether this side is neutral.
+		* The index of this side, which is 0 for the neutral side,
+		* 1 for side 1 and 2 for side 2.
 		*
-		* @type {boolean}
-		* @default false
+		* @type {number}
 		*/
-		this.isNeutral = isNeutral;
+		this.index = index;
 
 		/**
 		* The list of arguments that this side owns.
@@ -47,12 +47,12 @@ class Side {
 		this.gboosters = [];
 
 		/**
-		* The research points held by this side.
+		* The list of properties owned by this side.
 		*
-		* @type {number}
-		* @default 0
+		* @type {object.<Faith.Encounter.Property>}
+		* @default {}
 		*/
-		this.researchPoints = 0;
+		this.props = {};
 
 		/**
 		* The actions researched by this side.
@@ -104,4 +104,4 @@ class Side {
 	}
 }
 
-export default Side;
+export Side;

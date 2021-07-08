@@ -4,8 +4,15 @@
 * @license {https://www.gnu.org/licenses/gpl-3.0.en.html|GPL3.0 license}
 */
 
-Import Condition from './condition.js';
+//import PropertyCondition from './condprop.js';
+import ExistsCondition from './condexi.js';
+import Interpreter from 'js-interpreter';
 
+//[TODO] Rollback costs if any of them fails
+//[TODO] When evaluating the XML for a cost, ensure that <value></value>
+// does not contain a code string, but rather, <valueCode></valueCode> does,
+// and that <target></target> likewise does not contain a code string,
+// but rather, <targetCode></targetCode> does.
 
 class Cost {
 	/**
@@ -29,9 +36,11 @@ class Cost {
 	* performed or the entity that is to be created) or a string that
 	* specifies the code to be run in order to evaluate the target or
 	* targets, in which case the code must return a single
-	*Faith.Encounter.Entity or list of Entities.
+	* Faith.Encounter.Entity or list of Entities.
 	* 
-	* @param {Array.<Faith.Encounter.Condition>} [conds] - the array of
+	* @param {Array.<Faith.Encounter.PropertyCondition>
+	* |Faith.Encounter.PropertyCondition
+	* |Faith.Encounter.[TODO]} [conds] - the array of
 	* conditions that must be met after processing the cost (i.e. once the
 	* new value of the property would be in place) in order for
 	* the cost to be fulfillable. For instance, the default condition, 
@@ -39,9 +48,7 @@ class Cost {
 	* constructor or when <cost basic="true">...</cost> is used as the XML
 	* rule for the cost instead of <cost>...</cost>, is that the minimum
 	* value of the property to be altered will be zero after the cost is
-	* deducted from it. Note that all conditions must test for the
-	* property's putative value, not its current value, because the
-	* tests occur before its value is actually changed.
+	* deducted from it.
 	*
 	* [TODO] <cost basic="true">...</cost>
 	*/
@@ -109,12 +116,23 @@ class Cost {
 	* will affect
 	*/
 	getTargets(agent, holder) {
-
+		switch(this._target) {
+			case 'agent':
+				return [agent];
+			case 'side':
+				return [agent.encounter.sides[agent.side]];
+			case 'holder':			
+				return [holder];
+			default:
+				// code is to be evaluated
+				
+		}
 	}
 
 	/**
-	* Evaluate the cost, altering the 'prospective' versions of the
-	* property in the targets.
+	* Perform the cost. If the cost fails to be applied (because a
+	* condition is not met), it returns false; if it succeeds,
+	* it returns true.
 	*
 	* @param {Faith.Encounter.Character} agent - the agent that performs the
 	* action or creates the entity that will cost
@@ -123,30 +141,17 @@ class Cost {
 	* cost, be it the action that costs to be performed, or the trait or
 	* argument or booster that costs to be created.
 	*/
-	evaluate(agent, holder) {
-	// NOTE: valueCode should check the prospective, not current, version
-	// of the property in the targets, because the prospective version
-	// is the one that gets altered as more costs are stacked up, so if
-	// two costs each check if, for instance, a property is above zero
-	// after deducting 10 from it, the second cost should check if the
-	// property's prospective value will be above zero after both costs
-	// have deducted from it. This is something the engine itself must
-	// ensure.
-
-	}
+	run(agent, holder) {
 	
-	/**
-	* Perform the cost, altering the 'current' versions of the property
-	* in the targets.
-	*
-	* @param {Faith.Encounter.Character} agent - the agent that performs the
-	* action or creates the entity that will cost
-	*
-	* @param {Faith.Encounter.Entity} holder - the entity that 'holds' the
-	* cost, be it the action that costs to be performed, or the trait or
-	* argument or booster that costs to be created.
-	*/
-	perform(agent, holder) {
+
+	
+	}
+
+	_runCode(code, agent, holder) {
+		itp = new Interpreter(code); //'itp' stands for 'interpreter'
+
+		
+
 		
 	}
 }

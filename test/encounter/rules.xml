@@ -1,5 +1,4 @@
-<action>
- <id>action-add-interest</id>
+<action id="action-add-interest">
  <class>interest-increasing</class>
  <class>interest-recovering</class>
  <cost basic="true">

@@ -6,10 +6,21 @@
 
 import { Entity, EntityKind } from './entity.js';
 
+
+export function parseAction(rule) {
+
+
+}
+
+export function copyAction(source, target) {
+
+
+}
+
 export class Action extends Entity {
 //[TODO]
-	constructor(encounter, kind, name, id=null, classes=[]) {
-		super(encounter, kind, name, id, classes)
+	constructor(encounter, kind, name, side, id=null, classes=[]) {
+		super(encounter, kind, name, side, id, classes)
 
 		this.targets = [];
 	}

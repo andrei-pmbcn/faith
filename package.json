@@ -11,6 +11,7 @@
     "doc": "jsdoc src --recurse --private --template ./node_modules/ink-docstrap/template --destination ./doc"
   },
   "dependencies": {
+    "js-interpreter": "^2.3.0",
     "phaser": "^3.55.2"
   },
   "devDependencies": {

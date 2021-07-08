@@ -4,6 +4,8 @@
 * @license {https://www.gnu.org/licenses/gpl-3.0.en.html|GPL3.0 license}
 */
 
+import Interpreter from 'js-interpreter';
+
 /**
 * An Entity, such as an Argument, a Character or a Booster.
 *
@@ -26,6 +28,9 @@ export class Entity {
 	* when, for instance, having three different NPCs with the name
 	* 'guard'.
 	*
+	* @param {String} side - the side that the entity will have. Can be
+	* 1, 2 or(for the neutral side) 0
+	*
 	* @param {String} [id=null] - the optional id of the entity
 	*
 	* @param {Array.<String>} [classes=[]] - the optional list of the
@@ -34,7 +39,7 @@ export class Entity {
 	* has a separate class list and both lists are searched when
 	* looking for an entity with a given class.
 	*/
-	constructor(encounter, kind, name, id=null, classes=[]) {
+	constructor(encounter, kind, name, side, id=null, classes=[]) {
 		/**
 		* The encounter manager to which the entity belongs.
 		*
@@ -55,6 +60,14 @@ export class Entity {
 		* @type {String}
 		*/
 		this.name = name;
+
+		/**
+		* The entity's side. Can be 1 for side1, 2 for side2 or 0 for the
+		* neutral side.
+		*
+		* @type number
+		*/
+		this.side = side;
 
 		/**
 		* The entity's id; can be null.

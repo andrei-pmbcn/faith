@@ -44,6 +44,26 @@ class List {
 	}
 
 	/**
+	* Removes any number of entities or entityKinds from the list
+	* 
+	* @param {...Faith.Encounter.Entity|Faith.Encounter.EntityKind}
+	* args - the entities or entityKinds to be removed
+	* @return {Faith.Encounter.List} the list itself
+	*/
+	remove(...args) {
+		for (let arg of args) {
+			// skip over the argument if it is not found because
+			// splicing with splice(-1, 1) means splicing the
+			// second-to-last entry of the array, which we do not want
+			// if the argument is not found.
+			if (this.list.indexOf(arg) === -1)
+				continue;
+			this.list.splice(this.list.indexOf(arg), 1);
+		}
+		return this;
+	}
+
+	/**
 	* Returns the entry that has a specified id. All game entity kinds must
 	* have distinct ids, while entities may not have ids.
 	*
