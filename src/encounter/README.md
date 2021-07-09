@@ -294,7 +294,7 @@ Finally, elements can contain text, like so:
 
 
 
-## <a id="ruleset-xml"></a> Ruleset XML
+## Ruleset XML
 This chapter describes the XML elements that make up
 the rules of a ruleset, which must encompass all the rules for a given
 type of social encounter. There is usually one ruleset per game.
