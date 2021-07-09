@@ -1,21 +1,26 @@
 TODO 'default' attribute to all entity kinds
 TODO modifiers - an effect that targets another effect
-TODO effect priority (set priority 300 for additive, priority 400 for
-multiplicative, priority 100 for interrupt effects that are additive,
-priority 200 for interrupt effects that are multiplicative etc);
+TODO effect initiative (set initiative 300 for additive, initiative 400 for
+multiplicative, initiative 100 for interrupt effects that are additive,
+initiative 200 for interrupt effects that are multiplicative etc);
 TODO encounter visibilities (whether characters' actions are known, 
  etc.)
+TODO prop.side1, prop.side2, prop.side0 - the value of that property
+related to a given side; e.g. research.side1 and (for neutral characters)
+probing.side1 and conviction.side1. Effects also have a "propSide" element
+that determines whether to affect 'side1', 'side2' , 'side0' (absolute),
+the 'opponent' side or the 'friendly' side (relative).
 TODO check all links
 
-# <a id="social-encounter-engine"></a> Social Encounter Engine
+# Social Encounter Engine
 The social encounter engine is a non-violent combat-like turn-based RPG
 encounter engine meant to simulate social conflicts, such as debates,
 trials before a judge, religious evangelization, pleas for one party to
 spare another party's life or other kinds of acts of persuasion. With some
 tinkering, the  engine can accommodate other forms of conflict such as
-hacking. The engine aims to provide a whole host of different kinds of
-gameplay that would be impossible to deliver in a standard, combat-focused
-RPG.
+hacking, as well as normal combat. The engine aims to provide a whole host
+of different kinds of gameplay that would be impossible to deliver in a
+standard, combat-focused RPG.
 
 The way the social encounter engine works is straightforward: there are
 rules for different kinds of encounters, the kinds of actions that can be
@@ -250,7 +255,7 @@ others from xml using `ruleset.parse()`.
 The following documentation assumes you are loading rules and encounters
 from xml data.
 
-### <a id="tutorial"></a> Tutorial
+### Tutorial
 The social encounter engine uses [XML](https://www.w3schools.com/xml/) for
 writing its rulesets and individual encounters. XML is easy to use and can
 be learned quickly. In summary, XML consists of 'elements', each of whom
@@ -285,6 +290,13 @@ commas.
 Finally, elements can contain text, like so:
 ```
 <myElement>This is the element's text</myElement>
+```
+
+You can also include comments in xml, which will not be parsed, like so:
+```
+<myElement>
+	<!-- XML is easy! -->
+</myElement>
 ```
 
 [TODO]
@@ -471,7 +483,7 @@ the class 'adverse'.
 
 ### Code
 
-### <a id="existscondition"></a> ExistsCondition
+### ExistsCondition
 
 Attributes
 
@@ -508,11 +520,12 @@ encounter kind to all other encounter kinds
 
 ### Trait
 
+`trait`, `trait-character`, `trait-argument` and `trait-encounter` classes
 
 
 
 
-### <a id="visibility"></a> Visibility
+### Visibility
 The visibility rules that determine which aspects of an encounter's
 characters, arguments, boosters and traits need to be discovered and
 which are known from the beginning can be found here. The `<visibility>`
@@ -532,17 +545,47 @@ put the following in your `<ruleset>`:
 	allVisible="true"
 ></visibility>
 ```
+This will override all visibility rules inside all elements, so it can be
+used to quickly mod away the visibility rules for a whole game. Any new
+top-level (i.e. child of the `<ruleset>` element) visibility rules after
+this one will override the `allVisible="true"` attribute, however, so
+unless they themselves contain it, it will no longer take effect.
 
-Each element within the `<visibility>` object can have a class attribute
-included in it, like so:
+By default, the social encounter engine uses a rule whereby a propery
+called **probing** is present in each argument, booster, character and
+encounter, and determines when its various traits are revealed. Various
+effects can increase the probing property, and when it exceeds a
+**secrecy** property specific to each entity, knowledge about that entity
+is revealed to the probing side.
+
+You can override the default probing rules by putting
+**overrideDefaultProbing="true"** into your top-level <visibility> rule.
+This will make normal probing no longer work, and prevent the normal
+`probing` and `secrecy` properties from being loaded into game entities.
+Simply do:
+```
+<visibility
+	overrideDefaultProbing="true"
+></visibility>
+```
+You can re-enable default probing in later top-level (but only top-level)
+`<visibility>` rules.
+
+Each child element within the `<visibility>` element can have a class
+attribute included in it, like so:
 ```
 <visibility>
 	<encounter class="class-1, class-2">
 	</encounter>
 </visibility>
 ```
-This establishes that only encounter kinds that have the above classes are
-affected by this visibility rule.
+In the example given, this establishes that only encounter kinds that have
+the above classes are affected by this visibility rule.
+
+Note that the visibility rules are set in stone once the encounter starts;
+adding extra classes to an entity will not make that entity subject to
+different visibility rules than it started out with. There are, however,
+ways to make an entity's visibility change within an encounter. TODO
 
 Each element can likewise have an id attribute included in it, like so:
 ```
@@ -551,18 +594,27 @@ Each element can likewise have an id attribute included in it, like so:
 	</argument>
 </visibility>
 ```
-This establishes that only the argument kind with the specified id has
-the specified visibility rules.
+In the example given, this establishes that only the argument kind with
+the specified id has the specified visibility rules.
 
 The `<visibility>` rule itself or any of its child rules can have a 
 **mode** attribute which works identically to the mode attributes of
 entity rules, see the [Ruleset XML](#ruleset-xml) section for details.
+The child nodes of the <visibility> tag may have their own mode attributes,
+in which case they affect previous instances with the same id and class
+list.
 
 Inside the `<visibility>` element, there are rules for the overall
 encounter (placed in the `<encounter>` element), rules for various
-character kinds (placed in the `<characters>` element) etc. All attributes
-for the rules below, with the exception of `id` and `class`, may be set to
-either `true` or `false`. The following elements can exist:
+character kinds (placed in the `<character>` element) etc. Although the tag
+says 'character' and not 'characters', a single `<character>` element
+can describe the visibility rules for the character kinds whose classes
+are specified in its `class` attribute, and for all character kinds in the
+ruleset if no `class` or `id` attribute is specified; likewise for all
+other children of the `<visibility>` element.
+
+All attributes for the rules below, with the exception of `id` and `class`,
+may be set to either `true` or `false`. The following elements can exist:
 
 `<encounter>` - has a **properties**, a **traits** and a **secrets**
 attribute, describing whether the encounter's properties, traits and
@@ -584,7 +636,7 @@ The default settings, which need not be typed in, are:
 ></encounter>
 ```
 
-`<characters>` - has the following:
+`<character>` - has the following:
 
 * an **action** attribute that describes whether the character's action will
 be visible once it is performed by the opposing side or the neutral side,
@@ -604,7 +656,7 @@ are known
 * a **secrets** attribute that auto-reveals the character's secrets at the
 start of the encounter if set to `true`.
 
-In addition, the `<characters>` element features `*Refresh` attributes
+In addition, the `<character>` element features `*Refresh` attributes
 (`actionBuildupRefresh`, `propertiesRefresh`, `identityRefresh`,
 `kindRefresh`, `traitsRefresh` and `secretsRefresh` that denotes whether
 the visibility status of these should be refreshed to the value of the
@@ -612,7 +664,7 @@ corresponding `action`, `properties` etc. attribute every turn.
 
 The default settings, which need not be typed in, are:
 ```
-<characters
+<character
 	action="true"
 	actionToMySide="true"
 	actionBuildup="false"
@@ -627,23 +679,23 @@ The default settings, which need not be typed in, are:
 	traitsRefresh="false"
 	secrets="false"
 	secretsRefresh="false"
-></characters>
+></character>
 ```
 
-`<arguments>` and `<boosters>` - have a **properties** attribute that
+`<argument>` and `<booster>` - have a **properties** attribute that
 describes whether the argument or booster's properties are visible
 and a **kind** setting, determining whether the argument or booster's kind
-is known. `<arguments>` also has a **traits** attribute denoting the
-visibility of argument traits. In addition, `<arguments>` and `<boosters>`
-has a **propertiesRefresh** and a **kindRefresh** attribute, while 
-`<arguments>` has a **traitsRefresh** value, denoting whether the
+is known. `<argument>` also has a **traits** attribute denoting the
+visibility of argument traits. In addition, `<argument>` and `<booster>`
+have a **propertiesRefresh** and a **kindRefresh** attribute, while 
+`<argument>` has a **traitsRefresh** attribute, denoting whether the
 visibility of the argument or booster's properties, traits or kind will be
 refreshed each turn to the value specified in the respective 'properties'
 and 'kind' attribute.
 
 The default settings, which need not be typed in, are:
 ```
-<arguments
+<argument
 	properties="false"
 	propertiesRefresh="false"
 	traits="false"
@@ -651,21 +703,59 @@ The default settings, which need not be typed in, are:
 	kind="true"
 	kindRefresh="false"
 >
-</arguments>
-<boosters
+</argument>
+<booster
 	properties="false"
 	propertiesRefresh="false"
 	kind="false"
 	kindRefresh="false"
 >
-</boosters>
+</booster>
 ```
 
-In addition, all children of `<visibility>` can store additional
-`<property>` elements, which determine whether a specific property of theirs
-will be visible. Inside one of `<visibility>`'s children, e.g. inside
-`<characters>`, Simply write:
+`<trait>` - has a **trait** attribute that determines whether the
+trait itself is visible, and a **traitRefresh** attribute that determines
+whether the trait's visibility refreshes to its default value each turn.
 
+The default settings, which need not be typed in, are:
+```
+<trait
+	trait="false"
+	traitRefresh="false"
+></trait>
+```
+
+`<property>` - placed within a `<visibility>` element, holds rules for
+properties that are not specific to certain kinds of characters, boosters
+etc. `<property>` elements can store an **id** attribute and a **class**
+attribute, denoting the id or classes of the properties they affect.
+They also have a **vis** attribute that can be set to `true` or `false` and
+denotes whether the property or properties affected by this rule are
+initially visible, and a **refresh** attribute that determines whether the
+property's hidden or visible status will be reset to the value stored in
+`vis` every turn. By default, `vis` is `false` and `refresh` is `false`.
+
+Keep in mind that all these child elements of `<visibility>` can have
+optional `id` and `class` attributes to narrow down the list of entity
+kinds whose visibility they describe. You can have multiple elements of the
+same type in your `<visibility>` rule, for example:
+```
+<visibility>
+	<argument
+		class="hostile"
+		properties="false"
+	></argument>
+	<argument
+		class="peaceful"
+		properties="true"
+	></argument>
+</visibility>
+```
+
+In addition, all children of `<visibility>` with the exception of `<trait>`
+and `<property>` can store additional `<property>` elements, which
+determine whether specific properties of theirs will be visible. Inside
+one of `<visibility>`'s children, e.g. inside `<character>`, Simply write:
 ```
 <property
 	id="property-conviction"
@@ -674,40 +764,17 @@ will be visible. Inside one of `<visibility>`'s children, e.g. inside
 ></property>
 ```
 This will make the 'conviction' property visible at the start of the
-encounter. `<property>` elements can store an `id` attribute and a `class`
-attribute, denoting the id or classes of the properties they affect.
-They also have a `vis` attribute that can be set to `true` or `false` and
-denotes whether the property or properties affected by this rule are
-initially visible, and a `refresh` attribute that determines whether the
-property's hidden or visible status will be reset to the value stored in
-`vis` every turn. By default, `vis` is `false` and `refresh` is `false`.
+encounter. 
 
-`<visibility>` itself may also store the `<properties>` element, which
-can hold rules for properties that are not specific to characters,
-boosters etc.
-
-```
-<visibility>
-	<properties>
-		<property
-			...
-		></property>
-		<property
-			...
-		></property>
-	</properties>
-</visibility>
-```
-The contents of `<properties>` will be overriden by the `<property>`
-elements inside individual `<arguments>`, `<characters>` etc. elements,
-but will overwrite the `properties` attribute of the `<arguments>` etc.
-elements themselves, as will the `<property>` elements inside individual
-`<arguments>`, `<characters>` etc.
+The contents of top-level `<property>` elements will be overriden by the
+`<property>` elements inside individual `<argument>`, `<character>` etc.
+elements that are children of `<visibility>`, but will override the
+`properties` _attribute_ of these `<argument>` etc. elements.
 
 Individual action kinds, character kinds, argument kinds and booster kinds
 may have `<visibility>` elements of their own, which contain the same
-attributes as their respective `<characters>`, `<arguments>` and
-`<boosters>`. For instance, we can have: 
+attributes as the `<visibility><character>`, `<visibility><argument>` and
+`<visibility><booster>` rules. For instance, we can have: 
 
 ```
 <argument id="argument-refutation">
@@ -722,7 +789,7 @@ visible by default.
 
 In addition, action kinds can have `<visibility>` elements that contain an
 **action**, **actionToMySide**, **actionBuildup** and
-**actionBuildupRefresh** attribute, just like `<characters>` elements do.
+**actionBuildupRefresh** attribute, just like `<character>` elements do.
 The contents of an action kind's `<visibility>` override all other rules
 concerning the visibility of that action kind.
 
@@ -736,9 +803,21 @@ For example:
 </action>
 ```
 
+`<visibility>` rules within individual argument, booster etc. kinds will
+always override the top-level `<visibility>` rules.
+
+Trait kinds can have a `<visibility>` rule containing a `trait` attribute
+and a `traitRefresh` attribute, like so:
+```
+<trait>
+	<visibility
+		trait="true"
+		traitRefresh="false"
+	></visibility>
+</trait>
+```
+
 The `<visibility>` elements found inside action kinds, argument kinds etc.
 may not include any child elements of their own besides `<property>`,
 which is described above.
-
-
 

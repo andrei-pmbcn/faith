@@ -11,34 +11,35 @@ import { Character, CharacterKind } from './character.js';
 import { Effect, EffectKind } from './effect.js';
 import { Trait, TraitKind } from './trait.js';
 
+import { _parseVisibility, _visTopLevel } from './ruleset2.js';
 import List from './list.js';
 
 /**
 * The configuration object used when creating the ruleset.
 * @typedef {object} Faith.Encounter.rulesetConfig
 * 
-* @property {boolean} displayDomOnErrors - Whether to display the XML DOM
+* @property {Boolean} displayDomOnErrors - Whether to display the XML DOM
 * element that features the error when throwing errors and warnings.
 *
-* @property {boolean} displayContextOnErrors - 
+* @property {Boolean} displayContextOnErrors - 
 * Whether the ruleset displays the context of an xml error
 * (or warning). The context will show the xml element that has
 * the problem as well as some of the text before and after the
 * xml element in the xml file, for ease of searching.
 *
-* @property {boolean} displayContextPadded - 
+* @property {Boolean} displayContextPadded - 
 * Whether, when an error or warning occurs, to display the padded
 * context, which includes parts of the previous and next XML
 * elements, as part of displaying the context of the error,
 * which will always include the XML element affected by the error.
 *
-* @property {boolean} displayWarnings - 
+* @property {Boolean} displayWarnings - 
 * Whether to display warnings when they occur.
 *
-* @property {boolean} raiseAlertOnErrors - 
+* @property {Boolean} raiseAlertOnErrors - 
 * Whether the ruleset raises an alert on errors.
 * 
-* @property {boolean} raiseAlertOnWarnings - 
+* @property {Boolean} raiseAlertOnWarnings - 
 * Whether the ruleset raises an alert on warnings.
 */
 const rulesetConfig = {
@@ -88,7 +89,7 @@ class Ruleset {
 		* the error when throwing parser errors and warnings.
 		*
 		* @private
-		* @type {boolean}
+		* @type {Boolean}
 		* @default true
 		*/
 		this._displayDomOnErrors = config.displayDomOnErrors ?? true;
@@ -100,7 +101,7 @@ class Ruleset {
 		* xml element in the xml file, for ease of searching.
 		*
 		* @private
-		* @type {boolean}
+		* @type {Boolean}
 		* @default true
 		*/
 		this._displayContextOnErrors =
@@ -113,7 +114,7 @@ class Ruleset {
 		* which will always include the XML element affected by the error.
 		* 
 		* @private
-		* @type {boolean}
+		* @type {Boolean}
 		* @default true
 		*/
 		this._displayContextPadded = config.displayContextPadded ?? true;
@@ -122,7 +123,7 @@ class Ruleset {
 		* Whether to display warnings when they occur.
 		*
 		* @private
-		* @type {boolean}
+		* @type {Boolean}
 		* @default true
 		*/
 		this._displayWarnings = config.displayWarnings ?? true;
@@ -131,7 +132,7 @@ class Ruleset {
 		* Whether the ruleset raises an alert on errors.
 		*
 		* @private
-		* @type {boolean}
+		* @type {Boolean}
 		* @default true
 		*/
 		this._raiseAlertOnErrors = config.raiseAlertOnErrors ?? true;
@@ -140,7 +141,7 @@ class Ruleset {
 		* Whether the ruleset raises an alert on warnings.
 		*
 		* @private
-		* @type {boolean}
+		* @type {Boolean}
 		* @default true
 		*/
 		this._raiseAlertOnWarnings = config.raiseAlertOnWarnings ?? true;
@@ -244,6 +245,31 @@ class Ruleset {
 	}
 
 	/**
+	* Whether visibility rules are ignored and everything is visible.
+	* Set this to true to disable visibility rules.
+	*
+	* @type {Boolean}
+	* @default false
+	*/
+	allVisible = false;
+
+	/**
+	* Whether to ignore the default rules for probing and secrecy in this
+	* ruleset. Setting this to true without providing alternative rules
+	* for probing will make many things permanently unknown unless
+	* allVisible is set to 'true'.
+	*
+	* @type {Boolean}
+	* @default false
+	*/
+	overrideDefaultProbing = false;
+
+	/**
+	* The visibility rules for the encounter. Refer to the manual
+	* (README.md) for details.
+	*/
+	vis = _visTopLevel;
+	/**
 	* Adds the specified entity kind or entity kinds to the ruleset.
 	*
 	* @example
@@ -259,6 +285,8 @@ class Ruleset {
 	* } entityKinds - the entity kinds to be added
 	*/
 	add(...entityKinds) {
+		//[TODO] edit this after adding more lists
+
 		// First check that the id of the entity kind to be added
 		// does not clash with those of other entity kinds
 		for (let entityKind of entityKinds) {
@@ -278,8 +306,9 @@ class Ruleset {
 				this.boosters.add(entityKind);
 			} else if (entityKind instanceof CharacterKind) {
 				this.chars.add(entityKind);
-			} else if (entityKind instanceof EffectKind) {
-				this.effects.add(entityKind);
+			//[TODO]
+			//} else if (entityKind instanceof EffectKind) {
+			//	this.effects.add(entityKind);
 			} else if (entityKind instanceof EncounterKind) {
 				this.encounters.add(encounterKind);
 			} else if (entityKind instanceof TraitKind) {
@@ -290,7 +319,7 @@ class Ruleset {
 					+ 'an ActionKind, an ArgumentKind, '
 					+ 'a BoosterKind, a CharacterKind, an EffectKind, '
 					+ 'an EncounterKind or a TraitKind.'
-				); //[TODO]
+				; //[TODO]
 			}
 			this.all.add(entity);
 		}
@@ -312,6 +341,7 @@ class Ruleset {
 	* } entityKinds - the entityKinds to be removed
 	*/
 	remove(...entityKinds) {
+		//[TODO] edit this after adding more lists
 		for (let entityKind of entityKinds) {
 			if (entityKind instanceof ActionKind) {
 				this.actions.remove(entityKind);
@@ -321,9 +351,10 @@ class Ruleset {
 				this.boosters.remove(entityKind);
 			} else if (entityKind instanceof CharacterKind) {
 				this.chars.remove(entityKind);
-			} else if (entityKind instanceof EffectKind) {
-				this.effects.remove(entityKind);
-			} else if (entityKind instanceof EncounterKind {
+			//[TODO]
+			//} else if (entityKind instanceof EffectKind) {
+			//	this.effects.remove(entityKind);
+			} else if (entityKind instanceof EncounterKind) {
 				this.encounters.remove(entityKind);
 			} else if (entityKind instanceof TraitKind) {
 				//[TODO] account for different trait Lists; also ensure
@@ -361,7 +392,6 @@ class Ruleset {
 				+ 'String or an XMLDocument.');
 		}
 
-		//[TODO] accommodate 'wipe=all' for a given ruleset
 		//[TODO] handle ruleset-specific modes, e.g. <ruleset mode="alter">
 		//[TODO] only add the entityKind if it is new or if its mode is
 		//set to 'replace' (in which case the old entityKind gets deleted).
@@ -380,6 +410,8 @@ class Ruleset {
 			this._ruleStack = [];
 			let ruleset = rulesets[kRuleset];
 
+			this._debugData = {sourceText: null, xml: null, kRuleset: null,
+				ruleset: null};
 			this._debugData.kRuleset = kRuleset;
 			this._debugData.ruleset = ruleset;
 
@@ -392,12 +424,39 @@ class Ruleset {
 					isWarning = true);
 			}
 
-
-//all = new List(), args, actions, argTraits, boosters, chars, charTraits,
-//costTemplates, condTemplates, effects, encounters, encounterTraits,
-//research = {tier: [], untiered: new List();
 			if (isWipe) {
-				this.
+				//wipe the ruleset's data
+				//[TODO] edit this after adding more lists
+				this.all = new List();
+				this.args = new List();
+				this.actions = new List();
+				this.argTraits = new List();
+				this.boosters = new List();
+				this.chars = new List();
+				this.charTraits = new List();
+				this.costTemplates = new List();
+				this.condTemplates = new List();
+				this.effects = new List();
+				this.encounters = new List();
+				this.encounterTraits = new List();
+				this.research = {tier: [], untiered: new List()};
+			}
+
+			// store the ruleset's mode
+			let mode = ruleset.getAttribute('mode');
+			if (!mode) {
+				this._mode = 'replace';
+			} else {
+				if (mode !== 'replace' && mode !== 'alter'
+						&& mode !== 'delete') {
+					this._throwParserError(
+						'Invalid mode attribute for ruleset; expected '
+						+ "'replace', 'alter' or 'delete', got '"
+						+ mode + "'."
+					);
+				}
+
+				this._mode = mode;
 			}
 
 			this._debugData.kRule = 0;
@@ -407,10 +466,11 @@ class Ruleset {
 				let rule = rules[iRule];
 				let kind = rule.tagName;
 
+				// [WARNING] do not replace this with this._parseId()!
 				// All top-level rules must have an id; entities must have
 				// an id by default, and top-level costs, effects and
 				// conditions must have ids in order to be referenced by
-				// game elements that copy from them, as they are
+				// entities that copy from them, as they are
 				// templates.
 				if (!rule.id) {
 					this._throwParserError(
@@ -422,53 +482,52 @@ class Ruleset {
 						+ 'got a number instead');
 				}
 
-				let mode = rule.attributes.getNamedItem(mode);
-				if (!mode) {
-					if () {
-
-					} else {
-						mode = this._ruleMode;
-					}
-				}
+				mode = this._parseMode(rule.getAttribute('mode'));
 
 				let stackedRule = {
 					rule: rule,
 					kind: kind,
 					id: rule.id,
+					mode: mode,
 					kRule: this._debugData.kRule,
 				};
 				this._ruleStack.push(stackedRule);
 
-
 				switch (kind) {
 					case 'action':
-						this._parseAction(rule);
+						this._parseAction(rule, mode);
 						break;
 					case 'argument':
-						this._parseArgument(rule);
+						this._parseArgument(rule, mode);
 						break;
 					case 'booster':
-						this._parseBooster(rule);
+						this._parseBooster(rule, mode);
 						break;
 					case 'character':
-						this._parseCharacter(rule);
+						this._parseCharacter(rule, mode);
 						break;
 					case 'cost':
-						this._parseCost(rule, null); // (rule, holder)
+						this._parseCost(rule, null, mode);
+							// (rule, holder, mode)
 						break;
 					case 'effect':
-						this._parseEffect(rule, null); // (rule, holder)
+						this._parseEffect(rule, null, mode);
+							// (rule, holder, mode)
 						break;
 					case 'encounter':
-						this._parseEncounter(rule);
+						this._parseEncounter(rule, mode);
 						break;
 					case 'existsCondition':
-						this._parseExistsCondition(rule, null);
-							// (rule, holder)
+						this._parseExistsCondition(rule, null, mode);
+							// (rule, holder, mode)
 						break;
 					case 'trait':
-						this._parseTrait(rule, null); // (rule, holder)
+						this._parseTrait(rule, null, mode);
+							// (rule, holder, mode)
 						break;
+					case 'visibility':
+						this._parseVisibility(rule, null, mode);
+							// (rule, holder, mode)
 					default:
 						this._throwParserError(
 							'Invalid rule tag. Expected tag name '
@@ -482,38 +541,8 @@ class Ruleset {
 				this._ruleStack = [];
 			}
 		}
-		this._debugData = {sourceText: null, xml: null, kRuleset: null,
-			ruleset: null};
-		this._mode = 'replace';
-
 		return this;
 	}
-
-	/**
-	* Parse an action from its XML DOM element.
-	*
-	* @private
-	* @param {object} rule - the XML-based action rule to be parsed
-	*/
-	_parseAction(rule) {
-		
-	}
-
-	/**
-	* Copy the contents of an already-existent action into another
-	* already-existent action, overwriting only its null contents.
-	*
-	* @private
-	* @param {Faith.Encounter.Action} source - the source to be copied
-	* @param {Faith.Encounter.Action} target - the target to be copied into
-	*/
-
-	_copyAction(source, target) {
-		//[TODO] <copyById></copyById>
-
-	}
-
-
 
 	validate() {
 		let entityKind;
@@ -548,7 +577,7 @@ class Ruleset {
 	* @type {String}
 	* @default 'replace'
 	*/
-	mode = 'replace';
+	_mode = 'replace';
 
 	//[TODO] Check with jsdoc whether the properties are rendering
 	// correctly
@@ -562,9 +591,10 @@ class Ruleset {
 	* @property {object} xml - the XML node of the given rule
 	* @property {String} kind - the `kind` of the given rule,
 	* e.g. 'action', 'booster', 'cost' or 'condition'
-	* @property {String} mode - the mode of the given rule, e.g.
-	* 'replace', 'alter', 'delete'
 	* @property {String} id - the id of the given rule
+	* @property {String} mode - the mode of the given rule, e.g.
+	* 'replace', 'alter', 'delete'. Affects how the rule will treat
+	* previous instances of itself.
 	* @property {number} kRule - the number of rule starting tags (e.g.
 	* <action>, <cost>) in the source string up to the given rule's
 	* starting tag; used for debugging
@@ -590,11 +620,159 @@ class Ruleset {
 		ruleset: null};
 
 	/**
+	* Copy the contents of an already-existent action into another
+	* already-existent action, overwriting only its null contents.
+	*
+	* @private
+	* @param {Faith.Encounter.Action} source - the source to be copied
+	* @param {Faith.Encounter.Action} target - the target to be copied into
+	*/
+
+	_copyAction(source, target) {
+		//[TODO] <copyById></copyById>
+
+	}
+
+
+	/**
+	* Checks if all the classes in the two class lists are the same.
+	*
+	* @param {Set} classList1 - the first list of class names
+	* @param {Set} classList2 - the second list of class names
+	* @return {Boolean} the result of the check
+	*/
+	_checkClassesSame(classList1, classList2) {
+		if (classList1.size !== classList2.size)
+			return false;
+
+		for (let cls1 of classList1) {
+			let found = false;
+			for (let cls2 of classList2) {
+				if (cls1 === cls2) {
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+				return false;
+		}
+		return true;
+	}
+
+	/**
+	* Parse an action from its XML DOM element.
+	*
+	* @private
+	* @param {object} rule - the XML-based action rule to be parsed
+	*/
+	_parseAction(rule) {
+		
+	}
+
+	/**
+	* Converts a Boolean string to true or false, or throws an error
+	* if the string's value is different from 'true' or 'false'
+	*
+	* @private
+	* @param {String} str - the string to be parsed
+	*/
+	_parseBoolean(str) {
+		switch(str) {
+			case 'true':
+				return true;
+			case 'false':
+				return false;
+			default:
+				this._throwParserError("Invalid string-based Boolean: "
+					+ "expected 'true' or 'false', got '" + str + "'");
+		}
+	}
+
+	/**
+	* Parses the id of any entity that can have a numerical id,
+	* converting that numerical id (if it exists) into the parent node's
+	* id plus a suffix. 
+	* 
+	* @param {String} id - the entity's id
+	* @param {String} parentId - the id of the entity's parent
+	* @param {String} tag - the tag name of the entity, e.g. '<argument>'
+	* or '<cost>'.
+	* @return {String} the parsed id
+	*/
+	_parseId(id, parentId, tag) {
+		if (!id) {
+			let errMsg = 'Id missing for rule';
+			if (parentNode)
+				errMsg += ' included in rule ' + parentId;
+			this._throwParserError('Id missing for rule');
+		}
+
+		if (!isNaN(parseInt(id))) {
+			// we have a numerical id
+			return parentId + '-' + tag + '-' + id;
+		} else {
+			return id;
+		}
+	}
+
+	/**
+	* Parses the XML class list into a set (not array) of class names.
+	*
+	* @param {String} classList - the comma-separated list of classes
+	* @return {Set} the set of class names
+	*/
+	_parseClasses(classList) {
+		return Set(classList.split(",").map((x)=>(x.trim())));
+	}
+
+	/**
+	* Parses the given mode string, ensuring it takes the parent rule or
+	* ruleset's value if the mode is missing. Modes for rules are either
+	* 'replace', 'alter' or 'delete' and determine what should be done to
+	* the previous instance of the same rule.
+	* 
+	* @param {String} mode - the mode string in question
+	* @return {String} the parsed mode
+	*/
+	_parseMode(mode) {
+		if (mode && mode !== 'replace' && mode !== 'alter'
+				&& mode !== 'delete') {
+			this._throwParserError(
+				'Invalid mode attribute for rule; expected '
+				+ "'replace', 'alter' or 'delete', got '"
+				+ mode + "'."
+			);
+		}
+
+		if (!mode) {
+			if (this._ruleStack.length) {
+				// set the mode to be its parent element's mode
+				mode = this._ruleStack[this._ruleStack.length - 1]
+					.mode;
+			} else {
+				// set the mode to be the ruleset's mode
+				mode = this._mode;
+			}
+		}
+
+		return mode;
+	}
+
+	/**
+	* Parse a visibility rule from its XML DOM element
+	* 
+	* @private
+	* @method
+	* @param {object} rule - the XML-based visibility rule to be parsed
+	*/
+	_parseVisibility = _parseVisibility;
+
+	/**
 	* Throws a parser error, complete with xml file and DOM object context
 	*
 	* @private
 	* @param {String} msg - the message supplied
-	* @param {boolean} [isWarning=false] - whether the error is simply
+	* @param {Boolean} [isWarning=false] - whether the error is simply
 	* a warning
 	*/
 	_throwParserError(msg, isWarning=false) {
@@ -612,10 +790,10 @@ class Ruleset {
 		//[TODO] include different <conditions>
 		let regExpRulePre = new RegExp('<action>|<argument>|<booster>|'
 			+ '<character>|<condition>|<cost>|<effect>|<encounter>|'
-			+ '<trait>');
+			+ '<property>|<trait>|<visibility>');
 		let regExpRulePost = new RegExp('</action>|</argument>|</booster>|'
 			+ '</character>|</condition>|</cost>|</effect>|</encounter>|'
-			+ '</trait>');
+			+ '</property>|</trait>|</visibility>');
 
 		let fullmsg = msg + '\n';
 
@@ -723,4 +901,5 @@ class Ruleset {
 		}
 	}
 }
-export Ruleset;
+export { Ruleset };
+

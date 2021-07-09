@@ -104,4 +104,4 @@ class Side {
 	}
 }
 
-export Side;
+export { Side };
