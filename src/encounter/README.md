@@ -121,6 +121,8 @@ carried out or created. In addition, they affect _costs_ to decide whether
 the cost is successfully expended and _effects_ to determine when they are
 carried out.
 
+[TODO] **Items**
+
 ## Getting started
 You can use the rules that come packaged with this module or create the
 rules for your own RPG by specifying them in an XML file or files,
@@ -468,6 +470,13 @@ unless they have their own explicitly-written modes. The rule itself and
 any offspring in delete mode will delete their previous instances without
 replacing them. This allows a mod to delete previously written rules.
 
+Certain types of rules may have a **template** attribute that can be set
+to `true` or `false`. If `true`, the rule will not be checked for
+validation when a call to `ruleset.validate()` is made. This allows
+incomplete rules to exist within the ruleset and to be used as templates
+for other rules via the `<copyById>` element. All rules that can be
+copied by Id from other rules have a template attribute.
+
 ### Action
 
 ### Argument
@@ -502,13 +511,67 @@ in the encounter, the condition will find 4 matches.
 
 ### Encounter
 The <encounter></encounter> element describes a given kind of encounter that
-will be available, storing the encounter kind's visibility rules and any
-rules for what kinds of actions, arguments etc. are specific to the
-encounter. All encounter kinds have the 'encounter' class.
+will be available, storing the encounter kind's visibility rules, its
+victory conditions and any rules for what kinds of actions, arguments etc.
+are specific to the encounter. All encounter kinds have the 'encounter'
+class.
 
-Child elements:
+The encounter must have an **id** attribute and can have a **class**,
+**mode** and **template** attribute. See the [Ruleset XML](#ruleset-xml)
+section for more information.
 
-<removeClass>
+The encounter can have two (and only two) `<victory>` elements, which
+describe the the victory conditions that are checked for a given side
+at the end of each turn; specify the side to be checked in the `<victory>`
+element's **side** attribute, i.e. `side="1"` or `side="2"`. The victory
+conditions for a given side must _all_ be met for victory, although it is
+possible to mix and match `<and>` and `<or>` elements to provide
+alternative victory conditions.
+
+Put your victory conditions inside `<victory>` like so:
+```
+<victory side="1">
+	<condition>
+		...
+	</condition>
+	<condition>
+		...
+	</condition>
+</victory>
+```
+
+Or combine `<and>` and `<or>` elements:
+```
+<victory side="1">
+	<or>
+		<condition>
+			...
+		</condition>
+		<and>
+			<condition>
+				...
+			</condition>
+			<condition>
+				...
+			</condition>
+		</and>
+	</or>
+</victory>
+```
+
+The encounter can have any number of each of these child elements:
+`<copyById>` - copies the contents of another `<encounter>` elements into
+this `<encounter>` element before processing any of this element's
+children.
+
+`<removeClass>` - when using `mode="alter"`, this allows you to remove a
+class from the encounter. All classes specified in the encounter's
+`class` attribute are actually added to the encounter itself.
+
+`<visibility>` - the encounter's visibility rules. See the
+[visibility](#visibility) section for more information.
+
+`<property>` - any property specific to the encounter itself. See the
 
 [TODO]
 
@@ -516,6 +579,8 @@ Attributes:
 
 default - if `default` is set to `true`, it copies the contents of this
 encounter kind to all other encounter kinds
+
+### Property
 
 
 ### Trait
@@ -580,7 +645,8 @@ attribute included in it, like so:
 </visibility>
 ```
 In the example given, this establishes that only encounter kinds that have
-the above classes are affected by this visibility rule.
+all the above classes are affected by this visibility rule. If an id
+attribute is specified, it will override the class attribute.
 
 Note that the visibility rules are set in stone once the encounter starts;
 adding extra classes to an entity will not make that entity subject to

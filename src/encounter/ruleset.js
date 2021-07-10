@@ -11,44 +11,58 @@ import { Character, CharacterKind } from './character.js';
 import { Effect, EffectKind } from './effect.js';
 import { Trait, TraitKind } from './trait.js';
 
-import { _parseVisibility, _visTopLevel } from './ruleset2.js';
+import { _parseVisibility, _VisTopLevel } from './ruleset2.js';
 import List from './list.js';
+
+import xmldom from 'xmldom';
+const Parser = xmldom.DOMParser;
+
+/**
+* A parser error, handled internally by the ruleset class.
+*
+* @memberof Faith.Encounter
+*/
+class ParserError extends Error {}
+Object.defineProperty(ParserError.prototype, 'name', {
+  value: 'ParserError',
+});
 
 /**
 * The configuration object used when creating the ruleset.
 * @typedef {object} Faith.Encounter.rulesetConfig
 * 
-* @property {Boolean} displayDomOnErrors - Whether to display the XML DOM
-* element that features the error when throwing errors and warnings.
+* @property {Boolean} [displayDomOnErrors=false] - Whether to display the
+* XML DOM element that features the error when throwing errors and
+* warnings.
 *
-* @property {Boolean} displayContextOnErrors - 
+* @property {Boolean} [displayContextOnErrors=true] - 
 * Whether the ruleset displays the context of an xml error
 * (or warning). The context will show the xml element that has
 * the problem as well as some of the text before and after the
 * xml element in the xml file, for ease of searching.
 *
-* @property {Boolean} displayContextPadded - 
+* @property {Boolean} [displayContextPadded=true] - 
 * Whether, when an error or warning occurs, to display the padded
 * context, which includes parts of the previous and next XML
 * elements, as part of displaying the context of the error,
 * which will always include the XML element affected by the error.
 *
-* @property {Boolean} displayWarnings - 
+* @property {Boolean} [displayWarnings=true] - 
 * Whether to display warnings when they occur.
 *
-* @property {Boolean} raiseAlertOnErrors - 
+* @property {Boolean} [raiseAlertOnErrors=false] - 
 * Whether the ruleset raises an alert on errors.
 * 
-* @property {Boolean} raiseAlertOnWarnings - 
+* @property {Boolean} [raiseAlertOnWarnings=false] - 
 * Whether the ruleset raises an alert on warnings.
 */
 const rulesetConfig = {
-	displayDomOnErrors: true,
+	displayDomOnErrors: false,
 	displayContextOnErrors: true,
 	displayContextPadded: true,
 	displayWarnings: true,
-	raiseAlertOnErrors: true,
-	raiseAlertOnWarnings: true,
+	raiseAlertOnErrors: false,
+	raiseAlertOnWarnings: false,
 }
 
 /**
@@ -84,15 +98,18 @@ class Ruleset {
 	* parsed
 	*/
 	constructor(config, ...args) {
+		if (!config)
+			config = {};
+
 		/**
 		* Whether the ruleset displays the XML DOM element that features
 		* the error when throwing parser errors and warnings.
 		*
 		* @private
 		* @type {Boolean}
-		* @default true
+		* @default false
 		*/
-		this._displayDomOnErrors = config.displayDomOnErrors ?? true;
+		this._displayDomOnErrors = config.displayDomOnErrors ?? false;
 
 		/**
 		* Whether the ruleset displays the context of an xml error
@@ -133,18 +150,18 @@ class Ruleset {
 		*
 		* @private
 		* @type {Boolean}
-		* @default true
+		* @default false
 		*/
-		this._raiseAlertOnErrors = config.raiseAlertOnErrors ?? true;
+		this._raiseAlertOnErrors = config.raiseAlertOnErrors ?? false;
 
 		/**
 		* Whether the ruleset raises an alert on warnings.
 		*
 		* @private
 		* @type {Boolean}
-		* @default true
+		* @default false
 		*/
-		this._raiseAlertOnWarnings = config.raiseAlertOnWarnings ?? true;
+		this._raiseAlertOnWarnings = config.raiseAlertOnWarnings ?? false;
 
 		/**
 		* The list of all entity kinds in the ruleset.
@@ -268,7 +285,7 @@ class Ruleset {
 	* The visibility rules for the encounter. Refer to the manual
 	* (README.md) for details.
 	*/
-	vis = _visTopLevel;
+	vis = new _VisTopLevel();
 	/**
 	* Adds the specified entity kind or entity kinds to the ruleset.
 	*
@@ -377,12 +394,15 @@ class Ruleset {
 	*/
 	parse(source) {
 		let xml;
-		if (source instanceof String) {
-			let parser = new DOMParser();
+		
+		if (typeof source === 'string') {
+			let parser = new Parser();
 			this._debugData.sourceText = source;
 			xml = parser.parseFromString(source, 'text/xml');
 			this._debugData.xml = xml;
-		} else if (source instanceof XMLDocument) {
+		} else if ((typeof XMLDocument !== 'undefined'
+				&& source instanceof XMLDocument)
+				|| source instanceof Object) {
 			this._debugData.sourceText = '';
 			xml = source;
 			this._debugData.xml = xml;
@@ -410,19 +430,16 @@ class Ruleset {
 			this._ruleStack = [];
 			let ruleset = rulesets[kRuleset];
 
-			this._debugData = {sourceText: null, xml: null, kRuleset: null,
-				ruleset: null};
-			this._debugData.kRuleset = kRuleset;
-			this._debugData.ruleset = ruleset;
+			this._debugData = {
+				sourceText: typeof source === 'string' ? source : null,
+				xml: xml,
+				kRuleset: kRuleset,
+				ruleset: ruleset,
+			};
 
 			let isWipe = ruleset.getAttribute('wipe') === 'all'
 				? true : false;
 			let rules = ruleset.childNodes;
-			if (!rules.length) {
-				this._throwParserError('Xml ruleset does not contain any '
-					+ 'rules.',
-					isWarning = true);
-			}
 
 			if (isWipe) {
 				//wipe the ruleset's data
@@ -462,7 +479,12 @@ class Ruleset {
 			this._debugData.kRule = 0;
 				// (this also counts rules within other rules, for instance
 				// rules for traits, conditions and costs)
+			let noRulesFound = true;
 			for (let iRule = 0; iRule < rules.length; iRule++) {
+				if (rules[iRule].nodeType !== rules[iRule].ELEMENT_NODE)
+					continue;
+
+				noRulesFound = false;
 				let rule = rules[iRule];
 				let kind = rule.tagName;
 
@@ -472,7 +494,7 @@ class Ruleset {
 				// conditions must have ids in order to be referenced by
 				// entities that copy from them, as they are
 				// templates.
-				if (!rule.id) {
+				if (!rule.id && !(kind === 'visibility')) {
 					this._throwParserError(
 						'top-level rule is missing an id');
 				} else if (!isNaN(parseInt(rule.id))) {
@@ -528,17 +550,24 @@ class Ruleset {
 					case 'visibility':
 						this._parseVisibility(rule, null, mode);
 							// (rule, holder, mode)
+						break;
 					default:
 						this._throwParserError(
 							'Invalid rule tag. Expected tag name '
 							+ ' to be \'action\', \'booster\' etc. '
-							+ '(without quotes), got ' + tagName
+							+ '(without quotes), got ' + kind
 							+ ' instead.');
 				}
 				this._debugData.kRule++;
 			
 				//reset the rulestack
 				this._ruleStack = [];
+
+			}
+			if (noRulesFound) {
+				this._throwParserError('Xml ruleset does not contain any '
+					+ 'rules.',
+					isWarning = true);
 			}
 		}
 		return this;
@@ -677,6 +706,7 @@ class Ruleset {
 	* @param {String} str - the string to be parsed
 	*/
 	_parseBoolean(str) {
+		str = str.trim();
 		switch(str) {
 			case 'true':
 				return true;
@@ -700,6 +730,7 @@ class Ruleset {
 	* @return {String} the parsed id
 	*/
 	_parseId(id, parentId, tag) {
+		id = id.trim();
 		if (!id) {
 			let errMsg = 'Id missing for rule';
 			if (parentNode)
@@ -722,7 +753,7 @@ class Ruleset {
 	* @return {Set} the set of class names
 	*/
 	_parseClasses(classList) {
-		return Set(classList.split(",").map((x)=>(x.trim())));
+		return new Set(classList.split(",").map((x)=>(x.trim())));
 	}
 
 	/**
@@ -779,7 +810,8 @@ class Ruleset {
 		if (isWarning && !this._displayWarnings)
 			return;
 
-		let nPaddingChars = 60;
+		let nPaddingCharsPre = 30;
+		let nPaddingCharsPost = 80;
 			// (the number of characters to show from the context text
 			// in front of and after the current ruleset or rule)
 
@@ -788,118 +820,141 @@ class Ruleset {
 		let contextRuleset = null;
 		let contextDisplayed = null;
 		//[TODO] include different <conditions>
-		let regExpRulePre = new RegExp('<action>|<argument>|<booster>|'
-			+ '<character>|<condition>|<cost>|<effect>|<encounter>|'
-			+ '<property>|<trait>|<visibility>');
-		let regExpRulePost = new RegExp('</action>|</argument>|</booster>|'
+		let regExpRulePre = '<action|<argument|<booster|'
+			+ '<character|<condition|<cost|<effect|<encounter|'
+			+ '<property|<trait|<visibility';
+			// (do not include a closing '>' as the element may have
+			// attributes)
+		let regExpRulePost = '</action>|</argument>|</booster>|'
 			+ '</character>|</condition>|</cost>|</effect>|</encounter>|'
-			+ '</property>|</trait>|</visibility>');
+			+ '</property>|</trait>|</visibility>';
 
 		let fullmsg = msg + '\n';
 
 		// Display the rule stack
 		let stackedRule;
 		if (dd.kRuleset !== null && this._ruleStack.length) {
-			for (let i = this._ruleStack.length - 1; i > 0; i++) {
+			for (let i = this._ruleStack.length - 1; i >= 0; i--) {
 				stackedRule = this._ruleStack[i];
-				fullmsg += 'In ' + stackedRule.kind
-					+ ' ' +  stackedRule.id + '\n'
+				fullmsg += 'In <' + stackedRule.kind
+					+ '> ' +  (stackedRule.id ?? '(no id)') + '\n'
 			}
-			fullmsg += '\n';
 		}
 
-		if (this._displayContextOnErrors && context
-				&& dd.kRuleset !== null) {
+		// include the line number and optionally the context data
+		// in the error message
+		if (context && dd.kRuleset !== null) {
 			//we have a ruleset and XML string for the set of rulesets;
 			//find the target ruleset, indexed at kRuleset
 
-			let index = 0;
+			let index = -1;
 			//find the index of the current ruleset in the source string
 			for (let iRuleset = 0; iRuleset <= dd.kRuleset; iRuleset++) {
 				index = context.indexOf('<ruleset>', index + 1);
 			}
-			let indexPost = context.indexOf('</ruleset>', indexPre) + 10;
+			let indexPost = context.indexOf('</ruleset>', index) + 10;
 			
-			contextRuleset = context.slice(index, indexPost + 10);
-				//+10 because we include the </ruleset> tag
-			
-			//find the index of the current rule in the source string
+			let indexRuleset = index;
+			contextRuleset = context.slice(index, indexPost);
+		
 			if (this._ruleStack.length) {
+				//find the index of the current rule in the source string
 				index = 0;
 				stackedRule = this._ruleStack[this._ruleStack.length - 1];
-				for (let iRule = 0; iRule <= stackedRule.index; iRule++) {
-					index = contextRuleset.slice(index + 1)
-						.search(regExpRulePre);	
+
+				for (let iRule = 0; iRule <= stackedRule.kRule; iRule++) {
+					index += 1 + contextRuleset.slice(index)
+						.search(new RegExp(regExpRulePre
+							+ "|<" + stackedRule.kind + ">", 'm'));
+						// 'm' stands for 'multiline'
+
+						// adding the rule's kind in the event that it's
+						// an invalid, malformed kind that's throwing the
+						// error
 				}
+				// added 1 to the index before to make it search from
+				// right after the start of the currently found XML tag,
+				// so as not to consider the currently found XML tag
+				// a match. now subtract 1 to place it right at the 
+				// start of the currently found XML tag.
+				index -= 1;
 				
 				//indexPost = contextRuleset.slice(index + 1)
-				//	.search(regExpRulePost);
+				//	.search(new RegExp(regExpRulePost
+				//		+ "|<" + stackedRule.kind + ">"));
+			}
+
+			let lineIndex = -1;
+			let lineNumber = 0;
+			while (lineIndex < index + indexRuleset) {
+				lineIndex = context.indexOf('\n', lineIndex + 1);
+				if (lineIndex !== -1) {
+					lineNumber++;
+				}
+			}
+			fullmsg += 'Element with error in line ' + lineNumber
+				+ ' of source text. \n';
+
+			if (this._displayContextOnErrors) {
+				let indexDisplayedPre =
+						Math.max(index - nPaddingCharsPre, 0);
+				let ellipsesDisplayedPre = 
+					(index - nPaddingCharsPre <= 0) ? '' : '...'
+				let indexDisplayedPost =
+						Math.min(index + nPaddingCharsPost,
+						context.length)						
+				let ellipsesDisplayedPost = 
+							(index + nPaddingCharsPost >= context.length)
+							? '' : '...';
 
 				if (this._displayContextPadded) {
 					// extract the context string for the rule containing a
 					// small portion of the exterior elements
-					contextDisplayed = '...' + context.slice(
-						max(index - nPaddingChars, 0),
-						min(index + nPaddingChars + 1, context.length)
-						) + (index + nPaddingChars + 1 >= context.length)
-							? '' : '...';
+					contextDisplayed =
+						ellipsesDisplayedPre
+						+ context.slice(
+							indexDisplayedPre,
+							indexDisplayedPost
+						) + ellipsesDisplayedPost;
 				} else {
 					// extract the context string for the rule containing
 					// none of the exterior elements
 					contextDisplayed = context.slice(
-						index,
-						index + max(nPaddingChars + 1, context.length)
-						) + (index + nPaddingChars + 1 >= context.length)
-						? '' : '...';
+						index, indexDisplayedPost)
+						+ ellipsesDisplayedPost;
 				}
-			} else {
-				if (this._displayContextPadded) {
-					// extract the context string for the ruleset
-					// containing a small portion of the exterior elements
-					contextDisplayed = '...' + context.slice(
-						max(index - nPaddingChars, 0),
-						min(index + nPaddingChars + 1, context.length)
-						) + (index + nPaddingChars + 1 >= context.length)
-						? '' : '...';
-
-					fullmsg += '\n\nContext:\n' + contextDisplayed;
-				} else {
-					// extract the context string for the ruleset
-					// containing none of the exterior elements
-					contextDisplayed = context.slice(
-						index, 
-						index + max(nPaddingChars + 1, context.length), 
-					) + (index + nPaddingChars + 1 >= context.length)
-					? '' : '...';
-				}
+				fullmsg += '\nContext:\n' + contextDisplayed;
 			}
-			fullmsg += '\n\nContext:\n' + contextDisplayed;
 		}
 
 		// display the DOM
 		if (this._displayDomOnErrors) {
 			if (this._ruleStack.length) {
-				fullmsg += '\n\nError in rule: '
+				fullmsg += '\nError in rule: '
 					+ this._ruleStack[this._ruleStack.length - 1];
-				fullmsg += '\n\nRule stack: ' + this._ruleStack;
+				fullmsg += '\nRule stack: ' + this._ruleStack;
 			}
 			if (dd.ruleset) {
-				fullmsg + '\n\nRuleset:' + dd.ruleset;
+				fullmsg + '\nRuleset:' + dd.ruleset;
 			}
 		}
+
+		//console.log(fullmsg);
 		
 		if (isWarning) {
-			if (this._raiseAlertOnWarnings) {
+			if (this._raiseAlertOnWarnings
+					&& typeof alert !== 'undefined') {
 				alert(fullmsg);
 			}
 			console.warn(fullmsg);
 		} else {
-			if (this._raiseAlertOnErrors) {
+			if (this._raiseAlertOnErrors
+					&& typeof alert !== 'undefined') {
 				alert(fullmsg);
 			}
-			throw fullmsg;
+			throw new ParserError(fullmsg);
 		}
 	}
 }
-export { Ruleset };
+export { ParserError, rulesetConfig, Ruleset };
 

@@ -6,7 +6,8 @@ const exec = require('child_process').exec;
 const postBuildPlugin = {
 	apply: (compiler) => {
 		compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
-			exec('mocha dist/testBundle.js', (err, stdout, stderr) => {
+			exec('mocha --inspect dist/testBundle.js',
+					 (err, stdout, stderr) => {
 				if (stdout) process.stdout.write(stdout);
 				if (stderr) process.stderr.write(stderr);
 			});

@@ -23,11 +23,14 @@ function _parseVisibility(rule, holder, mode) {
 		}
 
 		if (mode === 'replace' || mode === 'delete') {
-			this.vis = JSON.parse(JSON.stringify(_visTopLevel));
+			this.vis = new _VisTopLevel();
 		}
 
 		if (mode !== 'delete') {
-			for (let child of rule.childNodes) {
+			for (let i = 0; i < rule.childNodes.length; i++) {
+				let child = rule.childNodes[i];
+				if (child.nodeType !== child.ELEMENT_NODE)
+					continue;
 
 				let childMode = this._parseMode(child.getAttribute('mode'));
 				this._debugData.kRule++;
@@ -44,19 +47,21 @@ function _parseVisibility(rule, holder, mode) {
 
 				switch (child.tagName) {
 					case 'argument':
-
+						break;
 					case 'booster':
-
+						break;
 					case 'character':
-
+						break;
+					case 'item':
+						break;
 					case 'encounter':
 						_parseVisibilityEncounter.bind(this)
 							(child, this, childMode, true);
 						break;
 					case 'property':
-
+						break;
 					case 'trait':
-						
+						break;
 					default:
 						this._throwParserError(
 							"Invalid tag name for child of top-level "
@@ -85,6 +90,8 @@ function _parseVisibility(rule, holder, mode) {
 				case 'booster':
 					break;
 				case 'character':
+					break;
+				case 'item':
 					break;
 				case 'encounter':
 					_parseVisibilityEncounter.bind(this)
@@ -119,18 +126,44 @@ function _parseVisibility(rule, holder, mode) {
 * rule, located in the <visibility> element that sits directly inside
 * the <ruleset> element.
 */
-function _processParsedRule(parsedRule, collection, holder, mode,
+function _processParsedRule(parsedRule, collection, rule, holder, mode,
 		isTopLevel) {
+	if (!parsedRule.classes)
+		parsedRule.classes = new Set();
+	if (!parsedRule.id)
+		parsedRule.id = null;
+	parsedRule.propList = [];
+	
+	//parse the visibility rules for the child property kinds
+	_parseVisibilityInProperties.bind(this)(rule, parsedRule.propList, mode)
+
+	if (isTopLevel && !parsedRule.classes.size && !parsedRule.id
+			&& mode === 'replace') {
+		// fill in from the default encounter visibility rule,
+		// as we will replace it
+		let defaultRule = _visTopLevelCreator[collection]();
+		for (let attr in defaultRule) {
+			// fill in the missing default rules
+			if (Object.keys(parsedRule).indexOf(attr) === -1)
+				parsedRule[attr] = defaultRule[attr]
+		}
+	}
+
 	// transfer properties from the parsedRule to the oldRule
 	function transferProperties(parsedRule, oldRule) {
 		for (let parsedProp of parsedRule.propList) {
 			// check if the property rule exists inside the oldRule
 			let foundProp;
 			for (let oldProp of oldRule.propList) {
-				if (oldProp.id === parsedProp.id
-						&& this._checkClassesSame(
-						oldProp.classes,
-						parsedProp.classes)) {
+				let noIdsNoClasses = !oldProp.id && !parsedProp.id
+					&& !oldProp.classes.size && !parsedProp.classes.size;
+				let sameIds = oldProp.id && parsedProp.id
+					&& oldProp.id === parsedProp.id;
+				let noIdsSameClasses = !oldProp.id && !parsedProp.id
+					&& this._checkClassesSame(
+					oldProp.classes, parsedProp.classes)
+
+				if (noIdsNoClasses || sameIds || noIdsSameClasses) {
 					foundProp = oldProp;
 					break;
 				}
@@ -146,9 +179,16 @@ function _processParsedRule(parsedRule, collection, holder, mode,
 					for (let attr in parsedProp) {
 						foundProp[attr] = parsedProp[attr];
 					}
+				} else if (parsedProp.mode === 'delete') {
+					// remove the old property from its propList
+					oldRule.propList.splice(oldRule.propList.indexOf(
+						foundProp), 1);
 				}
 			} else {
-				oldRule.propList.push(parsedProp);
+				if (parsedProp.mode === 'replace'
+						|| parsedProp.mode === 'alter') {
+					oldRule.propList.push(parsedProp);
+				}
 			}
 		}
 	}
@@ -160,15 +200,23 @@ function _processParsedRule(parsedRule, collection, holder, mode,
 		// The visibility rule is a top-level rule, so check all the
 		// encounter rules in this.vis and see which one matches, if any.
 		for (let visRule of this.vis[collection]) {
-			if (visRule.id === parsedRule.id
-					&& this._checkClassesSame(
-					visRule.classes, parsedRule.classes)) {
+			let noIdsNoClasses = !visRule.id && !parsedRule.id
+				&& !visRule.classes.size && !parsedRule.classes.size;
+			let sameIds = visRule.id && parsedRule.id
+				&& visRule.id === parsedRule.id;
+			let noIdsSameClasses = !visRule.id && !parsedRule.id
+				&& this._checkClassesSame(
+				visRule.classes, parsedRule.classes)
+
+			if (noIdsNoClasses || sameIds || noIdsSameClasses) {
 				oldRule = visRule;
 				break;
 			}
 		}
 		if (!oldRule) {
-			this.vis[collection].push(parsedRule);
+			if (mode === 'replace' || mode === 'alter') {
+				this.vis[collection].push(parsedRule);
+			}
 		} else {
 			if (mode === 'replace') {
 				// remove the previous instance of the rule
@@ -185,20 +233,34 @@ function _processParsedRule(parsedRule, collection, holder, mode,
 						transferProperties(parsedRule, oldRule);
 					}
 				}
+			} else if (mode === 'delete') {
+				// remove the previous instance of the rule
+				this.vis[collection].splice(
+					this.vis[collection].indexOf(oldRule), 1);
+
+				if (!this.vis[collection].length) {
+					// We removed the default visibility rule,
+					// put it back on
+					this.vis[collection] =
+						[_visTopLevelCreator[collection]()];
+				}
 			}
 		}
 	} else {
 		// The visibility rule is a kind-specific rule, so address its
 		// holder's vis attribute directly.
-		// 'alter' and 'replace' have the same effect because the
-		// holder's visibility rules have already been reset
-		// in _parseVisibility()
-		for (let attr in parsedRule) {
-			if (attr !== 'propList') {
-				holder.vis[attr] = parsedRule[attr];
-			} else {
-				transferProperties(parsedRule, holder.vis);
+		if (mode === 'replace') {
+			holder.vis = parsedRule;
+		} else if (mode === 'alter') {
+			for (let attr in parsedRule) {
+				if (attr !== 'propList') {
+					holder.vis[attr] = parsedRule[attr];
+				} else {
+					transferProperties(parsedRule, holder.vis);
+				}
 			}
+		} else if (mode === 'delete') {
+			holder.vis = null;
 		}
 	}
 }
@@ -212,14 +274,17 @@ function _processParsedRule(parsedRule, collection, holder, mode,
 * @param {String} mode - the rule's mode, i.e. whether the rule will
 * replace, alter or delete its previous instance if that instance exists
 */
-function _parseVisibilityProperties(rule, holder, mode) {
-	for (let child of rule.childNodes) {
-		
-		childMode = this._parseMode(child.getAttribute('mode'));
+function _parseVisibilityInProperties(rule, holder, mode) {
+	for (let iChild = 0; iChild < rule.childNodes.length; iChild++) {
+		let child = rule.childNodes[iChild];
+		if (child.nodeType !== child.ELEMENT_NODE)
+			continue;
+
+		let childMode = this._parseMode(child.getAttribute('mode'));
 		this._debugData.kRule++;
 
 		//add the visibility rule to the ruleStack
-		stackedRule = {
+		let stackedRule = {
 			rule: child,
 			kind: child.tagName,
 			id: null,
@@ -233,10 +298,9 @@ function _parseVisibilityProperties(rule, holder, mode) {
 				id: null,
 				classes: new Set(),
 				mode: mode,
-				vis: null,
-				refresh: null,
 			};
-			for (let attr of child.attributes) {
+			for (let iAttr = 0; iAttr < child.attributes.length; iAttr++) {
+				let attr = child.attributes[iAttr];
 				switch (attr.name) {
 					case 'id':
 						parsedProp.id = attr.textContent;
@@ -266,6 +330,11 @@ function _parseVisibilityProperties(rule, holder, mode) {
 						);
 				}
 			}
+			if (!parsedProp.classes)
+				parsedProp.classes = new Set();
+			if (!parsedProp.id)
+				parsedProp.id = null;
+
 			holder.push(parsedProp);
 		} else {
 			this._throwParserError(
@@ -292,7 +361,8 @@ function _parseVisibilityProperties(rule, holder, mode) {
 function _parseVisibilityEncounter(rule, holder, mode, isTopLevel) {
 	let parsedRule = {};
 
-	for (let attr of rule.attributes) {
+	for (let iAttr = 0; iAttr < rule.attributes.length; iAttr++) {
+		let attr = rule.attributes[iAttr];
 		switch (attr.name) {
 			case 'id':
 				parsedRule.id = attr.textContent;
@@ -334,13 +404,11 @@ function _parseVisibilityEncounter(rule, holder, mode, isTopLevel) {
 					+ "attribute name as described in the manual."
 				);
 		}
-	}	
-	//parse the visibility rules for the child property kinds
-	_parseVisibilityProperties.bind(this)(rule, parsedRule.propList, mode)
+	}
 
 	//process the parsed rule
 	_processParsedRule.bind(this)
-		(parsedRule, 'encounter', holder, mode, isTopLevel);
+		(parsedRule, 'encounter', rule, holder, mode, isTopLevel);
 }
 
 
@@ -424,80 +492,108 @@ const _visSpecific = {
 	trait: _visSpecificTrait,
 }
 
+// using classes for top-level default visibility rules because we can't
+// just use JSON.parse(JSON.stringify())) to create copies of these rules
+// due to the fact that 'classes' is a Set(), which gets converted to a
+// base Object when stringifying and parsing.
+
 //Top-level default visibility rules for arguments
-const _visTopLevelArgument = {
-	id: null,
-	classes: new Set(),
-	propList: [],
-	properties: "false",
-	propertiesRefresh: "false",
-	traits: "false",
-	traitsRefresh: "false",
-	kind: "true",
-	kindRefresh: "false",
+class _VisTopLevelArgument {
+	constructor() {
+		this.id = null;
+		this.classes = new Set();
+		this.propList = [];
+		this.properties = false;
+		this.propertiesRefresh = false;
+		this.traits = false;
+		this.traitsRefresh = false;
+		this.kind = true;
+		this.kindRefresh = false;
+	}
 };
 
 //Top-level default visibility rules for boosters
-const _visTopLevelBooster = {
-	id: null,
-	classes: new Set(),
-	propList: [],
-	properties: "false",
-	propertiesRefresh: "false",
-	kind: "false",
-	kindRefresh: "false",
+class _VisTopLevelBooster {
+	constructor() {
+		this.id = null;
+		this.classes = new Set();
+		this.propList = [];
+		this.properties = false;
+		this.propertiesRefresh = false;
+		this.kind = false;
+		this.kindRefresh = false;
+	}
 };
 
 //Top-level default visibility rules for characters
-const _visTopLevelCharacter = {
-	id: null,
-	classes: new Set(),
-	action: "true",
-	actionToMySide: "true",
-	actionBuildup: "false",
-	actionBuildupRefresh: "true",
-	propList: [],
-	properties: "false",
-	propertiesRefresh: "false",
-	identity: "true",
-	identityRefresh: "false",
-	kind: "true",
-	kindRefresh: "false",
-	traits: "false",
-	traitsRefresh: "false",
-	secrets: "false",
-	secretsRefresh: "false",
+class _VisTopLevelCharacter {
+	constructor() {
+		this.id = null;
+		this.classes = new Set();
+		this.action = true;
+		this.actionToMySide = true;
+		this.actionBuildup = false;
+		this.actionBuildupRefresh = true;
+		this.propList = [];
+		this.properties = false;
+		this.propertiesRefresh = false;
+		this.identity = true;
+		this.identityRefresh = false;
+		this.kind = true;
+		this.kindRefresh = false;
+		this.traits = false;
+		this.traitsRefresh = false;
+		this.secrets = false;
+		this.secretsRefresh = false;
+	}
 };
 
 //Top-level default visibility rules for encounters
-const _visTopLevelEncounter = {
-	id: null,
-	classes: new Set(),
-	propList: [],
-	properties: "false",
-	propertiesRefresh: "false",
-	traits: "true",
-	traitsRefresh: "false",
-	secrets: "false",
-	secretsRefresh: "false",
+class _VisTopLevelEncounter {
+	constructor() {
+		this.id = null;
+		this.classes = new Set();
+		this.propList = [];
+		this.properties = false;
+		this.propertiesRefresh = false;
+		this.traits = true;
+		this.traitsRefresh = false;
+		this.secrets = false;
+		this.secretsRefresh = false;
+	}
 };
 
 //Top-level default visibility rules for traits
-const _visTopLevelTrait = {
-	id: null,
-	classes: new Set(),
-	trait: "false",
-	traitRefresh: "false",
+class _VisTopLevelTrait {
+	constructor() {
+		this.id = null;
+		this.classes = new Set();
+		this.trait = false;
+		this.traitRefresh = false;
+	}
+};
+
+// Utility object that allows creating a certain type of default
+// top-level visibility rule by, for instance,
+// _visTopLevelCreator['trait']()
+const _visTopLevelCreator = {
+	argument: function() { return new _VisTopLevelArgument() },
+	booster: function() { return new _VisTopLevelBooster() },
+	character: function() { return new _VisTopLevelCharacter() },
+	encounter: function() { return new _VisTopLevelEncounter() },
+	trait: function() { return new _VisTopLevelTrait() },
 }
 
 //Top-level default visibility rules
-const _visTopLevel = {
-	argument: [_visTopLevelArgument],
-	booster: [_visTopLevelBooster],
-	character: [_visTopLevelCharacter],
-	encounter: [_visTopLevelEncounter],
-	trait: [_visTopLevelTrait],
-	prop: [],
+class _VisTopLevel {
+	constructor() {
+		this.argument = [new _VisTopLevelArgument()];
+		this.booster = [new _VisTopLevelBooster()];
+		this.character = [new _VisTopLevelCharacter()];
+		this.encounter = [new _VisTopLevelEncounter()];
+		this.trait = [new _VisTopLevelTrait()];
+		this.prop = [];
+	}
 };
 
-export { _parseVisibility, _visTopLevel }
+export { _parseVisibility, _VisTopLevel }

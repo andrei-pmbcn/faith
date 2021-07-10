@@ -1,6 +1,9 @@
-const fs = require('fs');
+import casesVisibility from './rulesetVisibility.js';
+
 import { Ruleset } from '~/src/encounter/ruleset.js'
-import assert from 'chai';
+
+const fs = require('fs');
+const assert = require('chai').assert;
 
 const casesParser = function() {
 	it('raises an error if the XML ruleset contains irrelevant elements',
@@ -71,6 +74,16 @@ const casesParseAction = function() {
 };
 
 
+//[TODO] misc ruleset-related tests
+
+it('ruleset defaults to mode="replace"')
+
+it('inherits the ruleset\'s mode="alter"')
+
+
+
+
+
 
 const cases = function() {
 	before(function() {
@@ -85,6 +98,7 @@ const cases = function() {
 	describe('parser', casesParser);
 	describe('parse action', casesParseAction);
 
+	describe.only('visibility rules', casesVisibility);
 };
 
 export default cases;
