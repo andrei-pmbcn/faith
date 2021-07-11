@@ -20,46 +20,55 @@ class List {
 		* @type {Array}
 		*/
 		this.list = [];
+
+		/**
+		* The elements of the list that are treated as defaults.
+		*
+		* @type {Array}
+		*/
+		this.defaultsList = [];
 	}
 
 	/**
-	* Adds any number of entities or entityKinds to the list
+	* Adds an entity or entityKind to the list
 	* 
-	* @param {...Faith.Encounter.Entity|Faith.Encounter.EntityKind}
-	* args - the entities or entityKinds to be added
+	* @param {Faith.Encounter.Entity|Faith.Encounter.EntityKind}
+	* obj - the entity or entityKind to be added
 	* @return {Faith.Encounter.List} the list itself
 	*/
-	add(...args) {
-		for (let arg of args) {
-		if (!args instanceof Entity && !args instanceof EntityKind) {
+	add(obj) {
+		if (!obj instanceof Entity && !obj instanceof EntityKind) {
 			throw 'invalid entity or entityKind to be added: must be of '
 				+ 'type Faith.Encounter.Entity or '
 				+ 'Faith.Encounter.EntityKind or one of their subclasses, '
 				+ 'e.g. Faith.Encounter.Argument or '
 				+ 'Faith.Encounter.ArgumentKind'
-			}
 		}
-		this.list.push(...args);
+		
+		this.list.push(obj);
+		if (obj.isDefault) {
+			this.defaultsList.push(obj);
+		}
+
 		return this;
 	}
 
 	/**
-	* Removes any number of entities or entityKinds from the list
+	* Removes an entity or entityKind from the list
 	* 
-	* @param {...Faith.Encounter.Entity|Faith.Encounter.EntityKind}
-	* args - the entities or entityKinds to be removed
+	* @param {Faith.Encounter.Entity|Faith.Encounter.EntityKind}
+	* obj - the entity or entityKind to be removed
 	* @return {Faith.Encounter.List} the list itself
 	*/
-	remove(...args) {
-		for (let arg of args) {
-			// skip over the argument if it is not found because
-			// splicing with splice(-1, 1) means splicing the
-			// second-to-last entry of the array, which we do not want
-			// if the argument is not found.
-			if (this.list.indexOf(arg) === -1)
-				continue;
+	remove(obj) {
+		// skip over the object if it is not found because
+		// splicing with splice(-1, 1) means splicing the
+		// second-to-last entry of the array, which we do not want
+		// if the object is not found.
+		if (!(this.list.indexOf(arg) === -1))
 			this.list.splice(this.list.indexOf(arg), 1);
-		}
+		if (obj.isDefault && !(this.defaultsList.indexOf(arg) === -1))
+			this.list.splice(this.defaultsList.indexOf(arg), 1);
 		return this;
 	}
 

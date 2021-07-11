@@ -109,6 +109,7 @@ function _parseVisibility(rule, holder, mode) {
 			}
 		}
 	}
+	this._ruleStack.pop();
 }
 
 /* Undocumented function
@@ -149,25 +150,83 @@ function _processParsedRule(parsedRule, collection, rule, holder, mode,
 		}
 	}
 
-	// transfer properties from the parsedRule to the oldRule
+	// find the first 'twin' of sourceObj in the targetList
+	function findTwin(sourceObj, targetList) {
+		let foundObj = null;
+		for (let index = 0; index < targetList.length; index++) {
+			let targetObj = targetList[index];
+			let noIdsNoClasses = !targetObj.id && !sourceObj.id
+				&& !targetObj.classes.size && !sourceObj.classes.size;
+			// sameIds checks that both props have non-null ids
+			// because when null === null we still do not know if the
+			// source and target are the same
+			let sameIds = targetObj.id && sourceObj.id
+				&& targetObj.id === sourceObj.id;
+			let noIdsSameClasses = !targetObj.id && !sourceObj.id
+				&& this._checkClassesSame(
+				targetObj.classes, sourceObj.classes)
+
+			if (noIdsNoClasses || sameIds || noIdsSameClasses) {
+				foundObj = targetObj;
+				break;
+			}
+		}
+		return foundObj;
+	}
+
+	// Collapses multiple property rules with the same target within the
+	// parsed rule. Do this when the rule is in replace mode because
+	// simply putting the parsed rule in its collection (which is what
+	// replace mode does at the end) would leave multiple property rules
+	// with the same target in the collection, which is bad.
+	function collapseProperties(parsedRule) {
+		for (let index = 0; index < parsedRule.propList.length; index++) {
+			let propList = parsedRule.propList;
+			let currentProp = propList[index];
+			let foundProp = null;
+			do {
+				foundProp = findTwin.bind(this)
+					(currentProp, propList.slice(index + 1));
+
+				if (foundProp) {
+					// remove the later property rule from the list
+					propList.splice(
+						propList.indexOf(foundProp), 1);
+
+					if (foundProp.mode === 'replace') {
+						propList[index] = foundProp;
+						currentProp = foundProp;
+						delete currentProp.mode;
+					} else if (foundProp.mode === 'alter') {
+						for (let attr in foundProp) {
+							currentProp[attr] = foundProp[attr];
+						}
+						delete currentProp.mode;
+					} else if (foundProp.mode === 'delete') {
+						propList.splice(
+							propList.indexOf(currentProp), 1);
+						index--;
+						foundProp = null;
+							// (do this in case a later rule exists
+							// that tries to replace the current,
+							// deleted rule)
+					}
+				} else if (currentProp.mode === 'delete') {
+					// there is nothing to delete, remove the delete rule
+					propList.splice(
+						propList.indexOf(currentProp), 1);
+					index--;
+				}
+			} while (foundProp !== null);
+		}
+	}
+
+	// transfers properties from the parsedRule to the oldRule
 	function transferProperties(parsedRule, oldRule) {
 		for (let parsedProp of parsedRule.propList) {
 			// check if the property rule exists inside the oldRule
-			let foundProp;
-			for (let oldProp of oldRule.propList) {
-				let noIdsNoClasses = !oldProp.id && !parsedProp.id
-					&& !oldProp.classes.size && !parsedProp.classes.size;
-				let sameIds = oldProp.id && parsedProp.id
-					&& oldProp.id === parsedProp.id;
-				let noIdsSameClasses = !oldProp.id && !parsedProp.id
-					&& this._checkClassesSame(
-					oldProp.classes, parsedProp.classes)
-
-				if (noIdsNoClasses || sameIds || noIdsSameClasses) {
-					foundProp = oldProp;
-					break;
-				}
-			}
+			let foundProp = findTwin.bind(this)
+				(parsedProp, oldRule.propList);
 			if (foundProp) {
 				if (parsedProp.mode === 'replace') {
 					// remove the old property from its propList
@@ -175,10 +234,12 @@ function _processParsedRule(parsedRule, collection, rule, holder, mode,
 						foundProp), 1);
 					// add the new property to the propList
 					oldRule.propList.push(parsedProp);
+					delete parsedProp.mode;
 				} else if (parsedProp.mode === 'alter') {
 					for (let attr in parsedProp) {
 						foundProp[attr] = parsedProp[attr];
 					}
+					delete foundProp.mode;
 				} else if (parsedProp.mode === 'delete') {
 					// remove the old property from its propList
 					oldRule.propList.splice(oldRule.propList.indexOf(
@@ -188,6 +249,11 @@ function _processParsedRule(parsedRule, collection, rule, holder, mode,
 				if (parsedProp.mode === 'replace'
 						|| parsedProp.mode === 'alter') {
 					oldRule.propList.push(parsedProp);
+					delete parsedProp.mode;
+				} else if (parsedProp.mode === 'delete') {
+					this._throwParserError(
+						"Failed to find anything for delete-mode "
+						+ "property visibility rule to delete", true)
 				}
 			}
 		}
@@ -199,6 +265,10 @@ function _processParsedRule(parsedRule, collection, rule, holder, mode,
 	if (isTopLevel) {
 		// The visibility rule is a top-level rule, so check all the
 		// encounter rules in this.vis and see which one matches, if any.
+		oldRule = findTwin.bind(this)(parsedRule, this.vis[collection]);
+
+		/*
+		//[TODO] old code, delete when done testing
 		for (let visRule of this.vis[collection]) {
 			let noIdsNoClasses = !visRule.id && !parsedRule.id
 				&& !visRule.classes.size && !parsedRule.classes.size;
@@ -213,9 +283,16 @@ function _processParsedRule(parsedRule, collection, rule, holder, mode,
 				break;
 			}
 		}
+		*/
+
 		if (!oldRule) {
 			if (mode === 'replace' || mode === 'alter') {
+				collapseProperties.bind(this)(parsedRule);
 				this.vis[collection].push(parsedRule);
+			} else if (mode === 'delete') {
+				this._throwParserError(
+					"Failed to find anything for delete-mode "
+					+ collection + " visibility rule to delete", true)
 			}
 		} else {
 			if (mode === 'replace') {
@@ -223,6 +300,7 @@ function _processParsedRule(parsedRule, collection, rule, holder, mode,
 				this.vis[collection].splice(
 					this.vis[collection].indexOf(oldRule), 1);
 				// add the new instance of the rule 
+				collapseProperties.bind(this)(parsedRule);
 				this.vis[collection].push(parsedRule);
 			} else if (mode === 'alter') {
 				// replace the attributes to be modified one by one
@@ -238,7 +316,8 @@ function _processParsedRule(parsedRule, collection, rule, holder, mode,
 				this.vis[collection].splice(
 					this.vis[collection].indexOf(oldRule), 1);
 
-				if (!this.vis[collection].length) {
+				if (!this.vis[collection].length
+						&& collection !== 'property') {
 					// We removed the default visibility rule,
 					// put it back on
 					this.vis[collection] =
@@ -250,6 +329,7 @@ function _processParsedRule(parsedRule, collection, rule, holder, mode,
 		// The visibility rule is a kind-specific rule, so address its
 		// holder's vis attribute directly.
 		if (mode === 'replace') {
+			collapseProperties.bind(this)(parsedRule);
 			holder.vis = parsedRule;
 		} else if (mode === 'alter') {
 			for (let attr in parsedRule) {
@@ -297,7 +377,7 @@ function _parseVisibilityInProperties(rule, holder, mode) {
 			let parsedProp = {
 				id: null,
 				classes: new Set(),
-				mode: mode,
+				mode: childMode,
 			};
 			for (let iAttr = 0; iAttr < child.attributes.length; iAttr++) {
 				let attr = child.attributes[iAttr];
@@ -310,8 +390,7 @@ function _parseVisibilityInProperties(rule, holder, mode) {
 							this._parseClasses(attr.textContent);
 						break;
 					case 'mode':
-						parsedProp.mode =
-							this._parseMode(attr.textContent);
+						// already parsed the mode
 						break;
 					case 'vis':
 						parsedProp.vis =
@@ -336,6 +415,7 @@ function _parseVisibilityInProperties(rule, holder, mode) {
 				parsedProp.id = null;
 
 			holder.push(parsedProp);
+			this._ruleStack.pop();
 		} else {
 			this._throwParserError(
 				'Invalid tag name for child of visibility tag: '
@@ -592,7 +672,7 @@ class _VisTopLevel {
 		this.character = [new _VisTopLevelCharacter()];
 		this.encounter = [new _VisTopLevelEncounter()];
 		this.trait = [new _VisTopLevelTrait()];
-		this.prop = [];
+		this.property = [];
 	}
 };
 

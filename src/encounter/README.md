@@ -13,18 +13,45 @@ the 'opponent' side or the 'friendly' side (relative).
 TODO check all links
 
 # Social Encounter Engine
-The social encounter engine is a non-violent combat-like turn-based RPG
-encounter engine meant to simulate social conflicts, such as debates,
-trials before a judge, religious evangelization, pleas for one party to
-spare another party's life or other kinds of acts of persuasion. With some
-tinkering, the  engine can accommodate other forms of conflict such as
-hacking, as well as normal combat. The engine aims to provide a whole host
-of different kinds of gameplay that would be impossible to deliver in a
-standard, combat-focused RPG.
+The social encounter engine is a turn-based RPG encounter engine that can
+simulate combat but is meant to primarily simulate social conflicts, such
+as debates, trials before a judge, religious evangelization, pleas for one
+party to spare another party's life or other kinds of acts of persuasion.
+The engine is both powerful and generic and can simulate any kind of 
+action you can think of. Want an action that increases the energy (if your
+game even has an energy stat) of three targets, but only if one of them is
+an enemy? Go for it. You can even do things like research abilities and
+reveal the opposing team's hidden stats during an encounter with this
+engine.
+
+You write the rules for your game and scenarios for your
+encounters in XML and load them into the engine, then run an encounter,
+input the orders for the characters on ech side, simulate turns
+and handle the game events that arise during these turns. The basics are
+easy to pick up (see the tutorial), while there are many intricacies for
+advanced users to learn.
+
+The engine does not simulate spatial locations, so you can't calculate
+things like splash damage from fireballs or loud shouting. It also doesn't
+allow for the scenery of the encounter to be used (e.g. overturning table
+or chair objects) as it is primarily focused on social encounters. Still,
+most turn-based JRPGs could easily be simulated by it.
+
+At the core of the engine is the distinction between 'actions', which are
+preformed by characters, and 'arguments' (as in, elements of persuasion),
+which are created by characters. Once created, arguments continuously take
+effect, for instance by decreasing a 'conviction' property of targeted
+charcters on the opposing team, and they grow in power during the turns
+when characters work to _develop_ them. They can have their own properties;
+in the game Faith of the Apostles, they have a property called 'relevance'
+among others, which acts like hit points and continously goes down. Thus,
+arguments behave somewhat like summons in standard RPGs. If you want to
+create a standard RPG with this engine, you can skip arguments and their
+counterpart, boosters, altogether.
 
 The way the social encounter engine works is straightforward: there are
 rules for different kinds of encounters, the kinds of actions that can be
-performed within them, the kinds of arguments that can be created in them
+performed within them, the kinds of characters that can be present in them
 etc. The engine makes no assumptions about what properties you give your
 characters, arguments etc, although it's customary for them to have at
 least a 'conviction' stat (the equivalent of hit points) and an 'energy'
@@ -100,6 +127,8 @@ customary for both sides facing off in an encounter to have a 'research'
 score that may be spent to purchase new researchable arguments, boosters
 etc., but this is not required.
 
+**Items** TODO
+
 **Traits** are attached to _characters_, _arguments_, the _sides_ present
 in an encounter and the _encounter_ itself, and may be assigned to
 _arguments_ when creating them or purchased by characters alongside bonuses
@@ -121,15 +150,16 @@ carried out or created. In addition, they affect _costs_ to decide whether
 the cost is successfully expended and _effects_ to determine when they are
 carried out.
 
-[TODO] **Items**
+## Running your own game
+If you just want to mod or create campaigns / scenarios for an already
+existing game that uses this engine, skip this section.
 
-## Getting started
 You can use the rules that come packaged with this module or create the
 rules for your own RPG by specifying them in an XML file or files,
 XML strings or XML documents. You can also modify the rules that come
 with the module by creating new rules with the `mode="alter"` attribute set
-on your new rules, which will partially overwrite the old rules. Thus, the
-engine is fully suited for modding.
+on your new rules, which will partially overwrite the old rules. The engine
+is designed with modding in mind.
 
 If you prefer to check out the engine with a pre-built ruleset, first set
 up your module bundler (e.g. webpack) to bundle xml files. For Webpack, this
@@ -259,11 +289,12 @@ from xml data.
 
 ### Tutorial
 The social encounter engine uses [XML](https://www.w3schools.com/xml/) for
-writing its rulesets and individual encounters. XML is easy to use and can
-be learned quickly. In summary, XML consists of 'elements', each of whom
-comprises a pair of 'tags' (the opening and closing tags) and everything
-contained between them, so an empty element called myElement would look
-like:
+writing its rulesets and individual encounters. You write your text files
+in XML and pass them on to the engine for processing. XML is easy to use
+and can be learned quickly. In summary, XML consists of 'elements', each of
+which comprises a pair of 'tags' (the opening and closing tags) and
+everything contained between them, so an empty element called myElement
+would look like:
 ```
 <myElement></myElement>
 ```
@@ -285,8 +316,8 @@ Elements may also have attributes, like so:
 	myOtherAttribute="value2"
 ></myElement>
 ```
-Put attributes inside your opening tag. Separate them with spaces but not
-commas.
+Put attributes inside your opening tag. Separate them with spaces and
+newlines but not commas.
 
 
 Finally, elements can contain text, like so:
@@ -301,10 +332,28 @@ You can also include comments in xml, which will not be parsed, like so:
 </myElement>
 ```
 
+You should use an XML editor or some other program to proofread
+your XML file, because the engine uses an external parser for converting
+the XML text into a tree structure, and that parser doesn't create error
+messages that show you where in the text file your error is. However, the
+errors that come up when converting that tree structure into a ruleset or
+encounter, errors that are specific to the Social Encounter Engine, will
+have detailed error messages showing you where the problem is in your file.
+
 [TODO]
 
 
 
+
+
+
+
+
+
+Tips for developers:
+* Test every little rule after you write it. Don't write huge blocks of
+rules and test them later (or not at all), because you _will_ run into
+errors.
 
 
 
@@ -477,6 +526,12 @@ incomplete rules to exist within the ruleset and to be used as templates
 for other rules via the `<copyById>` element. All rules that can be
 copied by Id from other rules have a template attribute.
 
+Certain types of rules may also have a **default** attribute, set to `true`
+or `false`. If true, the contents of the rule will be copied to all other
+rules of its kind, except for other `default` rules. The default rule will
+not overwrite any attributes or elements specifically written into the
+rules that copy it.
+
 ### Action
 
 ### Argument
@@ -492,7 +547,12 @@ the class 'adverse'.
 
 ### Code
 
-### ExistsCondition
+TODO
+
+### Condition
+
+
+#### ExistsCondition
 
 Attributes
 
@@ -503,11 +563,22 @@ itself; for instance, if the ruleset has 4 argument kinds with the class
 the class `interest-restoring` because its kind has the class) is present
 in the encounter, the condition will find 4 matches.
 
-[TODO]
+TODO
 
 ### Cost
 
 ### Effect
+
+`<maxOccurencesPerTurn>` - the maximum number of times the effect will
+occur each turn.
+`<maxOccurences>` - the maximum number of times the effect will occur.
+After this number is reached, the effect will be destroyed.
+
+
+
+
+
+
 
 ### Encounter
 The <encounter></encounter> element describes a given kind of encounter that
@@ -517,8 +588,8 @@ are specific to the encounter. All encounter kinds have the 'encounter'
 class.
 
 The encounter must have an **id** attribute and can have a **class**,
-**mode** and **template** attribute. See the [Ruleset XML](#ruleset-xml)
-section for more information.
+**mode**, **template** and **default** attribute. See the
+[Ruleset XML](#ruleset-xml) section for more information.
 
 The encounter can have two (and only two) `<victory>` elements, which
 describe the the victory conditions that are checked for a given side
@@ -571,16 +642,20 @@ class from the encounter. All classes specified in the encounter's
 `<visibility>` - the encounter's visibility rules. See the
 [visibility](#visibility) section for more information.
 
-`<property>` - any property specific to the encounter itself. See the
+`<property>` - any property specific to the encounter itself. See the 
+[Property](#property) section for more information.
 
-[TODO]
+TODO
+
+
+### Property
+
 
 Attributes:
 
-default - if `default` is set to `true`, it copies the contents of this
-encounter kind to all other encounter kinds
 
-### Property
+
+
 
 
 ### Trait

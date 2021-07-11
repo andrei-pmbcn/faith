@@ -90,7 +90,7 @@ const cases = function() {
 		this.xml = fs.readFileSync('test/encounter/rules.xml').toString();
 	});
 	beforeEach(function() {
-		this.ruleset = new Ruleset();
+		this.ruleset = new Ruleset({ displayWarnings: false });
 	});
 	afterEach(function() {
 		this.ruleset = null;

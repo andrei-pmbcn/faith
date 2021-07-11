@@ -390,22 +390,19 @@ class Ruleset {
 	*
 	* @param {String|XMLDocument} source - the source of the XML data,
 	* either a string containing the data or an actual XMLDocument.
+	* @param {String} fileName - an optional file name, shown in errors.
 	* @return {Faith.Encounter.Ruleset} the ruleset itself.
 	*/
-	parse(source) {
+	parse(source, fileName = null) {
 		let xml;
 		
 		if (typeof source === 'string') {
 			let parser = new Parser();
-			this._debugData.sourceText = source;
 			xml = parser.parseFromString(source, 'text/xml');
-			this._debugData.xml = xml;
 		} else if ((typeof XMLDocument !== 'undefined'
 				&& source instanceof XMLDocument)
 				|| source instanceof Object) {
-			this._debugData.sourceText = '';
 			xml = source;
-			this._debugData.xml = xml;
 		} else {
 			this._throwParserError('Invalid XML rule source, cannot add '
 				+ 'to ruleset. please ensure that the rule source is a '
@@ -434,7 +431,9 @@ class Ruleset {
 				sourceText: typeof source === 'string' ? source : null,
 				xml: xml,
 				kRuleset: kRuleset,
+				kRule: 0,
 				ruleset: ruleset,
+				fileName: fileName,
 			};
 
 			let isWipe = ruleset.getAttribute('wipe') === 'all'
@@ -479,6 +478,7 @@ class Ruleset {
 			this._debugData.kRule = 0;
 				// (this also counts rules within other rules, for instance
 				// rules for traits, conditions and costs)
+
 			let noRulesFound = true;
 			for (let iRule = 0; iRule < rules.length; iRule++) {
 				if (rules[iRule].nodeType !== rules[iRule].ELEMENT_NODE)
@@ -558,11 +558,8 @@ class Ruleset {
 							+ '(without quotes), got ' + kind
 							+ ' instead.');
 				}
-				this._debugData.kRule++;
 			
-				//reset the rulestack
-				this._ruleStack = [];
-
+				this._ruleStack.pop();
 			}
 			if (noRulesFound) {
 				this._throwParserError('Xml ruleset does not contain any '
@@ -644,9 +641,11 @@ class Ruleset {
 	* @property {number|null} kRuleset - the number of <ruleset> tags
 	* encountered up to the current <ruleset> tag in the source string
 	* @property {object} ruleset - the XML ruleset
+	* @property {number} kRule - the number of entity tags encountered
+	* up to the current entity tag in the source string
 	*/
 	_debugData = {sourceText: null, xml: null, kRuleset: null,
-		ruleset: null};
+		ruleset: null, kRule: 0, fileName: null };
 
 	/**
 	* Copy the contents of an already-existent action into another
@@ -830,6 +829,10 @@ class Ruleset {
 			+ '</property>|</trait>|</visibility>';
 
 		let fullmsg = msg + '\n';
+
+		if (this._debugData.fileName) {
+			fullmsg += 'In ' + this._debugData.fileName + '\n';
+		}
 
 		// Display the rule stack
 		let stackedRule;
