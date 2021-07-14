@@ -4,6 +4,8 @@
 * @license {https://www.gnu.org/licenses/gpl-3.0.en.html|GPL3.0 license}
 */
 
+import { List } from './list.js'
+
 /**
 * The data about a given side, stored in the EncounterManager.
 *
@@ -25,82 +27,93 @@ class Side {
 		/**
 		* The list of arguments that this side owns.
 		* 
-		* @type {Array.<Faith.Encounter.Argument>}
-		* @default {[]}
+		* @type {Faith.Encounter.List.<Faith.Encounter.Argument>}
+		* @default []
 		*/
-		this.args = [];
+		this.args = new List();
 
 		/**
 		* The list of Characters on this side.
 		*
-		* @type {Array.<Faith.Encounter.Character>}
-		* @default []
+		* @type {Faith.Encounter.List.<Faith.Encounter.Character>}
+		* @default new List()
 		*/
-		this.chars = [];
+		this.chars = new List();
 
 		/**
 		* The list of global boosters on this side.
 		*
-		* @type {Array.<Faith.Encounter.Booster>}
+		* @type {Faith.Encounter.List.<Faith.Encounter.Booster>}
 		* @default []
 		*/
-		this.gboosters = [];
+		this.gboosters = new List();
 
 		/**
-		* The list of properties owned by this side.
+		* The properties attached to this side. Access them using
+		* props.<property> .
 		*
-		* @type {object.<Faith.Encounter.Property>}
+		* @type {Object.<Faith.Encounter.Property>}
 		* @default {}
 		*/
 		this.props = {};
 
 		/**
-		* The actions researched by this side.
+		* The entities researched by this side.
 		*
-		* @type {Array.<Faith.Encounter.Action>}
+		* @type {Faith.Encounter.List}
 		* @default []
 		*/
-		this.researchedActions = [];
+		this.researched = new List();
+
+		/**
+		* The actions researched by this side.
+		*
+		* @type {Faith.Encounter.List.<Faith.Encounter.Action>}
+		* @default []
+		*/
+		this.researchedActions = new List();
 
 		/**
 		* The arguments researched by this side. 
 		*
-		* @type {Array.<Faith.Encounter.Argument>}
+		* @type {Faith.Encounter.List.<Faith.Encounter.Argument>}
 		* @default []
 		*/
-		this.researchedArguments = [];
+		this.researchedArguments = new List();
 
 		/**
 		* The bonuses researched by this side.
 		*
-		* @type {Array.<Faith.Encounter.Effect>}
+		* @type {Faith.Encounter.List.<Faith.Encounter.Effect>}
 		* @default []
 		*/
-		this.researchedBonuses = [];
+		this.researchedBonuses = new List();
 
 		/**
 		* The boosters researched by this side.
 		*
-		* @type {Array.<Faith.Encounter.Booster>}
+		* @type {Faith.Encounter.List.<Faith.Encounter.Booster>}
 		* @default []
 		*/
-		this.researchedBoosters = [];
+		this.researchedBoosters = new List();
 
 		/**
 		* The argument traits researched by this side.
 		*
-		* @type {Array.<Faith.Encounter.Trait>}
+		* @type {Faith.Encounter.List.<Faith.Encounter.Trait>}
 		* @default []
 		*/
-		this.researchedTraits = [];
+		this.researchedTraits = new List();
 
 		/**
 		* The secrets found by this side.
 		*
-		* @type {Array.<Faith.Encounter.Secret>}
+		* @type {Faith.Encounter.List}
 		* @default []
 		*/
-		this.secretsFound = [];
+		this.secretsFound = new List();
+
+		//[TODO] individual lists of types of secrets found
 	}
 }
 

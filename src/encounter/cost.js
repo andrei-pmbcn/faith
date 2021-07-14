@@ -6,19 +6,25 @@
 
 //import PropertyCondition from './condprop.js';
 import ExistsCondition from './condexi.js';
-import Interpreter from 'js-interpreter';
+import { EntityKind } from './entity.js';
 
 //[TODO] Rollback costs if any of them fails
 //[TODO] When evaluating the XML for a cost, ensure that <value></value>
 // does not contain a code string, but rather, <valueCode></valueCode> does,
 // and that <target></target> likewise does not contain a code string,
 // but rather, <targetCode></targetCode> does.
+// [TODO] <cost basic="true">...</cost>
 
-class Cost {
+/**
+* A cost for an action to be performed or an entity to be created,
+* represents how much a given property will be altered by performing
+* the action / adding the entity to the encounter.
+*
+* @memberof Faith.Encounter
+*/
+class Cost extends EntityKind {
 	/**
-	* A cost for an action to be performed or an entity to be created,
-	* represents how much a given property will be altered by performing
-	* the action / adding the entity to the encounter.
+	* Creates the cost.
 	*
 	* @param {String} property - the name of the property to be modified
 	*
@@ -38,9 +44,7 @@ class Cost {
 	* targets, in which case the code must return a single
 	* Faith.Encounter.Entity or list of Entities.
 	* 
-	* @param {Array.<Faith.Encounter.PropertyCondition>
-	* |Faith.Encounter.PropertyCondition
-	* |Faith.Encounter.[TODO]} [conds] - the array of
+	* @param {Array.<Faith.Encounter.Condition> [conds] - the array of
 	* conditions that must be met after processing the cost (i.e. once the
 	* new value of the property would be in place) in order for
 	* the cost to be fulfillable. For instance, the default condition, 
@@ -49,15 +53,20 @@ class Cost {
 	* rule for the cost instead of <cost>...</cost>, is that the minimum
 	* value of the property to be altered will be zero after the cost is
 	* deducted from it.
-	*
-	* [TODO] <cost basic="true">...</cost>
 	*/
 	constructor(
+		id,
 		property,
 		value,
 		target='agent',
 		conds=null,
+		classes=null,
+		
 	) {
+		super(id, null, classes, null);
+		delete this.name;
+		delete this.props;
+
 		/**
 		* the name of the property to be modified
 		*

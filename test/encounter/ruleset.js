@@ -1,4 +1,5 @@
-import casesVisibility from './rulesetVisibility.js';
+import casesVisibility from './ruleset/visibility.js';
+import casesEncounter from './ruleset/encounter.js';
 
 import { Ruleset } from '~/src/encounter/ruleset.js'
 
@@ -6,12 +7,72 @@ const fs = require('fs');
 const assert = require('chai').assert;
 
 const casesParser = function() {
-	it('raises an error if the XML ruleset contains irrelevant elements',
-			function() {
+	// skipping this because xmldom issues console messages instead of
+	// errors for its messages
+	it.skip('throws when parsing an empty string', function() {
+		let xmlString = '';
+
+		function fn() {
+			this.ruleset.parse(xmlString);
+		}
 		
+		assert.throws(fn.bind(this));
+	});
+
+	it('throws if ruleset contains non-rule elements',
+			function() {
+		//[TODO]
 
 	});
+	//[TODO] misc ruleset-related tests
+
+	it('parses an empty ruleset', function() {
+		let xmlString = '<ruleset></ruleset>';
+
+		function fn() {
+			this.ruleset.parse(xmlString);
+		}
+		
+		assert.doesNotThrow(fn.bind(this));
+	})
+
+	it('parses an empty ruleset alongside and inside irrelevant elements',
+			function() {
+		let xmlString =
+			'<abcd>\n'
+			+ '<efgh>\n'
+			+ '</efgh>\n'
+			+ '</abcd>\n'
+			+ '<container1>\n'
+			+ '<container2>\n'
+			+ '<ruleset>\n'
+			+ '</ruleset>\n'
+			+ '</container2>\n'
+			+ '</container1>\n'
+			+ '<abcd>\n'
+			+ '<efgh>\n'
+			+ '</efgh>\n'
+			+ '</abcd>\n';
+
+		function fn() {
+			this.ruleset.parse(xmlString);
+		}
+		
+		assert.doesNotThrow(fn.bind(this));
+	});
+
+		//[TODO] good for after errors:
+	it('wipes a ruleset with ruleset.wipe()');
+
+	it('wipes the ruleset when wipe="all" is set');
+
+	it('ruleset defaults to mode="replace"')
+
+	it('entities inherit the ruleset\'s mode="alter"')
+
+	it('entities inherit the ruleset\'s mode="delete"')
 }
+
 
 const casesParseActionCost = function() {
 	before(function() {
@@ -74,12 +135,6 @@ const casesParseAction = function() {
 };
 
 
-//[TODO] misc ruleset-related tests
-
-it('ruleset defaults to mode="replace"')
-
-it('inherits the ruleset\'s mode="alter"')
-
 
 
 
@@ -95,8 +150,11 @@ const cases = function() {
 	afterEach(function() {
 		this.ruleset = null;
 	});
-	describe('parser', casesParser);
-	describe('parse action', casesParseAction);
+	describe.only('parser basics', casesParser);
+	//describe('parse action', casesParseAction);
+
+	describe.only('encounter kinds', casesEncounter);
+
 
 	describe.only('visibility rules', casesVisibility);
 };

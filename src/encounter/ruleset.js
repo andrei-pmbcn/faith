@@ -8,11 +8,12 @@ import { Action, ActionKind } from './action.js';
 import { Argument, ArgumentKind } from './argument.js';
 import { Booster, BoosterKind } from './booster.js';
 import { Character, CharacterKind } from './character.js';
+import { EncounterKind, _parseEncounterKind } from './encounter.js';
 import { Effect, EffectKind } from './effect.js';
 import { Trait, TraitKind } from './trait.js';
 
 import { _parseVisibility, _VisTopLevel } from './ruleset2.js';
-import List from './list.js';
+import { List } from './list.js';
 
 import xmldom from 'xmldom';
 const Parser = xmldom.DOMParser;
@@ -29,7 +30,7 @@ Object.defineProperty(ParserError.prototype, 'name', {
 
 /**
 * The configuration object used when creating the ruleset.
-* @typedef {object} Faith.Encounter.rulesetConfig
+* @typedef {Object} Faith.Encounter.rulesetConfig
 * 
 * @property {Boolean} [displayDomOnErrors=false] - Whether to display the
 * XML DOM element that features the error when throwing errors and
@@ -252,7 +253,7 @@ class Ruleset {
 		* using research.tier[n-1] .
 		* Access the untiered researchables using research.untiered .
 		*
-		* @type <object>
+		* @type Object
 		*/
 		this.research = {tier: [], untiered: new List()}
 
@@ -396,17 +397,21 @@ class Ruleset {
 	parse(source, fileName = null) {
 		let xml;
 		
+		let errMsg = 'Invalid XML rule source, cannot add '
+			+ 'to ruleset. please ensure that the rule source is a '
+			+ 'valid XML String or an XMLDocument.'
 		if (typeof source === 'string') {
 			let parser = new Parser();
 			xml = parser.parseFromString(source, 'text/xml');
+			if (typeof xml === 'undefined') {
+				this._throwParserError(errMsg);
+			}
 		} else if ((typeof XMLDocument !== 'undefined'
 				&& source instanceof XMLDocument)
 				|| source instanceof Object) {
 			xml = source;
 		} else {
-			this._throwParserError('Invalid XML rule source, cannot add '
-				+ 'to ruleset. please ensure that the rule source is a '
-				+ 'String or an XMLDocument.');
+			this._throwParserError(errMsg);
 		}
 
 		//[TODO] handle ruleset-specific modes, e.g. <ruleset mode="alter">
@@ -419,8 +424,7 @@ class Ruleset {
 		let rulesets = xml.getElementsByTagName('ruleset')
 		if (!rulesets.length) {
 			this._throwParserError('Xml rule source does not contain '
-				+ 'any rulesets.',
-				isWarning = true);
+				+ 'any rulesets.', true);
 		}
 
 		for (let kRuleset = 0; kRuleset < rulesets.length; kRuleset++) {
@@ -441,21 +445,8 @@ class Ruleset {
 			let rules = ruleset.childNodes;
 
 			if (isWipe) {
-				//wipe the ruleset's data
-				//[TODO] edit this after adding more lists
-				this.all = new List();
-				this.args = new List();
-				this.actions = new List();
-				this.argTraits = new List();
-				this.boosters = new List();
-				this.chars = new List();
-				this.charTraits = new List();
-				this.costTemplates = new List();
-				this.condTemplates = new List();
-				this.effects = new List();
-				this.encounters = new List();
-				this.encounterTraits = new List();
-				this.research = {tier: [], untiered: new List()};
+				//wipe the ruleset
+				this.wipe();
 			}
 
 			// store the ruleset's mode
@@ -563,14 +554,16 @@ class Ruleset {
 			}
 			if (noRulesFound) {
 				this._throwParserError('Xml ruleset does not contain any '
-					+ 'rules.',
-					isWarning = true);
+					+ 'rules.', true);
 			}
 		}
+
+		this._loadTemplates()
 		return this;
 	}
 
 	validate() {
+		//[TODO]
 		let entityKind;
 		//validate all game entity kinds' individual data members
 		for (entityKind of this.all) {
@@ -584,7 +577,7 @@ class Ruleset {
 				if (this.all.list[j].id === entityKind.id) {
 					throw 'Entity kind number ' + i + ' and game entity '
 						+ 'number ' + j + ' in the ruleset have the same '
-						+ 'id, ' + entity.id + ' . Please give '
+						+ 'id, ' + entityKind.id + ' . Please give '
 						+ 'each type of argument, booster etc. an '
 						+ 'id that is unique among all game entities ('
 						+ 'an argument and a booster cannot share the '
@@ -593,6 +586,32 @@ class Ruleset {
 				}
 			}
 		}
+	}
+
+	/**
+	* Resets the ruleset, wiping all entity data and setting the rules
+	* to the defaults
+	*/
+	wipe() {
+		// wipe the ruleset's data
+		this.all = new List();
+		this.args = new List();
+		this.actions = new List();
+		this.argTraits = new List();
+		this.boosters = new List();
+		this.chars = new List();
+		this.charTraits = new List();
+		this.costTemplates = new List();
+		this.condTemplates = new List();
+		this.effects = new List();
+		this.encounters = new List();
+		this.encounterTraits = new List();
+		this.research = {tier: [], untiered: new List()};
+
+		// reset the basic rules to the defaults
+		this.allVisible = false;
+		this.overrideDefaultProbing = false;
+		this.overrideDefaultResearch = false; //[TODO]
 	}
 
 	/**
@@ -605,16 +624,13 @@ class Ruleset {
 	*/
 	_mode = 'replace';
 
-	//[TODO] Check with jsdoc whether the properties are rendering
-	// correctly
 	/**
 	* An array holding the rules currently being parsed, starting from the
 	* outermost rule (e.g. <encounter></encounter>) and ending with the
-	* innermost rule (e.g. <cost></cost>). Each object in the rulestack
-	* has the following properties:
+	* innermost rule (e.g. <cost></cost>).
 	* 
 	* @private
-	* @property {object} xml - the XML node of the given rule
+	* @property {Object} xml - the XML node of the given rule
 	* @property {String} kind - the `kind` of the given rule,
 	* e.g. 'action', 'booster', 'cost' or 'condition'
 	* @property {String} id - the id of the given rule
@@ -627,20 +643,18 @@ class Ruleset {
 	*/
 	_ruleStack = [];
 
-	//[TODO] Check with jsdoc whether the properties are rendering
-	// correctly
 	/**
 	* Data stored internally to provide accurate error messages
 	*
 	* @private
-	* @type {object}
+	* @type {Object}
 	* @property {String|null} sourceText - the source text string of the XML
 	* document parenting the XML rulesets to be parsed
 	* @property {XMLDocument|null} xml - the XML document parenting the XML
 	* rulesets to be parsed
 	* @property {number|null} kRuleset - the number of <ruleset> tags
 	* encountered up to the current <ruleset> tag in the source string
-	* @property {object} ruleset - the XML ruleset
+	* @property {Object} ruleset - the XML ruleset
 	* @property {number} kRule - the number of entity tags encountered
 	* up to the current entity tag in the source string
 	*/
@@ -688,10 +702,17 @@ class Ruleset {
 	}
 
 	/**
-	* Parse an action from its XML DOM element.
+	* Loads all defaults and other templates into their dependents
+	*/
+	_loadTemplates() {
+		//[TODO]
+	}
+
+	/**
+	* Parses an action from its XML DOM element.
 	*
 	* @private
-	* @param {object} rule - the XML-based action rule to be parsed
+	* @param {Object} rule - the XML-based action rule to be parsed
 	*/
 	_parseAction(rule) {
 		
@@ -793,7 +814,7 @@ class Ruleset {
 	* 
 	* @private
 	* @method
-	* @param {object} rule - the XML-based visibility rule to be parsed
+	* @param {Object} rule - the XML-based visibility rule to be parsed
 	*/
 	_parseVisibility = _parseVisibility;
 
@@ -809,24 +830,19 @@ class Ruleset {
 		if (isWarning && !this._displayWarnings)
 			return;
 
-		let nPaddingCharsPre = 30;
-		let nPaddingCharsPost = 80;
-			// (the number of characters to show from the context text
-			// in front of and after the current ruleset or rule)
-
 		let dd = this._debugData;
 		let context = dd.sourceText;
 		let contextRuleset = null;
 		let contextDisplayed = null;
 		//[TODO] include different <conditions>
-		let regExpRulePre = '<action|<argument|<booster|'
+		let regExpRulePre = '<action|<and|<argument|<booster|'
 			+ '<character|<condition|<cost|<effect|<encounter|'
-			+ '<property|<trait|<visibility';
+			+ '<or|<property|<trait|<visibility';
 			// (do not include a closing '>' as the element may have
 			// attributes)
-		let regExpRulePost = '</action>|</argument>|</booster>|'
+		let regExpRulePost = '</action>|</and>|</argument>|</booster>|'
 			+ '</character>|</condition>|</cost>|</effect>|</encounter>|'
-			+ '</property>|</trait>|</visibility>';
+			+ '</or>|</property>|</trait>|</visibility>';
 
 		let fullmsg = msg + '\n';
 
@@ -847,6 +863,11 @@ class Ruleset {
 		// include the line number and optionally the context data
 		// in the error message
 		if (context && dd.kRuleset !== null) {
+			let nPaddingCharsPre = 30;
+			let nPaddingCharsPost = 80;
+				// (the number of characters to show from the context text
+				// in front of and after the current ruleset or rule)
+
 			//we have a ruleset and XML string for the set of rulesets;
 			//find the target ruleset, indexed at kRuleset
 

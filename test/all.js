@@ -1,3 +1,3 @@
 import casesEncounter from './encounter.js';
 
-describe('encounters', casesEncounter);
+describe('social encounters', casesEncounter);

@@ -1,5 +1,20 @@
-//[TODO] parse visibility for traits
+/**
+* @author Andrei Pambuccian
+* @copyright 2021 Andrei Pambuccian
+* @license {https://www.gnu.org/licenses/gpl-3.0.en.html|GPL3.0 license}
+*/
 
+//[TODO] parse visibility for traits etc.
+
+/* Undocumented function, used in ruleset.js
+* Parses a visibility rule into the ruleset.
+* 
+* @param {Object} rule - the XML node being parsed
+* @param {Object} holder - the entity that encapsulates the rule, e.g.
+* characters encapsulate their traits
+* @param {String} mode - either 'replace', 'alter' or 'delete'; determines
+* what will happen to previous instances of the same rule
+*/
 function _parseVisibility(rule, holder, mode) {
 	if (!holder) {
 		// we have a top-level visibility rule
@@ -7,19 +22,28 @@ function _parseVisibility(rule, holder, mode) {
 		// if the rule has 'allVisible="true"', it will tell the ruleset
 		// to ignore visibility rules altogether and treat everything as
 		// visible
-		if (rule.getAttribute('allVisible') === 'true') {
-			this.allVisible = true;
-		} else {
-			this.allVisible = false;
+		let attr = rule.getAttribute('allVisible');
+		let bool;
+		if (attr) {
+			bool = this._parseBoolean(attr);
+			if (bool) {
+				this.allVisible = true;
+			} else {
+				this.allVisible = false;
+			}
 		}
 		// if the rule has an overrideDefaultProbing attribute,
 		// use it to determine whether the default probing rules
 		// will apply to this ruleset
- 		if (rule.getAttribute('overrideDefaultProbing') === 'true') {
-			this.overrideDefaultProbing = true;
-		} else if (rule.getAttribute('overrideDefaultProbing')
-				=== 'false') {
-			this.overrideDefaultProbing = false;
+		attr = rule.getAttribute('overrideDefaultProbing');
+		bool = undefined;
+		if (attr) {
+			bool = this._parseBoolean(attr);
+			if (bool) {
+				this.overrideDefaultProbing = true;
+			} else {
+				this.overrideDefaultProbing = false;
+			}
 		}
 
 		if (mode === 'replace' || mode === 'delete') {
@@ -308,7 +332,7 @@ function _processParsedRule(parsedRule, collection, rule, holder, mode,
 					if (attr !== 'propList') {
 						oldRule[attr] = parsedRule[attr];
 					} else {
-						transferProperties(parsedRule, oldRule);
+						transferProperties.bind(this)(parsedRule, oldRule);
 					}
 				}
 			} else if (mode === 'delete') {
@@ -374,6 +398,16 @@ function _parseVisibilityInProperties(rule, holder, mode) {
 		this._ruleStack.push(stackedRule);
 
 		if (child.tagName === 'property') {
+			for (let iTestNode = 0; iTestNode < child.childNodes.length;
+					iTestNode++) {
+				let testNode = child.childNodes[iTestNode];
+				if (testNode.nodeType === testNode.ELEMENT_NODE)
+					this._throwParserError(
+						'Element nodes should not be in a '
+						+ 'property visibility rule, found '
+						+ testNode.tagName);
+			}
+
 			let parsedProp = {
 				id: null,
 				classes: new Set(),
@@ -402,7 +436,7 @@ function _parseVisibilityInProperties(rule, holder, mode) {
 						break;
 					default:
 						this._throwParserError(
-							+ "Invalid attribute name for property "
+							"Invalid attribute name for property "
 							+ "visibility rule: " + attr.name + ". "
 							+ "Please provide a valid attribute name "
 							+ "as described in the manual."
@@ -479,7 +513,7 @@ function _parseVisibilityEncounter(rule, holder, mode, isTopLevel) {
 				break;
 			default:
 				this._throwParserError(
-					+ "Invalid attribute name for encounter visibility "
+					"Invalid attribute name for encounter visibility "
 					+ "rule: " + attr.name + ". Please provide a valid "
 					+ "attribute name as described in the manual."
 				);

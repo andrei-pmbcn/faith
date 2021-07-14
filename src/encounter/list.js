@@ -6,27 +6,19 @@
 
 import { Entity, EntityKind } from './entity.js';
 
-/* A list that can be searched by name and id.
-* Get its entries by id using its `get` method,
-* access the whole list using its `list` member.
+/* A list that can be searched by name, classes and id.
+* Get its entries by id using <list>['<id>'].
 * 
 * @memberof Faith.Encounter
 */
 class List {
 	constructor() {
 		/**
-		* The list itself.
-		*
-		* @type {Array}
-		*/
-		this.list = [];
-
-		/**
 		* The elements of the list that are treated as defaults.
 		*
-		* @type {Array}
+		* @type {Object}
 		*/
-		this.defaultsList = [];
+		this._defaults = {};
 	}
 
 	/**
@@ -44,11 +36,21 @@ class List {
 				+ 'e.g. Faith.Encounter.Argument or '
 				+ 'Faith.Encounter.ArgumentKind'
 		}
-		
-		this.list.push(obj);
-		if (obj.isDefault) {
-			this.defaultsList.push(obj);
+
+		if (!obj.id || typeof obj.id !== 'string') {
+			throw 'invalid id for entity or entityKind to be added: '
+				+ 'must be a string'
 		}
+		
+		if (typeof this[obj.id] === 'undefined') {
+			this[obj.id] = obj;
+			if (obj.isDefault) {
+				this._defaults[obj.id] = obj;
+			}
+		} else {
+			throw 'Entity with id ' + obj.id + 'already exists in the list.'
+		}
+
 
 		return this;
 	}
@@ -61,31 +63,13 @@ class List {
 	* @return {Faith.Encounter.List} the list itself
 	*/
 	remove(obj) {
-		// skip over the object if it is not found because
-		// splicing with splice(-1, 1) means splicing the
-		// second-to-last entry of the array, which we do not want
-		// if the object is not found.
-		if (!(this.list.indexOf(arg) === -1))
-			this.list.splice(this.list.indexOf(arg), 1);
-		if (obj.isDefault && !(this.defaultsList.indexOf(arg) === -1))
-			this.list.splice(this.defaultsList.indexOf(arg), 1);
-		return this;
-	}
-
-	/**
-	* Returns the entry that has a specified id. All game entity kinds must
-	* have distinct ids, while entities may not have ids.
-	*
-	* @param {String} id - the id of the entry to be returned
-	* @return {Faith.Encounter.Entity} the entry returned
-	*/
-	getById(id) {
-		for (let entry of this.list) {
-			if (entry.id === id) {
-				return entry;
+		if (typeof (this[obj.id] !== 'undefined'))
+			delete this[obj.id];
+			if (obj.isDefault) {
+				delete this._defaults[obj.id];
 			}
 		}
-		return null;
+		return this;
 	}
 
 	/**
@@ -96,13 +80,37 @@ class List {
 	* the entries returned
 	*/
 	getByName(name) {
-		var entries = [];
-		for (let entry of this.list) { 
-			if (entry.name === name) {
-				entries.push(entry);
+		let entries = [];
+		for (let entry of Object.keys(this)) { 
+			if (this[entry].name === name) {
+				entries.push(this[entry]);
+			}
+		}
+		return entries;
+	}
+
+	/**
+	* Returns a list of entries that have the specified classes.
+	*
+	* @param {Set.<String>} classes - the set of classes to be searched
+	* for
+	* @return {Array.<Faith.Encounter.Entity|Faith.Encounter.EntityKind>}
+	* the entities returned
+	*/
+	getByClasses(classes) {
+		let entries = [];
+		for (let entry of Object.keys(this)) {
+			let nFound = 0;
+			for (let cls of this[entry].classes.values()) {
+				if (classes.has(cls)) {
+					nFound++
+				}
+			}
+			if (nFound === classes.length) {
+				entries.push(this[entry]);
 			}
 		}
 		return entries;
 	}
 }
-export default List;
+export { List };

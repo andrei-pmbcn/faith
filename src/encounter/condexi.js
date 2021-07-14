@@ -207,10 +207,10 @@ class ExistsCondition {
 				&& this._entityName === null && this._classes === null
 				&& this._excludedClasses === null
 				&& this._entityCode === null) {
-			throw 'Invalid arguments in existsCondition: at least one '
-				+ 'of \'rel\', \'kindId\', \'entityId\', \'kindName\',
-				+ '\'entityName\', \'classes\' or \'excludedClasses\'
-				+ 'must be non-null.'
+			throw "Invalid arguments in existsCondition: at least one "
+				+ "of 'rel', 'kindId', 'entityId', 'kindName',"
+				+ "'entityName', 'classes' or 'excludedClasses'"
+				+ "must be non-null."
 		}
 
 		if (this._rel) {
@@ -222,17 +222,17 @@ class ExistsCondition {
 				case 'creator':
 				break;
 				default:
-					throw 'Invalid rel argument in existsCondition: '
-					+ 'must be either null, \'same\', \'target\', '
-					+ '\'holder\' or \'creator\'.'
+					throw "Invalid rel argument in existsCondition: "
+					+ "must be either null, 'same', 'target', "
+					+ "'holder' or 'creator'."
 			}
 		}
 
 		if (this._number === null && this._min === null
 				&& this._max === null && this._valueCode === null) {
-			throw 'Invalid arguments in existsCondition: at least one of '
-				+ '\'number\', \'min\', \'max\' and \'valueCode\' must '
-				+ 'be non-null';
+			throw "Invalid arguments in existsCondition: at least one of "
+				+ "'number', 'min', 'max' and 'valueCode' must "
+				+ "be non-null";
 		}
 	}
 
@@ -258,7 +258,9 @@ class ExistsCondition {
 					break;
 				case 'target':
 					if (elem instanceof Action) {
-						for (let target in elem.targets
+						for (let target in elem.targets) {
+							//[TODO]
+						}
 					}
 
 
