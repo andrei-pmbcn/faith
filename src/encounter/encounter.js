@@ -144,7 +144,7 @@ function _parseEncounterKind(rule, mode) {
 				this._throwParserError(
 					"Invalid attribute name for encounter rule: "
 					+ attr.name + ". Please provide a valid attribute "
-					+ "name as described in the manual."
+					+ "name as described in the manual.");
 		}
 	}
 	//[TODO]

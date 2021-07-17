@@ -1,5 +1,5 @@
 const assert = require('chai').assert;
-import { ParserError } from '~/src/encounter/ruleset.js';
+import { ParserError } from '~/src/encounter/parser.js';
 import { _VisTopLevel } from '~/src/encounter/ruleset2.js'; 
 
 let xmlEncounterId = 'id="encounter-default"\n'

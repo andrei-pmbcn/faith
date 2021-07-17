@@ -5,7 +5,7 @@
 */
 
 
-import { Entity, EntityKind } from './entity.js';
+import { Entity, EntityKind, targetMixin } from './entity.js';
 
 /*
 * Computes and stores the minima, maxima, initial value etc. of a property.
@@ -32,8 +32,8 @@ class Property extends Entity {
 		/**
 		* The base value of the property's current value; can be different
 		* from the respective property kind's base value. This is the initial
-		* and (if `this.tethered` is set to `true`) the unmodified value of
-		* the property before its sources and coeff are applied.
+		* and (if `this.kind.tethered` is set to `true`) the unmodified value
+		* of the property before its sources and coeff are applied.
 		* 
 		* In addition to a number, the base value can be set to 'min' or
 		* 'max', which signifies that the initial value will equal the
@@ -46,8 +46,8 @@ class Property extends Entity {
 		/**
 		* The coefficient of the property's current value, which multiples
 		* the processed value of the sources of the property's current value
-		* to obtain the initial and (if `this.tethered` is set to `true`) the
-		* unmodified current value of the property.
+		* to obtain the initial and (if `this.kind.tethered` is set to `true`)
+		* the unmodified current value of the property.
 		*
 		* @type {Number}
 		*/
@@ -125,47 +125,152 @@ class Property extends Entity {
 		this.prevMax = null;
 
 		/**
-		* A temporary value used for checking whether the entity meets its
-		* creation costs.
+		* A temporary value used for checking whether the property's current
+		* value meets its holder entity's creation costs.
 		*
 		* @type {Number}
 		* @default null
 		*/
 		this.temp = null;
 
-		// gather sources
+		/**
+		* A temporary value used for checking whether the property's minimum
+		* value meets its holder's creation costs.
+		*
+		* @type {Number}
+		* @default null
+		*/
+		this.tempMin = null;
 
 		/**
-		* The sources of the current value.
-		* 
+		* A temporary value used for checking whether the property's maximum
+		* value meets its holder's creation costs.
+		*
+		* @type {Number}
+		* @default null
 		*/
-		this.sources = 
+		this.tempMax = null;
 
+		/**
+		* The sources of the current value, i.e. the properties that affect
+		* this property's unmodified value. Only contains elements if
+		* `this.kind.val.tethered` is `true`.
+		* 
+		* @type {Faith.Encounter.List}
+		*/
+		this.sources = new List();
+
+		/**
+		* The sources of the minimum value, i.e. the properties that affect
+		* this property's unmodified minimum value. Only contains elements if
+		* `this.kind.min.tethered` is `true`.
+		* 
+		* @type {Faith.Encounter.List}
+		*/
+		this.sourcesMin = new List();
+
+		/**
+		* The sources of the maximum value, i.e. the properties that affect
+		* this property's unmodified maximum value. Only contains elements if
+		* `this.kind.max.tethered` is `true`.
+		* 
+		* @type {Faith.Encounter.List}
+		*/
+		this.sourcesMax = new List();
+
+		// catalog the sources
+		this._catalogAllSources();
+
+		/**
+		* The effects that alter the current value. Only contains elements if
+		* `this.kind.val.tethered` is `true`.
+		*
+		* @type {Faith.Encounter.List}
+		*/
+		this.effects = new List();
+
+		/**
+		* The effects that alter the minimum value. Only contains elements if
+		* `this.kind.min.tethered` is `true`.
+		*
+		* @type {Faith.Encounter.List}
+		*/
+		this.effectsMin = new List();
+
+		/**
+		* The effects that alter the maximum value. Only contains elements if
+		* `this.kind.max.tethered` is `true`.
+		*
+		* @type {Faith.Encounter.List}
+		*/
+		this.effectsMax = new List();
+
+		//gather effects
 		//[TODO]
+		/**
+		* The dependents of the current value, i.e. the properties that
+		* are affected by this property's current value.
+		*
+		* @type {Faith.Encounter.List}
+		*/
+		this.dependents = new List();
 
+		/**
+		* The dependents of the minimum value, i.e. the properties that
+		* are affected by this property's minimum value.
+		*
+		* @type {Faith.Encounter.List}
+		*/
+		this.dependentsMin = new List();
 
+		/**
+		* The dependents of the maximum value, i.e. the properties that
+		* are affected by this property's maximum value.
+		*
+		* @type {Faith.Encounter.List}
+		*/
+		this.dependentsMax = new List();
 
+		/**
+		* The order in which the current, minimum and maximum value of this
+		* property are updated, e.g. ['max', 'min', 'val']. The first
+		* element of this array is updated first.
+		*
+		* @private
+		* @type {Array}
+		*/
+		this.order = null;
 
-
+		// Determine the update order; always update val last, so as to
+		// ensure it fits within the new minimum and maximum
 		if (this.base === 'min') {
 			if (this.baseMin === 'max') {
-				computeInitMax()
-				this.min = max;
+				this._order = ['max', 'min', 'val'];
 			} else if (this.baseMax === 'min') {
-				computeInitMax
+				this._order = ['min', 'max', 'val']; 
+			} else {
+				this._order = ['min', 'max', 'val'];
 			}
-			
-
 		} else if (this.base === 'max') {
+			if (this.baseMin === 'max') {
+				this._order = ['max', 'min', 'val'];
+			} else if (this.baseMax === 'min') {
+				this._order = ['min', 'max', 'val'];
+			} else {
 
+			}
 		} else {
-			computeInitVal()
+			this._order = ['max', 'min', 'val'];
+		}
+
+		// Setup the initial values
+		for (let category of this._order) {
+			this._computeUnmod(category);
 		}
 
 
 
-
-
+		//[TODO]
 	}
 
 	/**
@@ -211,52 +316,62 @@ class Property extends Entity {
 	unmodMax = null
 
 	/**
-	* Compute the property's unmodified value, i.e. before effects modify it.
-	*
-	* @private
-	*/
-	_computeUnmodVal() {
-		if (this.base !== 'min' && this.base !== 'max') {
-			this.unmod = this.base + this.coeff * this.processSources('val');
-		} else if (this.base )
-
-	}
-
-	/**
-	* Compute the property's unmodified minimum value, i.e. before effects
+	* Compute the property's specified unmodified value, i.e. before effects
 	* modify it.
 	*
 	* @private
+	* @param {String} category - either 'val', 'min' or 'max'; 'val' is for the
+	* current value.
 	*/
-	_computeUnmodMin() {
-		this.unmodMin = this.minBase
-			+ this.minCoeff * this.processSources('min');
+	_computeUnmod(category) {
+		if (category === 'val') {
+			if (this.base !== 'min' && this.base !== 'max') {
+				this.unmod = this.base
+					+ this.coeff * this.processSources('val');
+			} else if (this.base === 'min') {
+				this.unmod = this.unmodMin;
+			} else if (this.base === 'max') {
+				this.unmod = this.unmodMax;
+			}
+		} else if (category === 'min') {
+			if (this.baseMin !== 'max') {	
+				this.unmodMin = this.minBase
+					+ this.minCoeff * this.processSources('min');
+			} else {
+				this.unmodMin = this.unmodMax;
+			}
+		} else if (category === 'max') {
+			if (this.baseMax !== 'min') {
+				this.unmodMax = this.maxBase
+					+ this.maxCoeff * this.processSources('max');
+			} else {
+				this.unmodMax = this.unmodMin;
+			}
+		}
 	}
-
-	/**
-	* Compute the property's unmodified maximum value, i.e. before effects
-	* modify it.
-	*
-	* @private
-	*/
-	_computeUnmodMax() {
-		this.unmodMax = this.maxBase
-			+ this.maxCoeff * this.processSources('max');
-	}
-
-
-
-
-
 
 	/**
 	* Process the sources of the property's current, minimum or maximum value.
 	*
-	* @param {String} target - either 'val', 'min' or 'max'; 'val' is for the
+	* @private
+	* @param {String} category - either 'val', 'min' or 'max'; 'val' is for the
 	* current value.
 	*/
-	_processSources(target) {
+	_processSources(category) {
 		//[TODO]
+
+	}
+
+	/**
+	* Adds the property's sources to the sources, sourcesMin and sourcesMax
+	* lists.
+	*
+	* @private
+	*/
+	_catalogAllSources() {
+		//[TODO]
+
+
 
 	}
 }

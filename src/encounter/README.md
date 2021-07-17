@@ -598,13 +598,8 @@ TODO
 versa
 
 
-
-
-`active`
-
-`alive`
-
-`finished`
+`flag` - the flag to be set, unset or toggled. Can be `active`, `alive` or
+`finished`.
 
 
 
@@ -615,9 +610,14 @@ occur each turn.
 `maxOccurences` - the maximum number of times the effect will occur.
 After this number is reached, the effect will be destroyed.
 
-`ignoreMinimum` - whether to ignore the property's minimum
+`ignoreMinimum` - whether to ignore the property's minimum; only applies if
+the effect is affecting the property's current value and its `tethered`
+value is set to `false`
 
-`ignoreMaximum` - whether to ignore the property's maximum
+`ignoreMaximum` - whether to ignore the property's maximum; only applies if
+the effect is affecting the property's current value and its `tethered`
+value is set to `false`
+
 
 
 
@@ -633,6 +633,9 @@ class.
 The encounter element must have an **id** attribute and can have a
 **name**, **class**, **mode**, **template** and **default** attribute. See
 the [Ruleset Xml](#ruleset-xml) section for more information.
+
+Every encounter kind has the `encounter` class. Any other classes that
+encounter kinds have should be prefixed with `encounter-`.
 
 The encounter element can have two (and only two) `<victory>` elements, which
 describe the the victory conditions that are checked for a given side
@@ -721,10 +724,22 @@ The property kind element must have an **id** attribute and can have a
 **name**, **class**, **mode**, **template** and **default** attribute. See the
 [Ruleset Xml](#ruleset-xml) section for more information.
 
+Every property kind has the `property` class. Any other classes that property
+kinds have should be prefixed with `property-`.
+
 The property kind element may contain an optional `<visibility>` element
 describing any visibility rules specific to it. These will override the
 global rules stated in the optional top-level `<visibility>` tag (which is
 right inside the `<ruleset>` tag).
+
+The property kind element may also contain any number of `<addClass>` and
+`<removeClass>` elements.
+
+`<addClass>` - when using `mode="alter"`, this allows you to add a class
+to the encounter kind.
+
+`<removeClass>` - when using `mode="alter"`, this allows you to remove a
+class from the encounter kind. 
 
 The property kind element may also optionally contain a single `<val>`,
 a single  `<min>` and a single `<max>` element. These describe how a
@@ -736,6 +751,7 @@ current, minimum and maximum values can be negative; to avoid this, use
 `<min base="0">`.
 
 Each of `<val>`, `<min>` and `<max>` has the following **attributes**:
+
 `mode` - works as everywhere else. See the [Ruleset Xml](#ruleset-xml) for
 more information.
 
@@ -823,6 +839,10 @@ character's 'energy' property, and so they are that maximum value's
 `<source>` may have the following attributes:
 
 `kind` - required; the source property's kind.
+
+`mode` - works as everywhere else. See the [Ruleset Xml](#ruleset-xml) for
+more information. New `<source>` elements with a given mode will affect
+previous elements in which the `kind` attribute has the same value.
 
 `var` - the name of the variable that will represent the source in the
 `<code>` element (not the `<holderCode>` element). For instance, if you have
@@ -929,14 +949,40 @@ instance, if a `<source>` element in a `<property>` contains a
 `<holder>agent</holder>` sub-element, that sub-element will point to the
 entity that has the given property.
 
-A `<target>` or `<holder>` element may contain a **side** attribute, which
+A `<target>` or `<holder>` element must contain an **id** attribute, which 
+can (and indeed should) be numeric, with a number that is unique among the
+`<target>` or `<holder>` elements of the element's parent. For instance:
+```
+<property
+	id="property-whatever"
+>
+	<val>
+		<source kind="property-whatever-else">
+			<holder id="1">allArguments</holder>
+			<holder id="2">allBoosters</holder>
+		</source>
+	</val>
+</property>
+```
+Here, the two holders have ids "1" and "2".
+
+A `<target>` or `<holder>` element may also contain a **mode** attribute,
+which describes the element's mode as shown in the
+[Ruleset Xml](#ruleset-xml) section, a **targetId** attribute that makes the
+element refer to the entity having the specified id, a **targetClass**
+attribute, which selects only for entities with the specified classes, and a
+**notTargetClass** attribute, which filters out entities that have the
+specified classes.
+
+In addition, the element may contain a **side** attribute, which
 states which side contains the targets and can have the following values:
 
-`both` - both sides; the default, so it needs not be specified
+`all` - all sides; the default, so it needs not be specified
 
 `friendly` - the entity's own side in the encounter
 
-`opposing` - the opposing side in the encounter
+`opposing` - the opposing side in the encounter. If the friendly side is the
+neutral side, then the opposite side constitutes both of the other sides.
 
 `neutral` - the neutral side in the encounter
 
@@ -955,9 +1001,9 @@ finished. If the entity is active, it can perform actions or be used (and is a
 character or item). If the entity is alive, it processes all effects applied
 to it (by default, no effects affect dead entities).
 
-The element may contain one of the following bits of text, stating what the
-target or holder actually is. Some of these options may be disabled for some
-types of entities that have the element.
+The element must contain text content that consists of one of the following
+options, stating the type of the designated target or holder. Some of these
+options may be disabled for some types of entities that have the element.
 
 `encounter` - the encounter itself
 
@@ -965,10 +1011,9 @@ types of entities that have the element.
 
 `self` - the entity that holds the `<target>` or `<holder>` element
 
-`target` - the target of the `<action>` that holds the effect; the default
-for the `<target>` element inside effects. If more than one such target
-exists of the `<action>` exists, each target will have its own version of
-the effect. 
+`target` - the target of the effect or action. If the action has multiple
+targets, all will be included. Effects created by an action with multiple
+targets each have one target, i.e. one of the action's targets.
 
 `holder` - the entity that holds the entity that holds the `<target>` or
 `<holder>` element; the default for the `<holder>` element inside properties.
@@ -1014,6 +1059,28 @@ the opposing side
 `allItems` - all items on the specified `side`
 
 `allTraits` - all traits on the specified `side`
+
+`allArgumentTraits` - all traits belonging to characters on the specified
+`side`
+
+`allCharacterTraits` - all traits belonging to characters on the specified
+`side`
+
+`allEncounterTraits` - all traits belonging to the encounter
+
+`allItemTraits` - all traits belonging to items on the specified `side`
+
+If the `targetId` attribute has been set, the text content of the element
+is ignored.
+
+Note that irrespective of the text content, the target or holder list is
+still filtered by the `<target>` or `<holder>` element's attributes, so a
+`<holder side="opposing">creator</holder>` element will only find a holder
+if the creator of the `<holder>` element's parent entity is on the opposite
+side, which is highly unlikely to happen in any ruleset. Likewise,
+`<target side="1" active="true">allCharacters</target>` will only target all
+active characters on side 1. The `encounter` and `allEncounterTraits` text
+content ignore sides.
 
 
 ### Trait

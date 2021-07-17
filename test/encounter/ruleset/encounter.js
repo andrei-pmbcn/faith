@@ -1,5 +1,5 @@
 const assert = require('chai').assert;
-import { ParserError } from '~/src/encounter/ruleset.js';
+import { ParserError } from '~/src/encounter/parser.js';
 
 function casesThrows() {
 	it('throws when the rule has no id');

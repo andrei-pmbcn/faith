@@ -94,7 +94,7 @@ class Entity {
 				+ ': must be an Object of type Set.'
 		}
 
-		if typeof (this.kind.classes !== 'undefined') {
+		if (typeof this.kind.classes !== 'undefined') {
 			for (let cls of this.kind.classes.values()) {
 				this.classes.add(cls);
 			}
@@ -312,7 +312,10 @@ Object.assign(EntityKind.prototype, codeMixin);
 * of targets
 */
 const targetSpec = {
-	target: null,
+	type: null,
+	id: null,
+	classes: null,
+	notClasses: null,
 	side: null,
 	finished: null,
 	active: null,
@@ -321,7 +324,7 @@ const targetSpec = {
 }
 
 /**
-* The methods used in getting targets that fit a specification and checking
+* The methods used for getting targets that fit a specification and checking
 * whether a given entity is a target
 *
 * @mixin
@@ -345,25 +348,409 @@ const targetMixin = {
 	isTarget(candidate, targeter, targetSpec) {
 		//[TODO]
 
-	}
+	},
 
 	/**
 	* Gets all the targets with the given specification
 	*
 	* @param {Faith.Encounter.Entity} candidate - the entity to be checked
+	*
 	* @param {Faith.Encounter.Entity} targeter - the entity attempting the
 	* targeting
+	*
 	* @param {Faith.Encounter.targetSpec} targetSpec - the target
 	* specification to be compared against
 	* 
 	* @return {Array.<Faith.Encounter.Entity>} the targets found
 	*/
-	getTargets(targeter, targetSpecs) {
+	getTargets(targeter, targetSpec) {
+
+		// Get the targeted sides
+		let sides = this._getCandidateSides(targeter, targetSpec));
+
+
+
+
+		let candidates = []; // the list of entities that might be targets
+		if (targetSpec.id) {
+			let candidate = this.manager.all.getById(targetSpec.id);
+			if (candidate) {
+				candidates = [candidate];
+				candidates = filterBySides(candidates, sides);
+
+			}
+			return candidates;
+		}
+
+
+		// Get the potentially targeted entities
+		switch (targetSpec.type) {
+			case 'encounter':
+				candidates.push(this.manager.encounter);
+				break;
+			case 'side':
+				if (sides === null)
+					sides = [0, 1, 2];
+				for (let side of sides) {
+					candidates.push(this.manager.sides[side]);
+				}
+				break;
+			case 'self':
+				candidates.push(targeter);
+				candidates = filterBySides(candidates, sides);
+				break;
+			case 'target':
+				if (targeter.target) {
+					// targeter is an effect
+					candidates.push(targeter.target);
+				} else if (targeter.targets) {
+					// targeter is an action
+					for (let target of targeter.targets) {
+						candidates.push(target);
+					}
+				} else {
+					if (this.displayWarnings) {
+						let errMsg = 
+							"Could not find target for targetSpec.type "
+							+ "= 'target' , targeter kind is "
+							+ targeter.kind.id + "\n";
+						if (targeter.holder) {
+							errMsg += "targeter holder's kind is "
+							+ targeter.holder.kind.id + "\n";
+						}
+						console.warn(errMsg);
+					}
+				}
+				candidates = filterBySides(candidates, sides);
+				break;
+			case 'holder':
+				if (targeter.holder) {
+					candidates.push(targeter.holder);
+				} else {
+					if (this.displayWarnings) {
+						let errMsg = 
+							"Could not find holder for targetSpec.type "
+							+ "= 'holder' , targeter kind is "
+							+ targeter.kind.id + "\n";
+						console.warn(errMsg);
+					}
+				}
+				candidates = filterBySides(candidates, sides);
+				break;
+			case 'ultimateHolder':
+				if (!targeter.holder) {
+					if (this.displayWarnings) {
+						let errMsg = 
+							"Could not find holder for targetSpec.type "
+							+ "= 'ultimateHolder' , targeter kind is "
+							+ targeter.kind.id + "\n";
+						console.warn(errMsg);
+					}
+					break;
+				}
+				let holder = targeter.holder;
+				while (holder.holder) {
+					holder = holder.holder;
+				}
+				candidates.push(holder);
+				candidates = filterBySides(candidates, sides);
+				break;
+			case 'creator':
+				let holder = targeter;
+				while (!holder.creator) {
+					if (!holder.holder) {
+						if (this.displayWarnings) {
+							let errMsg = 
+								"Could not find creator for targetSpec.type "
+								+ "= 'creator', targeter kind is "
+								+ targeter.kind.id + "\n";
+							if (targeter.holder) {
+								errMsg += "targeter holder's kind is "
+								+ targeter.holder.kind.id + "\n";
+							}
+							console.warn(errMsg);
+						}
+						break;
+					}
+					holder = holder.holder;
+				} 
+				candidates.push(holder.creator);
+				candidates = filterBySides(candidates, sides);
+				break;
+			case 'code':
+				//[TODO]
+				throw 'code not yet supported'
+				candidates = filterBySides(candidates, sides);
+				break;
+			case 'allDevelopers':
+				let holder = targeter;
+				while (!holder.developers) {
+					if (!holder.holder) {
+						if (this.displayWarnings) {
+							let errMsg = 
+								"Could not find developers for "
+								+ "targetSpec.type "
+								+ "= 'allDevelopers', targeter kind is "
+								+ targeter.kind.id + "\n";
+							if (targeter.holder) {
+								errMsg += "targeter holder's kind is "
+								+ targeter.holder.kind.id + "\n";
+							}
+							console.warn(errMsg);
+						}
+						break;
+					}
+					holder = holder.holder;
+				}
+				for (let developer of holder.developers) {
+					candidates.push(developer);
+				}
+				candidates = filterBySides(candidates, sides);
+				break;
+			case 'allActions':
+				for (let side of sides) {
+					for (let action of this.manager.sides[side].actions) {
+						candidates.push(action);
+					}
+				}
+				break;
+			case 'allArguments':
+				for (let side of sides) {
+					for (let argument of this.manager.sides[side].args) {
+						candidates.push(argument);
+					}
+				}
+				break;
+			case 'allBoosters':
+				for (let side of sides) {
+					for (let booster of this.manager.sides[side].boosters) {
+						candidates.push(booster);
+					}
+				}
+				break;
+			case 'allGlobalBoosters':
+				for (let side of sides) {
+					for (let booster of this.manager.sides[side].gBoosters) {
+						candidates.push(booster);
+					}
+				}
+				break;
+			case 'allArgumentBoosters':
+				for (let side of sides) {
+					for (let booster of
+							this.manager.sides[side].argBoosters) {
+						candidates.push(booster);
+					}
+				}
+				break;
+			case 'allFriendlyBoosters':
+				for (let side of sides) {
+					for (let booster of
+								this.manager.sides[side].friendlyBoosters) {
+							candidates.push(booster);
+						}
+					}
+				}
+				break;
+			case 'allAdverseBoosters':
+				for (let side of sides) {
+					for (let booster of
+								this.manager.sides[side].adverseBoosters) {
+							candidates.push(booster);
+						}
+					}
+					break;
+				}
+
+
+
+
+
+
+			//[TODO]
+		}
+
+
+				for (let target of tempList) {
+					let targetSide = this._getEntitySide(target);
+					if (sides.indexOf(targetSide) !== -1) {
+						candidates.push(target);
+					}
+				}
+	},
+		
+`allCharacters` - all characters on the specified `side`
+
+`allEffects` - all effects belonging to entities on the specified `side`
+
+`allItems` - all items on the specified `side`
+
+`allTraits` - all traits on the specified `side`
+
+	/**
+	* Filters the candidates for a given target list so that only those that
+	* match the classes in the targetSpec are included.
+	* 
+	* @private
+	* @param {Array.<Faith.Encounter.Entity>} candidates - the array of
+	* candidates
+	*
+	* @param {Array.<Number>} sides - the array holding the sides that are
+	* to be included
+	*
+	* @return {Array.<Faith.Encounter.Entity>} the filtered array of candidates
+	*/
+	_filterByClasses(candidates, targetSpec) {
+
+
+
+
 		//[TODO]
 
 	}
+
+	/**
+	* Filters the candidates for a given target list so that only those
+	* whose flags match the ones in the targetSpec are included.
+	*
+	* @private
+	* @param {Array} candidates - the array of candidates
+	*
+	* @param {Faith.Encounter.targetSpec} targetSpec - the targetSpec storing
+	* the flags
+
+	* @return {Array.<Faith.Encounter.Entity>} the filtered array of candidates
+	*/
+	_filterByFlags(candidates, targetSpec) {
+		if ((targetSpec.finished === null
+				|| targetSpec.finished === undefined)
+				&& (targetSpec.active === null
+				|| targetSpec.active === undefined)
+				&& (targetSpec.alive === null
+				|| targetSpec.alive === undefined)) {
+			// (keep these as === null and === undefined because they
+			// might be false, so do not use !targetSpec.active etc)
+			return candidates;
+		}
+		let filteredCandidates = [];
+		for (let candidate of candidates) {
+			if (targetSpec.finished !== null
+					&& targetSpec.finished !== undefined
+					&& targetSpec.finished !== candidate.finished) {
+				continue;
+			}
+
+			if (targetSpec.active !== null
+					&& targetSpec.active !== undefined
+					&& targetSpec.active !== candidate.active) {
+				continue;
+			}
+
+			if (targetSpec.alive !== null
+					&& targetSpec.alive !== undefined
+					&& targetSpec.alive !== candidate.alive) {
+				continue;
+			}
+
+			filteredCandidates.push(candidate);	
+		}
+		return filteredCandidates;
+	},
+
+	/**
+	* Filters the candidates for a given target list so that only those
+	* on the specified sides are included.
+	*
+	* @private
+	* @param {Array.<Faith.Encounter.Entity>} candidates - the array of
+	* candidates
+	*
+	* @param {Array.<Number>} sides - the array holding the sides that are
+	* to be included
+	*
+	* @return {Array.<Faith.Encounter.Entity>} the filtered array of candidates
+	*/
+	_filterBySides(candidates, sides) {
+		if (sides === null)
+			return candidates;
+		let filteredCandidates = [];
+		for (let candidate of candidates) {
+			if (sides.indexOf(candidate.side) !== -1) {
+				filteredCandidates.push(candidate);
+			}
+		}
+		return filteredCandidates;
+	},
+
+	/**
+	* Gets the exact sides described in the targetSpec
+	*
+	* @param {Faith.Encounter.Entity} targeter - the entity attempting the
+	* targeting
+	*
+	* @param {Faith.Encounter.targetSpec} targetSpec - the target
+	* specification to be used
+	*
+	* @return {Array.<Number>} sides - the sides extracted from the targetSpec
+	*/
+	_getCandidateSides(targeter, targetSpec) {
+		let sides = null;
+		let targeterSide = this._getEntitySide(targeter);
+		switch (targetSpec.side) {
+			case null:
+			case 'all':
+				sides = null;
+				break;
+			case 'friendly':
+				sides = [targeterSide];
+				break;
+			case 'opposing':
+				if (targeterSide === 1) {
+					sides = [2];
+				} else if (targeterSide === 2) {
+					sides = [1];
+				} else if (targeterSide === 0) {
+					sides = [1, 2];
+				}
+				break;
+			case 'neutral':
+				sides = [0];
+				break;
+			case 'side1':
+				sides = [1];
+				break;
+			case 'side2':
+				sides = [2];
+				break;
+			default:
+				throw 'Invalid side attribute for targetSpec, got '
+					+ targetSpec.side;
+		}
+		return sides;
+	},
+
+	/**
+	* Gets the side of the specified entity.
+	*
+	* @private
+	*
+	* @param {Faith.Encounter.Entity} entity - the entity whose side is to
+	* be found
+	*
+	* @return {Number} The side of the entity
+	*/
+	 _getEntitySide(entity) {
+			// if the entity has no side, go through its hierarchy of holders
+			// and see if one of them has a side
+			let holder = entity;
+				while (holder.side === undefined && holder.side === null) {
+				holder = holder.holder;
+				if (!holder) {
+					return null;
+				}
+			}
+			return holder.side;
+		}
 }
 
-
 export { Entity, traitMixin, targetMixin, EntityKind };
-
