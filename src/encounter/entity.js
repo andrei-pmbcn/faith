@@ -601,7 +601,7 @@ const targetMixin = {
 	* @return {Array.<Faith.Encounter.Entity>} the filtered array of candidates
 	*/
 	_filterByClasses(candidates, targetSpec) {
-
+		
 
 
 
