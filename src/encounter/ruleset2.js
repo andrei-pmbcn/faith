@@ -430,6 +430,9 @@ function _parseVisibilityInProperties(rule, holder, mode) {
 						parsedProp.vis =
 							this._parseBoolean(attr.textContent);
 						break;
+					case 'alwaysHide':
+						parsedProp.alwaysHide = 
+							this._parseBoolean(attr.textContent);
 					case 'refresh':
 						parsedProp.refresh =
 							this._parseBoolean(attr.textContent);

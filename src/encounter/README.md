@@ -3,13 +3,12 @@ TODO modifiers - an effect that targets another effect
 TODO effect initiative (set initiative 300 for additive, initiative 400 for
 multiplicative, initiative 100 for interrupt effects that are additive,
 initiative 200 for interrupt effects that are multiplicative etc);
-TODO encounter visibilities (whether characters' actions are known, 
- etc.)
-TODO prop.side1, prop.side2, prop.side0 - the value of that property
+TODO XX prop.side1, prop.side2, prop.side0 - the value of that property
 related to a given side; e.g. research.side1 and (for neutral characters)
-probing.side1 and conviction.side1. Effects also have a "propSide" element
-that determines whether to affect 'side1', 'side2' , 'side0' (absolute),
-the 'opponent' side or the 'friendly' side (relative).
+probing.side1 and conviction.side1. XX
+TODO ruleset-specific attributes, e.g. stating whether items are owned by
+characters or belong to a side-specific pool from which any character on that
+side may freely use or equip them
 TODO inside encounters, option to truncate decimals of float values
 to e.g. 0, 2 or 3 decimal points
 TODO check all links
@@ -437,7 +436,7 @@ kebab-case). Also, it is strongly recommended that rules that are used as
 templates for other rules (using the `<copyById>` tag) have a string-based
 id. The id may not be `getByName`, `getByClasses` or `_defaults` because
 these are used by certain code in the engine, but you should not be using
-pascal case (e.g. 'thisIsPascalCase') or underlines for ids to begin with.
+camel case (e.g. 'thisIsCamelCase') or underlines for ids to begin with.
 
 All top-level rules, i.e. rules that are the direct children of a 
 `<ruleset>` tag, must have a unique id. Top-level `<...Condition>`, 
@@ -727,6 +726,13 @@ The property kind element must have an **id** attribute and can have a
 Every property kind has the `property` class. Any other classes that property
 kinds have should be prefixed with `property-`.
 
+The property kind element must contain a **codeName** attribute that
+specifies what the name used by the Social Encounter engine's code for this
+property will be. This name should be a single word or a set of words written
+in camelCase (i.e. the first letter of each word after the first is
+capitalized, so it looksLikeThis). The codeName may only contain letters,
+digits and underlines - no hyphens.
+
 The property kind element may contain an optional `<visibility>` element
 describing any visibility rules specific to it. These will override the
 global rules stated in the optional top-level `<visibility>` tag (which is
@@ -747,27 +753,41 @@ property's current (and initial) value, minimum value and maximum value
 respectively are calculated. If the property has a `<min>` or `<max>`
 element, then whenever the property reaches its minimum or maximum value as
 specified in these elements, it can go no further. Note that a property's
-current, minimum and maximum values can be negative; to avoid this, use
-`<min base="0">`.
+current, minimum and maximum values can be negative; to avoid making the
+current value negative during encounters, use `<min base="0">`.
+
+When `<min>` or `<max>` is not set, there is no minimum or maximum, but when
+`<val>` is not set, it defaults to `<val base="0">`. If you want the current
+value to initially equal the maximum value, e.g. if you want to start the
+encounter with full hit points, use `<val base="max">`
 
 Each of `<val>`, `<min>` and `<max>` has the following **attributes**:
 
 `mode` - works as everywhere else. See the [Ruleset Xml](#ruleset-xml) for
 more information.
 
+`resetAfterEncounter` - whether the value should be reset after the encounter
+is over. Can be `true` or `false`; `true` by default.
+
 `base` - this is the amount that the property's current, minimum or maximum
-value has when the property's holder entity is created. It can be a number,
-or `min` or `max`, in which case it takes on the value of the property's
-computed minimum value or computed maximum value. It is an error for
-`<min>` to have `base="min"`, for `<max>` to have `base="max"`, or for
-`<min>` to have `base="max"` and for `<max>` to have `base="min"` at the
-same time. When `tethered="true"`, `base` represents not just the initial
-value but is also used in recalculating the current value every time a
-_source_ (see below) changes or an _effect_ occurs. `base` is 0 by default.
+value has when the property's holder entity is created, before the _sources_
+or _coeff_ are calculated. It can be a number, or `min` or `max`, in which
+case it takes on the value of the property's computed minimum value or
+computed maximum value. It is an error for `<min>` to have `base="min"`, for
+`<max>` to have `base="max"`, or for `<min>` to have `base="max"` and for
+`<max>` to have `base="min"` at the same time. When `tethered="true"`, `base`
+represents not just the initial value but is also used in recalculating the
+current value every time a _source_ (see below) changes or an _effect_
+occurs. `base` is 0 by default.
+
+Note that `base` should only change when the item, character or side having
+this property levels up or otherwise improves. It should _not_ change as part
+of most effects.
 
 TODO when `<max base="min">`, compute the min first, then the max; conversely,
 when `<min base="max">`, compute the max first, then the min.
 
+`costsChange` - how much the base value permanently changes when its costs are expended; 1 by default.
 
 `coeff` - this is the amount that the current, minimum or maximum value will
 be multiplied by after its _sources_ are processed. For instance, if a
@@ -827,6 +847,10 @@ called `sources` in addition to standard variables, and that array will
 contain all the source properties. Only one `<code>` element may be present;
 any `<code>` elements placed after it will overwrite it.
 
+`<cost>` - a cost element (see [Cost](#cost)) that describes one of the costs
+for permanently increasing or decreasing the value's `base` by a number stated
+in the value's `costsChange` attribute.
+
 `<source>` - any number of these may be present. Each `<source>` element
 represents a property that, combined with the other source properties,
 affects the initial value and (if tethered="true") contributes to recomputing
@@ -855,46 +879,64 @@ If a thus-named variable represents a source with multiple holders, it will
 be an array, each element of the array being the property of the specified
 `kind` within the given holder.
 
-The `<source>` element also has any number of `<holder>` child elements and
-one optional `<holderCode>` child element. Each holder represents an entity
-that has the property specified by `kind`. By having multiple holders under
-the same `<source>` tag, the engine will process the property of the 
-specified `kind` in each of these holders. So, for instance, if we have a
-property `property-side-power` that will be assigned to the team's side, and
-it has two sources, the total `power` of the team's arguments and the total
-`power` of its boosters, it will have the following `<source>` element:
+The `<source>` element also has any number of `<holder>` child elements. Each
+holder represents an entity that has the property specified by `kind` and
+whose property of that kind is counted as a source. By having multiple
+holders under the same `<source>` tag, the engine will process the property
+of the  specified `kind` in each of these holders. So, for instance, if we
+have a property `property-side-power` that will be assigned to the team's
+side, and it has two sources, the total `power` of the team's arguments and
+the total `power` of its boosters, it will have the following `<source>`
+element:
 
 ```
 <source
 	kind="property-power"
 >
-	<holder side="friendly">allArguments</holder>
-	<holder side="friendly">allBoosters</holder>
+	<holder
+		id="1"
+		side="friendly"
+		targetType="allArguments"
+	></holder>
+	<holder
+		id="2"
+		side="friendly"
+		targetType="allBoosters"
+	></holder>
 </source>
 ```
 
 You can, of course, create two different sources for the same result:
 ```
 <source kind="property-power">
-	<holder side="friendly">allArguments</holder>
+	<holder
+		id="1"
+		side="friendly"
+		targetType="allArguments"
+	></holder>
 </source>
 <source kind="property-power">
-	<holder side="friendly">allBoosters</holder>
+	<holder
+		id="1"
+		side="friendly"
+		targetType="allBoosters"
+	></holder>
 </source>
 ```
 
-The values that the `holder` property can take are discussed in the
-[Targets](#targets) section.
+The attributes and child elements that the `holder` property can have are
+discussed in the [Targets](#targets) section.
 
 If no `<holder>` element exists, the property's holder will be regarded as
-the source's holder, so it will be the same as `<holder>holder</holder>`.
-The `<holderCode>` child element, if present, stores the code to be run when
-`<source>` is set to `code`.
+the source's holder, so it will be the same as
+`<holder targetType="holder"></holder>`.
 
 Example of a property kind element:
 ```
 <property
 	id="property-energy"
+	codeName="energy"
+	name="energy"
 	class="property-character, property-stat"
 >
 	<val base="max">
@@ -902,17 +944,20 @@ Example of a property kind element:
 	<max
 		base="50"
 		coeff="3.0"
+		costsChange="10"
 		tethered="true"
 		process="average"
 	>
 		<source kind="property-intelligence"></source>
 		<source kind="property-spirit"></source>
+		<cost>TODO</cost>
 	</max>
 </property>
 ```
 This will create a property 'energy' with a default minimum of 0, a default
 maximum of `50 + ((intelligence + spirit) / 2) * 3.0` and an initial value
-equal to the maximum.
+equal to the maximum. It will cost TODO to increase this property by 10
+points.
 
 As mentioned earlier, <property> can also sit inside other entity elements
 like characters, boosters and items, in which case it is an
@@ -943,11 +988,12 @@ Example:
 
 ### Targets
 Some elements contain a <target> sub-element, which describes one of their
-targets. Likewise, `<property>` elements have a `<holder>` sub-element that
-shows which entity or entity kind encapsulates these elements. So, for
-instance, if a `<source>` element in a `<property>` contains a 
-`<holder>agent</holder>` sub-element, that sub-element will point to the
-entity that has the given property.
+targets. Likewise, the `<source>` elements inside `<property>` elements have
+a `<holder>` sub-element that shows which entity or entity kind encapsulates
+these `<source>` elements. So, for instance, if a `<source>` element in a
+`<property>` contains a `<holder targetType="creator"></holder>` sub-element,
+that sub-element will point to the entity that has ultimately created the
+entity holding the given property.
 
 A `<target>` or `<holder>` element must contain an **id** attribute, which 
 can (and indeed should) be numeric, with a number that is unique among the
@@ -957,22 +1003,31 @@ can (and indeed should) be numeric, with a number that is unique among the
 	id="property-whatever"
 >
 	<val>
-		<source kind="property-whatever-else">
-			<holder id="1">allArguments</holder>
-			<holder id="2">allBoosters</holder>
+		<source
+			kind="property-whatever-else"
+		>
+			<holder
+				id="1"
+				targetType="allArguments"
+			></holder>
+			<holder
+				id="2"
+				targetType="allBoosters"
+			></holder>
 		</source>
 	</val>
 </property>
 ```
-Here, the two holders have ids "1" and "2".
+Here, the two holders have ids "1" and "2", which must be distinct.
 
 A `<target>` or `<holder>` element may also contain a **mode** attribute,
 which describes the element's mode as shown in the
 [Ruleset Xml](#ruleset-xml) section, a **targetId** attribute that makes the
-element refer to the entity having the specified id, a **targetClass**
-attribute, which selects only for entities with the specified classes, and a
-**notTargetClass** attribute, which filters out entities that have the
-specified classes.
+element refer to the entity having the specified id, a **targetKindId**
+attribute that selects for only entities that have the specified _kind_, a
+**targetClass** attribute that selects for only entities with the
+specified classes, and a **notTargetClass** attribute that filters out
+entities that have the specified classes.
 
 In addition, the element may contain a **side** attribute, which
 states which side contains the targets and can have the following values:
@@ -995,28 +1050,35 @@ For `friendly` or `opposing`, if the entity holding the `<target>` or
 of its holder's holder and so on, will be used to determine this instead.
 
 The element may also have a **finished**, an **active** and an **alive**
-attribute, which selects entities to target based on their given finished
-and active states. If the entity's creation has been completed, it is
-finished. If the entity is active, it can perform actions or be used (and is a
-character or item). If the entity is alive, it processes all effects applied
-to it (by default, no effects affect dead entities).
+attribute, which selects entities to target based on their given finished,
+active and alive states. If the entity's creation has been completed, it is
+finished. If the entity is active, it can perform actions (if it is a
+character) or be used (if it is an item). If the entity is alive, it
+processes all effects applied to it (by default, no effects affect dead
+entities).
 
-The element must contain text content that consists of one of the following
-options, stating the type of the designated target or holder. Some of these
-options may be disabled for some types of entities that have the element.
+The element must contain a **targetType** attribute set to one of the
+following values, which further filter the designated target or holder.
 
 `encounter` - the encounter itself
 
-`side` - the side designated by the `side` attribute. 
+`side` - the side or sides designated by the `side` attribute. 
 
 `self` - the entity that holds the `<target>` or `<holder>` element
 
-`target` - the target of the effect or action. If the action has multiple
+`target` - the target of the `<effect>` or `<action>` element ultimately
+holding the `<target>` or `<holder>` element. If the action has multiple
 targets, all will be included. Effects created by an action with multiple
-targets each have one target, i.e. one of the action's targets.
+targets each have one target, i.e. one of the action's targets. `target`
+is the default for the `<target>` element inside effects.
 
 `holder` - the entity that holds the entity that holds the `<target>` or
 `<holder>` element; the default for the `<holder>` element inside properties.
+
+`holder2` - the second-order holder, i.e. the entity that holds the entity
+that holds the entity that holds the `<target>` or `<holder>` element.
+
+`holder3` - the third-order holder.
 
 `ultimateHolder` - the last in the chain of entities (not the side) that hold
 the next entities in the chain and ultimately hold the entity with the
@@ -1024,13 +1086,59 @@ the next entities in the chain and ultimately hold the entity with the
 
 `creator` - the entity that created the first entity with a creator in the
 chain of entities that holds the `<target>` or `<holder>` element, starting
-from the bottom up. For instance, if an _effect_ has a `<target>` element,
-and that _effect_ belongs to a _trait_ that belongs to an _argument_ that
-was created by a _character_, then that _argument_ will be picked as the
-target. Note that _actions_ are created by _characters_ too.
+from the bottom up. For instance, if an _effect_ has a
+`<target targetType="creator"></target>` element, and that _effect_ belongs
+to a _trait_ that belongs to an _argument_ that was created by a _character_,
+then the aforementioned _character_ will be picked as the target. Note that
+_actions_ are created by _characters_ too.
 
-`code` - the entities included in an array returned by the `<targetCode>`
-or `<holderCode>` element that is the `<target>` or `<holder>` tag's sibling.
+`code` - the entities included in an array returned by the code contents of
+the `<getTargetsCode>` child element belonging to the `<target>` or `<holder>`
+element; the `<isTargetCode>` code element must also exist, see below.
+
+`kindredActions` - all actions created by the same `creator` as the entity
+holding the `<target>` or `<holder>` element. These may include the entity
+itself or its holder.
+
+`kindredArguments` - all arguments created by the same `creator` as the entity
+holding the `<target>` or `<holder>` element. These may include the entity
+itself or its holder.
+
+`kindredBoosters` - all boosters created by the same `creator` as the entity
+holding the `<target>` or `<holder>` element. These may include the entity
+itself or its holder.
+
+`kindredCharacters` - all characters created by the same `creator` as the
+entity holding the `<target>` or `<holder>` element. These may include the
+entity itself or its holder.
+
+`kindredItems` - all items created by the same `creator` as the entity
+holding the `<target>` or `<holder>` element. These may include the entity
+itself or its holder.
+
+`kindredTraits` - all traits created by the same `creator` as the entity
+holding the `<target>` or `<holder>` element. These may include the entity
+itself or its holder.
+
+`sameHolderBoosters` - all boosters that share the same `holder as either the
+entity holding the `<target>` or `<holder>` element or, if that entity is
+a property, its holder.
+
+`sameHolderEffects` - all effects that share the same `holder` as either the
+entity holding the `<target>` or `<holder>` element or, if that entity is
+a property, its holder.
+
+`sameHolderItems` - all items that share the same `holder` as either the
+entity holding the `<target>` or `<holder>` element or, if that entity is
+a property, its holder.
+
+`sameHolderEquippedItems` - all equipped items that share the same `holder`
+as either the entity holding the `<target>` or `<holder>` element or, if that
+entity is a property, its holder.
+
+`sameHolderTraits` - all traits that share the same `holder` as either the
+entity holding the `<target>` or `<holder>` element or, if that entity is
+a property, its holder.
 
 `allDevelopers` - all developers of the argument that ultimately holds the
 `<target>` or `<holder>` element
@@ -1058,6 +1166,8 @@ the opposing side
 
 `allItems` - all items on the specified `side`
 
+`allEquippedItems` - all items equipped by characters on the specified `side`
+
 `allTraits` - all traits on the specified `side`
 
 `allArgumentTraits` - all traits belonging to characters on the specified
@@ -1070,17 +1180,15 @@ the opposing side
 
 `allItemTraits` - all traits belonging to items on the specified `side`
 
-If the `targetId` attribute has been set, the text content of the element
-is ignored.
-
-Note that irrespective of the text content, the target or holder list is
-still filtered by the `<target>` or `<holder>` element's attributes, so a
-`<holder side="opposing">creator</holder>` element will only find a holder
-if the creator of the `<holder>` element's parent entity is on the opposite
-side, which is highly unlikely to happen in any ruleset. Likewise,
-`<target side="1" active="true">allCharacters</target>` will only target all
-active characters on side 1. The `encounter` and `allEncounterTraits` text
-content ignore sides.
+Note that irrespective of the targetType, the target or holder list is
+still filtered by the other attributes of the `<target>` or `<holder>`
+element, so a `<holder side="opposing" targetType="creator"></holder>`
+element will only find a holder if the creator of the `<holder>` element's
+parent entity is on the opposite side, which is highly unlikely to happen in
+any ruleset. Likewise, 
+`<target side="1" active="true" targetType="allCharacters"></target>` will
+only target all active characters on side 1. The `encounter` and
+`allEncounterTraits` target types ignore sides.
 
 
 ### Trait
@@ -1322,9 +1430,11 @@ etc. `<property>` elements can store an **id** attribute and a **class**
 attribute, denoting the id or classes of the properties they affect.
 They also have a **vis** attribute that can be set to `true` or `false` and
 denotes whether the property or properties affected by this rule are
-initially visible, and a **refresh** attribute that determines whether the
-property's hidden or visible status will be reset to the value stored in
-`vis` every turn. By default, `vis` is `false` and `refresh` is `false`.
+initially visible, an **alwaysHide** attribute that tells the default probing
+process whether to never reveal this property, and a **refresh** attribute
+that determines whether the property's hidden or visible status will be
+reset to the value stored in `vis` every turn. By default, `vis` is `false`, 
+alwaysHide is `false` and `refresh` is `false`.
 
 Keep in mind that all these child elements of `<visibility>` can have
 optional `id` and `class` attributes to narrow down the list of entity

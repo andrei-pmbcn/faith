@@ -13,16 +13,17 @@ import { List, Map } from './list.js'
 */
 class Side {
 	/**
-	* @param {boolean} isNeutral - whether this side is neutral
+	* @param {Number} side - the index of this side, which is 0 for the
+	* neutral side, 1 for side 1 and 2 for side 2.
 	*/
-	constructor(index) {
+	constructor(side) {
 		/**
 		* The index of this side, which is 0 for the neutral side,
 		* 1 for side 1 and 2 for side 2.
 		*
 		* @type {number}
 		*/
-		this.index = index;
+		this.side = side;
 
 		/**
 		* The list of (unfinished) actions that this side owns.
@@ -89,10 +90,45 @@ class Side {
 		this.adverseBoosters = new List();
 
 		/**
+		* The list of effects this side has.
+		*
+		* @type {Faith.Encounter.List<Faith.Encounter.Effect>}
+		* @default []
+		*/
+		this.effects = new List();
+
+		/**
+		* The list of items this side has.
+		*
+		* @type {Faith.Encounter.List<Faith.Encounter.Item>}
+		* @default []
+		*/
+		this.items = new List();
+
+		/**
+		* The list of items currently being equipped by characters that this
+		* side has.
+		*
+		* @type {Faith.Encounter.List<Faith.Encounter.Item>}
+		* @default []
+		*/
+		this.equippedItems = new List();
+
+		/**
+		* The list of items on this side that currently have no owner.
+		* If the ruleset states that unowned items may not exist, this list
+		* will always be empty.
+		*
+		* @type {Faith.Encounter.List<Faith.Encounter.Item>}
+		* @default []
+		*/
+		this.unownedItems = new List();
+
+		/**
 		* The properties attached to this side. Access them using
 		* props.<property> .
 		*
-		* @type {Object.<Faith.Encounter.Property>}
+		* @type {Faith.Encounter.Map.<Faith.Encounter.Property>}
 		* @default {}
 		*/
 		this.props = new Map();

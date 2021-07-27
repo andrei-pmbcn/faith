@@ -9,7 +9,7 @@
 
 import { Ruleset } from './ruleset.js';
 import { Side } from './side.js';
-import { List } from './list.js';
+import { List, Map } from './list.js';
 
 /**
 * @namespace Faith.Encounter
@@ -91,23 +91,45 @@ class EncounterManager {
 		}
 
 		/**
+		* The list of all entities present in the encounter. Useful for
+		* finding an entity by its id.
+		*
+		* @type {Faith.Encounter.List.<Faith.Encounter.Entity>}
+		*/
+		this.all = [];
+
+		/**
 		* The three sides in the encounter. sides[0] is the neutral side,
 		* sides[1] is side 1 and sides[2] is side 2.
 		*
 		* @type {Array.<Faith.Encounter.Side>}
 		*/
 		this.sides = [];
-		this.sides[0] = config.neutral;
-		this.sides[1] = config.side1;
-		this.sides[2] = config.side2;
 	
 		/**
-		* The encounter's custom game-related properties
+		* The list of all effects targeting the encounter.
+		*
+		* @type {Faith.Encounter.List.<Faith.Encounter.Effect>}
+		* @default []
+		*/
+		this.effects = new List();
+
+		/**
+		* the list of all effects in the encounter, irrespective of what they
+		* target.
+		*
+		* @type {Faith.Encounter.List.<Faith.Encounter.Effect>}
+		* @default []
+		*/
+		this.allEffects = new List();
+
+		/**
+		* The encounter's game-related properties.
 		* 
-		* @type {object.<number>}
+		* @type {Faith.Encounter.Map.<Faith.Encounter.Property>}
 		* @default {}
 		*/
-		this.props = {};
+		this.props = new Map();
 
 		/**
 		* The encounter's traits

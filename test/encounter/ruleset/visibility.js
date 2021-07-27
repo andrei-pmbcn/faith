@@ -70,29 +70,34 @@ let xmlEncounterAttributesSwapped =
 
 let xmlProperty1 = 
 	'vis="false"\n'
+	+ 'alwaysHide="true"\n'
 	+ 'refresh="false"\n'
 	+ '></property>\n';
 
-// the property has vis="true", refresh="true"
+// the property has vis="true", alwaysHide="false", refresh="true"
 let xmlProperty2 = 
 	'vis="true"\n'
+	+ 'alwaysHide="false"\n'
 	+ 'refresh="true"\n'
 	+ '></property>\n';
 
-// the property has has vis="true", refresh="false"
+// the property has has vis="true", alwaysHide="false", refresh="false"
 let xmlProperty3 = 
 	'vis="true"\n'
+	+ 'alwaysHide="false"\n'
 	+ 'refresh="false"\n'
 	+ '></property>\n';
 
-// only has refresh="false"
+// only has alwaysHide="false", refresh="false"
 let xmlPropertyPartial1 =
-	'refresh="false"\n'
+	'alwaysHide="false"\n'
+	+ 'refresh="false"\n'
 	+ '></property>\n';
 
-// only has refresh="true"
+// only has alwaysHide="false", refresh="true"
 let xmlPropertyPartial2 =
-	'refresh="true"\n'
+	'alwaysHide="false"\n'
+	+ 'refresh="true"\n'
 	+ '></property>\n';
 
 let xmlFullEncounter =
@@ -187,12 +192,14 @@ function verifyFullEncounterRuleLoaded(xmlString) {
 	assert.sameMembers(arrayFromSet(prop.classes),
 		['prop-class-1', 'prop-class-2', 'prop-class-3']);
 	assert.isFalse(prop.vis);
+	assert.isTrue(prop.alwaysHide);
 	assert.isFalse(prop.refresh);
 
 	prop = rule.propList[1];
 	assert.isNull(prop.id);
 	assert.equal(prop.classes.size, 0);
 	assert.isTrue(prop.vis);
+	assert.isFalse(prop.alwaysHide);
 	assert.isTrue(prop.refresh);
 }
 
@@ -1209,6 +1216,7 @@ function casesCollapsesTopLevelEncounterProperty() {
 		assert.lengthOf(rule.propList, 1);
 
 		assert.isTrue(rule.propList[0].vis);
+		assert.isFalse(rule.propList[0].alwaysHide);
 		assert.isFalse(rule.propList[0].refresh);
 	});
 
@@ -1247,6 +1255,7 @@ function casesCollapsesTopLevelEncounterProperty() {
 		assert.lengthOf(rule.propList, 1);
 
 		assert.isTrue(rule.propList[0].vis);
+		assert.isFalse(rule.propList[0].alwaysHide);
 		assert.isFalse(rule.propList[0].refresh);
 	});
 
@@ -1321,6 +1330,7 @@ function casesCollapsesTopLevelEncounterProperty() {
 		assert.lengthOf(rule.propList, 1);
 
 		assert.isTrue(rule.propList[0].vis);
+		assert.isFalse(rule.propList[0].alwaysHide);
 		assert.isFalse(rule.propList[0].refresh);
 	});
 
@@ -1358,6 +1368,7 @@ function casesCollapsesTopLevelEncounterProperty() {
 		assert.lengthOf(rule.propList, 1);
 
 		assert.isTrue(rule.propList[0].vis);
+		assert.isFalse(rule.propList[0].alwaysHide);
 		assert.isFalse(rule.propList[0].refresh);
 	});
 
@@ -1431,6 +1442,7 @@ function casesCollapsesTopLevelEncounterProperty() {
 		assert.lengthOf(rule.propList, 1);
 
 		assert.isTrue(rule.propList[0].vis);
+		assert.isFalse(rule.propList[0].alwaysHide);
 		assert.isFalse(rule.propList[0].refresh);
 	});
 
@@ -1469,6 +1481,7 @@ function casesCollapsesTopLevelEncounterProperty() {
 		assert.lengthOf(rule.propList, 1);
 
 		assert.isUndefined(rule.propList[0].vis);
+		assert.isFalse(rule.propList[0].alwaysHide);
 		assert.isFalse(rule.propList[0].refresh);
 	});
 
@@ -1541,6 +1554,7 @@ function casesModsTopLevelEncounterProperty() {
 		
 		let prop = rule.propList[0];
 		assert.isTrue(prop.vis);
+		assert.isFalse(prop.alwaysHide);
 		assert.isTrue(prop.refresh);
 	});
 
@@ -1580,8 +1594,8 @@ function casesModsTopLevelEncounterProperty() {
 		let prop = rule.propList[0];
 		assert.equal(prop.id, 'property-id');
 		assert.isTrue(prop.vis);
+		assert.isFalse(prop.alwaysHide);
 		assert.isTrue(prop.refresh);
-
 	});
 
 
@@ -1625,6 +1639,7 @@ function casesModsTopLevelEncounterProperty() {
 		
 		let prop = rule.propList[0];
 		assert.isTrue(prop.vis);
+		assert.isFalse(prop.alwaysHide);
 		assert.isTrue(prop.refresh);
 		assert.sameMembers
 			(arrayFromSet(prop.classes), arrayPropertyClasses);
@@ -1666,11 +1681,13 @@ function casesModsTopLevelEncounterProperty() {
 
 		let prop = rule.propList[0];
 		assert.isFalse(prop.vis);
+		assert.isTrue(prop.alwaysHide);
 		assert.isFalse(prop.refresh);
 		assert.equal(prop.id, 'property-id');
 
 		prop = rule.propList[1];
 		assert.isTrue(prop.vis);
+		assert.isFalse(prop.alwaysHide);
 		assert.isTrue(prop.refresh);
 		assert.equal(prop.id, 'property-id-different');
 	});
@@ -1713,12 +1730,14 @@ function casesModsTopLevelEncounterProperty() {
 
 		let prop = rule.propList[0];
 		assert.isFalse(prop.vis);
+		assert.isTrue(prop.alwaysHide);
 		assert.isFalse(prop.refresh);
 		assert.sameMembers
 			(arrayFromSet(prop.classes), arrayPropertyClasses);
 
 		prop = rule.propList[1];
 		assert.isTrue(prop.vis);
+		assert.isFalse(prop.alwaysHide);
 		assert.isTrue(prop.refresh);
 		assert.sameMembers
 			(arrayFromSet(prop.classes), arrayPropertyClassesDifferent);
@@ -1766,6 +1785,7 @@ function casesModsTopLevelEncounterProperty() {
 		assert.isNull(prop.id);
 		assert.equal(prop.classes.size, 0);
 		assert.isFalse(prop.vis);
+		assert.isFalse(prop.alwaysHide);
 		assert.isTrue(prop.refresh);
 	});
 
@@ -1804,6 +1824,7 @@ function casesModsTopLevelEncounterProperty() {
 		assert.equal(prop.id, 'property-id');
 		assert.equal(prop.classes.size, 0);
 		assert.isFalse(prop.vis);
+		assert.isFalse(prop.alwaysHide);
 		assert.isTrue(prop.refresh);
 	});
 
@@ -1847,6 +1868,7 @@ function casesModsTopLevelEncounterProperty() {
 		assert.sameMembers
 			(arrayFromSet(prop.classes), arrayPropertyClasses);
 		assert.isFalse(prop.vis);
+		assert.isFalse(prop.alwaysHide);
 		assert.isTrue(prop.refresh);
 
 	});
@@ -1888,12 +1910,14 @@ function casesModsTopLevelEncounterProperty() {
 		assert.equal(prop.id, 'property-id');
 		assert.equal(prop.classes.size, 0);
 		assert.isFalse(prop.vis);
+		assert.isTrue(prop.alwaysHide);
 		assert.isFalse(prop.refresh);
 
 		prop = rule.propList[1];
 		assert.equal(prop.id, 'property-id-different');
 		assert.equal(prop.classes.size, 0);
 		assert.isUndefined(prop.vis);
+		assert.isFalse(prop.alwaysHide);
 		assert.isTrue(prop.refresh);
 	});
 
@@ -1936,12 +1960,14 @@ function casesModsTopLevelEncounterProperty() {
 		assert.sameMembers
 			(arrayFromSet(prop.classes), arrayPropertyClasses);
 		assert.isFalse(prop.vis);
+		assert.isTrue(prop.alwaysHide);
 		assert.isFalse(prop.refresh);
 
 		prop = rule.propList[1];
 		assert.isNull(prop.id);
 			(arrayFromSet(prop.classes), arrayPropertyClassesDifferent);
 		assert.isUndefined(prop.vis);
+		assert.isFalse(prop.alwaysHide);
 		assert.isTrue(prop.refresh);
 	});
 
@@ -2083,6 +2109,7 @@ function casesModsTopLevelEncounterProperty() {
 		assert.equal(prop.id, 'property-id');
 		assert.equal(prop.classes.size, 0);
 		assert.isFalse(prop.vis);
+		assert.isTrue(prop.alwaysHide);
 		assert.isFalse(prop.refresh);
 	});
 
@@ -2121,6 +2148,7 @@ function casesModsTopLevelEncounterProperty() {
 		assert.sameMembers
 			(arrayFromSet(prop.classes), arrayPropertyClasses);
 		assert.isFalse(prop.vis);
+		assert.isTrue(prop.alwaysHide);
 		assert.isFalse(prop.refresh);
 	});
 }

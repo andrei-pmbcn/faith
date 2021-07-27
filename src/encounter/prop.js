@@ -4,8 +4,10 @@
 * @license {https://www.gnu.org/licenses/gpl-3.0.en.html|GPL3.0 license}
 */
 
+import { Entity, EntityKind } from './entity.js';
+import { targetMixin } from './targetMixin.js';
 
-import { Entity, EntityKind, targetMixin } from './entity.js';
+//[TODO] test for infinite source loops, whereby a property's value ultimately // has itself as one of its sources.
 
 /*
 * Computes and stores the minima, maxima, initial value etc. of a property.
@@ -239,7 +241,7 @@ class Property extends Entity {
 		* @private
 		* @type {Array}
 		*/
-		this.order = null;
+		this._order = null;
 
 		// Determine the update order; always update val last, so as to
 		// ensure it fits within the new minimum and maximum
@@ -316,6 +318,15 @@ class Property extends Entity {
 	unmodMax = null
 
 	/**
+	* Destroys the property, clearing it from all lists that include it,
+	* notably the lists within the dependents and sources of the property.
+	*/
+	destroy() {
+		//[TODO]
+
+	}
+
+	/**
 	* Compute the property's specified unmodified value, i.e. before effects
 	* modify it.
 	*
@@ -351,7 +362,8 @@ class Property extends Entity {
 	}
 
 	/**
-	* Process the sources of the property's current, minimum or maximum value.
+	* Processes the sources of the property's current, minimum or maximum
+	* value.
 	*
 	* @private
 	* @param {String} category - either 'val', 'min' or 'max'; 'val' is for the
@@ -363,17 +375,21 @@ class Property extends Entity {
 	}
 
 	/**
-	* Adds the property's sources to the sources, sourcesMin and sourcesMax
-	* lists.
+	* Adds the property's sources to the `sources`, `sourcesMin` and
+	* `sourcesMax` lists.
 	*
 	* @private
 	*/
 	_catalogAllSources() {
 		//[TODO]
 
-
-
 	}
+
+	/**
+	* Finds the dependents of the property, updates their sources lists
+	* 
+
+
 }
 
 

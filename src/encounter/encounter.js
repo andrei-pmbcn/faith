@@ -97,9 +97,9 @@ class EncounterKind extends EntityKind {
 		/**
 		* The entityKind's traits.
 		* 
-		* @type {Faith.Encounter.List}
+		* @type {Faith.Encounter.Map.<Faith.Encounter.Trait>}
 		*/
-		this.traits = traits ?? new List();
+		this.traits = traits ?? new Map();
 	}
 
 	/**
