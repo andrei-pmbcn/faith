@@ -995,6 +995,15 @@ these `<source>` elements. So, for instance, if a `<source>` element in a
 that sub-element will point to the entity that has ultimately created the
 entity holding the given property.
 
+The concept of "holders" is important in targeting. Many entities within an
+encounter are holders for other entities: arguments are holders for their
+boosters and traits, characters are holders for their items and unfinished
+actions (as well as any unfinished argument, booster or character they
+might be creating) and all non-property entities are holders for their
+properties. When a character holds an item that holds a trait that holds a
+property, for instance, we speak of a chain of holders going up from that
+property to the character.
+
 A `<target>` or `<holder>` element must contain an **id** attribute, which 
 can (and indeed should) be numeric, with a number that is unique among the
 `<target>` or `<holder>` elements of the element's parent. For instance:
@@ -1029,6 +1038,11 @@ attribute that selects for only entities that have the specified _kind_, a
 specified classes, and a **notTargetClass** attribute that filters out
 entities that have the specified classes.
 
+TODO a **wearSlots** attribute, which can contain a comma-separated list of
+wear slots and filters for only those items that would use the specified wear
+slots, regardless of whether they are being equipped right now. If the list is
+empty (i.e. wearSlots="") it will be ignored.
+
 In addition, the element may contain a **side** attribute, which
 states which side contains the targets and can have the following values:
 
@@ -1055,7 +1069,9 @@ active and alive states. If the entity's creation has been completed, it is
 finished. If the entity is active, it can perform actions (if it is a
 character) or be used (if it is an item). If the entity is alive, it
 processes all effects applied to it (by default, no effects affect dead
-entities).
+entities). These three attributes may have a value of "true", "false" or
+"null"; in the latter case, they tell the engine not to match against these
+flags.
 
 The element must contain a **targetType** attribute set to one of the
 following values, which further filter the designated target or holder.
@@ -1120,25 +1136,25 @@ itself or its holder.
 holding the `<target>` or `<holder>` element. These may include the entity
 itself or its holder.
 
-`sameHolderBoosters` - all boosters that share the same `holder as either the
+`sameHolderBoosters` - all boosters that share the same argument as either the
+entity holding the `<target>` or `<holder>` element or the closest entity
+to it in its chain of holders.
+
+`sameHolderEffects` - all effects that share the same holder as either the
 entity holding the `<target>` or `<holder>` element or, if that entity is
 a property, its holder.
 
-`sameHolderEffects` - all effects that share the same `holder` as either the
-entity holding the `<target>` or `<holder>` element or, if that entity is
-a property, its holder.
+`sameHolderItems` - all items that share the same character as either the
+entity holding the `<target>` or `<holder>` element or the closest entity to
+it in its chain of holders.
 
-`sameHolderItems` - all items that share the same `holder` as either the
-entity holding the `<target>` or `<holder>` element or, if that entity is
-a property, its holder.
-
-`sameHolderEquippedItems` - all equipped items that share the same `holder`
-as either the entity holding the `<target>` or `<holder>` element or, if that
-entity is a property, its holder.
+`sameHolderEquippedItems` - all equipped items that share the same character
+as either the entity holding the `<target>` or `<holder>` element or the
+closest entity to it in its chain of holders.
 
 `sameHolderTraits` - all traits that share the same `holder` as either the
-entity holding the `<target>` or `<holder>` element or, if that entity is
-a property, its holder.
+entity holding the `<target>` or `<holder>` element or the closest entity to
+it in its chain of holders.
 
 `allDevelopers` - all developers of the argument that ultimately holds the
 `<target>` or `<holder>` element

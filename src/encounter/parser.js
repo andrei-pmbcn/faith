@@ -36,6 +36,8 @@ const parserMixin = {
 				return true;
 			case 'false':
 				return false;
+			case 'null':
+				return null;
 			default:
 				this._throwParserError("Invalid string-based Boolean: "
 					+ "expected 'true' or 'false', got '" + str + "'");

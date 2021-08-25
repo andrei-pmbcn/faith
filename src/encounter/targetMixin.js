@@ -98,23 +98,10 @@ const targetMixin = {
 			return false;
 		}
 
-		function checkSameHolder(className) {
-			let targeterHolder = this._getEntityHolder(
-				targeter, targetSpec.type);
-			let candidateHolder = this._getEntityHolder(
-				candidate, targetSpec.type);
-			if (!targeterHolder || !candidateHolder
-					|| targeterHolder !== candidateHolder) {
-				return false;
-			}
-
-			if (candidate.constructor.name === className)
-				return true;
-			return false;
-		}
 
 		let creator;
 		let holder;
+		let candHolder;
 		switch (targetSpec.type) {
 			case 'encounter':
 				if (candidate.constructor.name === 'Encounter')
@@ -206,10 +193,57 @@ const targetMixin = {
 			case 'kindredTraits':
 				return checkKindred('Trait');
 			case 'sameHolderBoosters':
-				return checkSameHolder('Booster');
+				// check that the candidate is a booster
+				if (candidate.constructor.name !== 'Booster')
+					return false;
+
+				// check that the targeter's eventual holder is an argument
+				holder = targeter.holder;
+				while (!holder.boosters) {
+					if (!holder.holder) {
+						if (this.displayWarnings) {
+							let errMsg = 
+								"Could not find ultimate argument holder for "
+								+ "targetSpec.type = 'sameHolderBoosters', "
+								+ "targeter kind is "
+								+ targeter.kind.id + "\n";
+							if (targeter.holder) {
+								errMsg += "targeter holder's kind is "
+								+ targeter.holder.kind.id + "\n";
+							}
+							console.warn(errMsg);
+						}
+						return false;
+					}
+				}
+
+				// check that the candidate's holder exists and matches
+				// the targeter's argument holder
+				if (!candidate.holder)
+					return false;
+				// (since the candidate is a booster, we do not need to check
+				// if its holder is an argument)
+				if (candidate.holder !== holder)
+					return false;
+				return true;
 			case 'sameHolderEffects':
 				return checkSameHolder('Effect');
 			case 'sameHolderItems':
+		function checkSameHolder(className) {
+			let targeterHolder = this._getEntityHolder(
+				targeter, targetSpec.type);
+			let candidateHolder = this._getEntityHolder(
+				candidate, targetSpec.type);
+			if (!targeterHolder || !candidateHolder
+					|| targeterHolder !== candidateHolder) {
+				return false;
+			}
+
+			if (candidate.constructor.name === className)
+				return true;
+			return false;
+		}
+
 				return checkSameHolder('Item');
 			case 'sameHolderEquippedItems':
 				if (!checkSameHolder('Item'))
