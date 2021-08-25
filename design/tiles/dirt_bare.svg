@@ -15,7 +15,7 @@
    version="1.1"
    id="svg2151"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
-   sodipodi:docname="dirt.svg"
+   sodipodi:docname="dirt_bare.svg"
    inkscape:export-filename="/home/andrei/Code/personal/missionary/design/tiles/dirt_test.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96">
@@ -665,10 +665,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="289.8761"
-     inkscape:cy="-109.55955"
+     inkscape:cx="5.0566519"
+     inkscape:cy="-65.536532"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g38137"
      showgrid="false"
      units="px"
      inkscape:pagecheckerboard="true"
@@ -1751,30 +1751,6 @@
          width="100%"
          height="100%" />
       <use
-         x="0"
-         y="0"
-         xlink:href="#g32219"
-         id="use32223"
-         transform="matrix(0.64823764,0,0,0.76290312,-9.3472058,72.032151)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32157"
-         id="use32227"
-         transform="translate(-9.819768,20.261163)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32219"
-         id="use32225"
-         transform="matrix(0.8898385,0,0,0.88888861,-11.744218,47.146401)"
-         width="100%"
-         height="100%" />
-      <use
          id="use32248"
          inkscape:spray-origin="#path31957"
          xlink:href="#path31957"
@@ -2290,22 +2266,6 @@
          width="100%"
          height="100%"
          transform="rotate(-23.262611,96.506277,296.83551)" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#use32384"
-         id="use32418"
-         transform="translate(-16.932906,23.328783)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32412"
-         id="use32420"
-         transform="translate(-17.062007,26.768088)"
-         width="100%"
-         height="100%" />
       <use
          id="use32462"
          inkscape:spray-origin="#path32424"
@@ -2897,30 +2857,6 @@
          id="path952"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="ccccccc" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32913"
-         id="use32923"
-         transform="matrix(0.76394037,0,0,0.76394037,-9.0376893,75.359245)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32412-0"
-         id="use32925"
-         transform="matrix(0.81248835,0,0,0.81248835,-5.0019421,60.147771)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32670"
-         id="use32927"
-         transform="matrix(1,0,0,0.5840867,-3.8625377,112.5607)"
-         width="100%"
-         height="100%" />
     </g>
     <g
        id="g32945"
@@ -4605,62 +4541,6 @@
          id="path952-4"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="ccccccc" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32869"
-         id="use33333"
-         transform="matrix(1.2658786,0,0,1.2622952,-7.6580118,-35.393098)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32879"
-         id="use33335"
-         transform="matrix(1.0736774,0,0,1.094461,-8.9372824,3.0202165)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32893"
-         id="use33337"
-         transform="matrix(0.76944182,0,0,0.76944182,-0.90336605,72.237749)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32412"
-         id="use33339"
-         transform="matrix(1.1263909,0,0,1.1263909,-2.8674769,-1.5227351)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#use32384"
-         id="use33341"
-         transform="matrix(0.88368653,0,0,0.70569052,3.1955062,89.679164)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32913"
-         id="use33345"
-         transform="matrix(0.84240048,0,0,0.7601162,5.9279476,76.352861)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32412-0"
-         id="use33349"
-         transform="matrix(0.98884495,0,0,1.2459353,9.2867802,-34.53195)"
-         width="100%"
-         height="100%" />
     </g>
     <g
        id="g34902">
@@ -6507,78 +6387,6 @@
          id="path5302"
          style="fill:url(#linearGradient35141);stroke:none;stroke-width:1.05832px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1"
          d="m 42.3328,229.26709 -8.46656,4.23328 v 8.46656 l 8.46656,4.23328 8.46656,-4.23328 v -8.46656 z m 0,0.52916 7.662485,3.83124 0.274915,0.11834 v 0.2837 7.67282 l -7.67282,3.83641 -0.26458,0.13229 -0.26458,-0.13229 -7.67282,-3.83641 v -7.67282 -0.26458 l 0.274915,-0.13746 z" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32157"
-         id="use33771"
-         transform="matrix(0.77837183,0,0,1,27.102187,19.73219)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32219"
-         id="use33773"
-         transform="matrix(0.7085883,0,0,0.72402864,22.868733,80.626032)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32869"
-         id="use33775"
-         transform="matrix(0.71759867,0,0,0.8016211,24.686431,64.111916)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32945"
-         id="use33777"
-         transform="matrix(0.86039077,0,0,0.86039077,9.9902859,52.821951)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32893"
-         id="use33779"
-         transform="matrix(0.73859552,0,0,0.73859552,20.033712,80.913251)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32412-0"
-         id="use33781"
-         transform="matrix(0.74477004,0,0,0.74477004,31.085831,74.722721)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32670"
-         id="use33783"
-         transform="translate(26.206745,22.525695)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32412-0"
-         id="use33785"
-         transform="matrix(-0.66321889,0,0,0.66321889,52.426252,96.42662)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32412"
-         id="use33789"
-         transform="matrix(0.36985168,0,0,0.5456021,32.181401,125.92994)"
-         width="100%"
-         height="100%" />
     </g>
     <g
        id="g35131">
@@ -8524,62 +8332,6 @@
          id="path5324"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="ccccccc" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32879"
-         id="use34269"
-         transform="matrix(-0.80899668,0,0,0.88992608,83.975564,43.479333)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32157"
-         id="use34271"
-         transform="matrix(-1.0763736,0,0,1.2621723,80.797239,-32.610752)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32412"
-         id="use34275"
-         transform="matrix(0.8849635,0,0,0.8849635,32.956144,50.297459)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32412"
-         id="use34277"
-         transform="matrix(0.76373943,0,0,1.1258996,39.839264,-1.4787718)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32670"
-         id="use34279"
-         transform="rotate(-11.164935,138.53331,-4.9019396)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32913"
-         id="use34281"
-         transform="matrix(0.91033131,0,0,0.94731021,37.700501,33.311402)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32967"
-         id="use34283"
-         transform="matrix(0.91805645,0,0,0.91805645,35.926101,39.993735)"
-         width="100%"
-         height="100%" />
     </g>
     <use
        x="0"
@@ -10334,30 +10086,6 @@
          id="path883-9-6"
          d="m 8.46656,262.60417 -0.2614302,-0.1304 7.9332082,-11.90538 0.265622,0.1298 v 0.57044 L 9.087,262.29389 Z"
          style="fill:url(#dirt-border);stroke:none;stroke-width:0.52916px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32913"
-         id="use35631"
-         transform="matrix(0.82803796,0,0,0.82803796,-7.5315873,76.3505)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32945"
-         id="use35633"
-         transform="rotate(30,-49.698033,196.37475)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32412"
-         id="use35635"
-         transform="rotate(30,-64.146995,202.89239)"
-         width="100%"
-         height="100%" />
     </g>
     <g
        id="g36399">
@@ -11814,30 +11542,6 @@
          id="path5345"
          d="m 25.39968,262.60417 0.26143,-0.1304 -7.933208,-11.90538 -0.265622,0.1298 v 0.57044 l 7.31696,11.02526 z"
          style="fill:url(#dirt-border);stroke:none;stroke-width:0.52916px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32670"
-         id="use36157"
-         transform="matrix(1.1768598,-0.42187243,0.55174683,0.99234253,-119.70336,46.521338)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32913"
-         id="use36159"
-         transform="matrix(1.1666164,-0.56085585,0.555373,1.1552117,-122.54991,19.326111)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32412-0"
-         id="use36161"
-         transform="matrix(0.77848844,-0.31131001,0.34508042,0.86293761,-68.809677,69.110373)"
-         width="100%"
-         height="100%" />
     </g>
     <g
        id="g38251">
@@ -12808,30 +12512,6 @@
          id="path952-9"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="ccccccc" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32412-0"
-         id="use36545"
-         transform="matrix(1.1716628,0,0,0.9343564,22.378883,50.276466)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32670"
-         id="use36549"
-         transform="matrix(1.3988643,0,0,1.0833535,18.376255,21.078795)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32945"
-         id="use36551"
-         transform="matrix(1,0,0,0.68047426,8.0661503,112.5121)"
-         width="100%"
-         height="100%" />
     </g>
     <g
        id="g36866">
@@ -13730,22 +13410,6 @@
          id="path5364"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="ccccccc" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32893"
-         id="use36759"
-         transform="matrix(1.116841,0,0,1.0771875,26.973481,26.947357)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#use32384"
-         id="use36761"
-         transform="matrix(1,0,0,0.85471084,34.302854,71.780666)"
-         width="100%"
-         height="100%" />
     </g>
     <g
        id="g37312">
@@ -15057,30 +14721,6 @@
          id="path1130-7-5"
          style="fill:url(#linearGradient35151);stroke:none;stroke-width:1.05832px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1"
          d="M 8.46656,263.13333 0,275.83317 l 8.46656,4.23328 8.46656,-4.23328 z m 0.03669,1.09398 7.713644,11.43481 -7.7503338,3.87517 -7.7699706,-3.83899 z" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32945"
-         id="use37156"
-         transform="rotate(19.750516,-141.68531,171.21763)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32412"
-         id="use37158"
-         transform="matrix(0.80913388,0.09123765,-0.09231116,0.80799682,7.9582268,100.1427)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32670"
-         id="use37160"
-         transform="rotate(-17.760727,184.85331,271.69584)"
-         width="100%"
-         height="100%" />
     </g>
     <g
        id="g37606">
@@ -15941,30 +15581,6 @@
          id="path952-8"
          d="m 25.1351,279.405 0.26458,0.13229 0.26458,-0.13229 7.67282,-10.69591 0.01169,-0.52289 -0.286607,0.12085 z"
          style="fill:url(#dirt-border);fill-opacity:1;stroke:none;stroke-width:0.52916px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#use32384"
-         id="use37500"
-         transform="matrix(0.73255765,0.82197616,-0.81055129,0.74288318,182.49311,99.849469)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32412"
-         id="use37502"
-         transform="matrix(0.80298853,0.64196643,-0.74586081,0.93294235,168.89938,58.222707)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32412-0"
-         id="use37504"
-         transform="matrix(0.96185502,0,0,0.97664478,10.33058,60.048046)"
-         width="100%"
-         height="100%" />
     </g>
     <g
        id="g37909">
@@ -16863,22 +16479,6 @@
          id="path5390"
          d="m 42.59738,279.405 -0.26458,0.13229 -0.26458,-0.13229 -7.67282,-10.69591 -0.01169,-0.52289 0.286607,0.12085 z"
          style="fill:url(#dirt-border);fill-opacity:1;stroke:none;stroke-width:0.52916px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32412"
-         id="use37802"
-         transform="matrix(0.69615549,0,0,0.88597432,20.023513,83.311025)"
-         width="100%"
-         height="100%" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32967"
-         id="use37804"
-         transform="matrix(0.90748472,-0.83928463,0.79208428,0.96156178,-158.84849,89.591537)"
-         width="100%"
-         height="100%" />
     </g>
     <g
        id="g38137">
@@ -17515,14 +17115,6 @@
          width="100%"
          height="100%"
          transform="rotate(-89.775908,80.273307,233.34404)" />
-      <use
-         x="0"
-         y="0"
-         xlink:href="#g32893"
-         id="use38061"
-         transform="matrix(0.84104186,0,0,0.80071854,34.230465,103.79324)"
-         width="100%"
-         height="100%" />
       <path
          id="path1130-6-1"
          style="fill:url(#linearGradient35157);stroke:none;stroke-width:1.05832px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1"
