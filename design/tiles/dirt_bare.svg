@@ -1,87 +1,86 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="1024"
    height="320"
    viewBox="0 0 270.92992 84.6656"
    version="1.1"
    id="svg2151"
-   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
    sodipodi:docname="dirt_bare.svg"
    inkscape:export-filename="/home/andrei/Code/personal/missionary/design/tiles/test.png"
    inkscape:export-xdpi="96"
-   inkscape:export-ydpi="96">
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs2145">
     <linearGradient
        id="dirt-righthue-4"
-       osb:paint="solid">
+       inkscape:swatch="solid">
       <stop
-         style="stop-color:#5f6902;stop-opacity:1;"
+         style="stop-color:#504402;stop-opacity:1;"
          offset="0"
          id="stop11535" />
     </linearGradient>
     <linearGradient
        id="dirt-righthue-3"
-       osb:paint="solid">
+       inkscape:swatch="solid">
       <stop
-         style="stop-color:#5c6602;stop-opacity:1;"
+         style="stop-color:#4d3f02;stop-opacity:1;"
          offset="0"
          id="stop11529" />
     </linearGradient>
     <linearGradient
        id="dirt-righthue-2"
-       osb:paint="solid">
+       inkscape:swatch="solid">
       <stop
-         style="stop-color:#535c03;stop-opacity:1;"
+         style="stop-color:#463a02;stop-opacity:1;"
          offset="0"
          id="stop11523" />
     </linearGradient>
     <linearGradient
        id="dirt-righthue-1"
-       osb:paint="solid">
+       inkscape:swatch="solid">
       <stop
-         style="stop-color:#535c02;stop-opacity:1;"
+         style="stop-color:#423701;stop-opacity:1;"
          offset="0"
          id="stop11517" />
     </linearGradient>
     <linearGradient
        id="dirt-lefthue-4"
-       osb:paint="solid">
+       inkscape:swatch="solid">
       <stop
-         style="stop-color:#696602;stop-opacity:1;"
+         style="stop-color:#513602;stop-opacity:1;"
          offset="0"
          id="stop11511" />
     </linearGradient>
     <linearGradient
        id="dirt-lefthue-3"
-       osb:paint="solid">
+       inkscape:swatch="solid">
       <stop
-         style="stop-color:#666302;stop-opacity:1;"
+         style="stop-color:#4c3201;stop-opacity:1;"
          offset="0"
          id="stop11505" />
     </linearGradient>
     <linearGradient
        id="dirt-lefthue-2"
-       osb:paint="solid">
+       inkscape:swatch="solid">
       <stop
-         style="stop-color:#5c5803;stop-opacity:1;"
+         style="stop-color:#442e02;stop-opacity:1;"
          offset="0"
          id="stop11499" />
     </linearGradient>
     <linearGradient
        id="dirt-lefthue-1"
-       osb:paint="solid">
+       inkscape:swatch="solid">
       <stop
-         style="stop-color:#5c5802;stop-opacity:1;"
+         style="stop-color:#422b01;stop-opacity:1;"
          offset="0"
          id="stop11493" />
     </linearGradient>
@@ -118,10 +117,10 @@
        gradientTransform="translate(24.337644,-8.3641361)" />
     <linearGradient
        id="dirt-background"
-       osb:paint="solid"
-       gradientTransform="matrix(-1,0,0,1,237.06368,389.46176)">
+       gradientTransform="matrix(-1,0,0,1,237.06368,389.46176)"
+       inkscape:swatch="solid">
       <stop
-         style="stop-color:#5d6002;stop-opacity:1;"
+         style="stop-color:#434502;stop-opacity:1;"
          offset="0"
          id="stop31868" />
     </linearGradient>
@@ -137,45 +136,45 @@
        gradientTransform="translate(19.046044,-8.3641361)" />
     <linearGradient
        id="dirt-border"
-       osb:paint="solid"
-       gradientTransform="matrix(-1.05832,0,0,1.05832,-685.29759,-21.961396)">
+       gradientTransform="matrix(-1.05832,0,0,1.05832,-685.29759,-21.961396)"
+       inkscape:swatch="solid">
       <stop
-         style="stop-color:#383b02;stop-opacity:1;"
+         style="stop-color:#202201;stop-opacity:1;"
          offset="0"
          id="stop31880" />
     </linearGradient>
     <linearGradient
        id="dirt-midhue-4"
-       osb:paint="solid"
-       gradientTransform="translate(17.359515,-12.095858)">
+       gradientTransform="translate(17.359515,-12.095858)"
+       inkscape:swatch="solid">
       <stop
-         style="stop-color:#656902;stop-opacity:1;"
+         style="stop-color:#503c01;stop-opacity:1;"
          offset="0"
          id="stop31951" />
     </linearGradient>
     <linearGradient
        id="dirt-midhue-3"
-       osb:paint="solid"
-       gradientTransform="translate(17.359515,-12.095858)">
+       gradientTransform="translate(17.359515,-12.095858)"
+       inkscape:swatch="solid">
       <stop
-         style="stop-color:#636602;stop-opacity:1;"
+         style="stop-color:#493701;stop-opacity:1;"
          offset="0"
          id="stop31959" />
     </linearGradient>
     <linearGradient
        id="dirt-midhue-2"
-       osb:paint="solid">
+       inkscape:swatch="solid">
       <stop
-         style="stop-color:#595c03;stop-opacity:1;"
+         style="stop-color:#433202;stop-opacity:1;"
          offset="0"
          id="stop31969" />
     </linearGradient>
     <linearGradient
        id="dirt-midhue-1"
-       osb:paint="solid"
-       gradientTransform="translate(17.359515,-12.095858)">
+       gradientTransform="translate(17.359515,-12.095858)"
+       inkscape:swatch="solid">
       <stop
-         style="stop-color:#585c02;stop-opacity:1;"
+         style="stop-color:#413102;stop-opacity:1;"
          offset="0"
          id="stop31975" />
     </linearGradient>
@@ -190,8 +189,8 @@
        gradientUnits="userSpaceOnUse" />
     <linearGradient
        id="stone-1"
-       osb:paint="solid"
-       gradientTransform="matrix(0.8549077,0,0,0.79066164,11.457449,41.534714)">
+       gradientTransform="matrix(0.8549077,0,0,0.79066164,11.457449,41.534714)"
+       inkscape:swatch="solid">
       <stop
          style="stop-color:#818174;stop-opacity:1;"
          offset="0"
@@ -208,8 +207,8 @@
        gradientUnits="userSpaceOnUse" />
     <linearGradient
        id="stone-2"
-       osb:paint="solid"
-       gradientTransform="matrix(1.0098132,0,0,0.68198085,5.1782209,67.906714)">
+       gradientTransform="matrix(1.0098132,0,0,0.68198085,5.1782209,67.906714)"
+       inkscape:swatch="solid">
       <stop
          style="stop-color:#99998c;stop-opacity:1;"
          offset="0"
@@ -227,8 +226,8 @@
        gradientTransform="translate(-0.00591269,0.05143515)" />
     <linearGradient
        id="stone-3"
-       osb:paint="solid"
-       gradientTransform="matrix(1.0953406,-0.00586591,-0.00586591,1.1582425,10.760378,-40.116221)">
+       gradientTransform="matrix(1.0953406,-0.00586591,-0.00586591,1.1582425,10.760378,-40.116221)"
+       inkscape:swatch="solid">
       <stop
          style="stop-color:#aeaea4;stop-opacity:1;"
          offset="0"
@@ -246,8 +245,8 @@
        gradientTransform="translate(-0.00698477,0.14274079)" />
     <linearGradient
        id="stone-4"
-       osb:paint="solid"
-       gradientTransform="rotate(51.484783,19.785878,227.41388)">
+       gradientTransform="rotate(51.484783,19.785878,227.41388)"
+       inkscape:swatch="solid">
       <stop
          style="stop-color:#c0c0b9;stop-opacity:1;"
          offset="0"
@@ -264,8 +263,8 @@
        gradientUnits="userSpaceOnUse" />
     <linearGradient
        id="shade-3"
-       osb:paint="solid"
-       gradientTransform="translate(11.63482,-75.53965)">
+       gradientTransform="translate(11.63482,-75.53965)"
+       inkscape:swatch="solid">
       <stop
          style="stop-color:#000000;stop-opacity:0.1462879;"
          offset="0"
@@ -578,15 +577,15 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.70710678"
-     inkscape:cx="688.36562"
-     inkscape:cy="13.975251"
+     inkscape:zoom="1"
+     inkscape:cx="313.5"
+     inkscape:cy="30.5"
      inkscape:document-units="px"
-     inkscape:current-layer="g2653"
+     inkscape:current-layer="layer1"
      showgrid="false"
      units="px"
      inkscape:pagecheckerboard="false"
-     inkscape:window-width="1848"
+     inkscape:window-width="1852"
      inkscape:window-height="1016"
      inkscape:window-x="0"
      inkscape:window-y="0"
