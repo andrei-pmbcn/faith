@@ -6,7 +6,7 @@
    version="1.1"
    id="svg2151"
    inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
-   sodipodi:docname="stonework_lightgrey_normal.svg"
+   sodipodi:docname="stonework_brown_normal.svg"
    inkscape:export-filename="/home/andrei/Code/personal/missionary/design/tiles/test.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
@@ -24,7 +24,7 @@
        id="stone-righthue-4"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#b3b1aa;stop-opacity:1;"
+         style="stop-color:#a95a38;stop-opacity:1;"
          offset="0"
          id="stop25993" />
     </linearGradient>
@@ -32,7 +32,7 @@
        id="stone-righthue-3"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#b0aca7;stop-opacity:1;"
+         style="stop-color:#a45837;stop-opacity:1;"
          offset="0"
          id="stop25951" />
     </linearGradient>
@@ -40,7 +40,7 @@
        id="stone-righthue-2"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#aca9a3;stop-opacity:1;"
+         style="stop-color:#a05636;stop-opacity:1;"
          offset="0"
          id="stop25909" />
     </linearGradient>
@@ -48,7 +48,7 @@
        id="stone-righthue-1"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#aeaba4;stop-opacity:1;"
+         style="stop-color:#9d5434;stop-opacity:1;"
          offset="0"
          id="stop25867" />
     </linearGradient>
@@ -56,7 +56,7 @@
        id="stone-lefthue-4"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#b3adaa;stop-opacity:1;"
+         style="stop-color:#a94738;stop-opacity:1;"
          offset="0"
          id="stop24293" />
     </linearGradient>
@@ -64,7 +64,7 @@
        id="stone-lefthue-3"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#b0aaa7;stop-opacity:1;"
+         style="stop-color:#a44637;stop-opacity:1;"
          offset="0"
          id="stop24251" />
     </linearGradient>
@@ -72,7 +72,7 @@
        id="stone-lefthue-2"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#aea8a4;stop-opacity:1;"
+         style="stop-color:#a04436;stop-opacity:1;"
          offset="0"
          id="stop24209" />
     </linearGradient>
@@ -80,7 +80,7 @@
        id="stone-lefthue-1"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#aea8a5;stop-opacity:1;"
+         style="stop-color:#9d4234;stop-opacity:1;"
          offset="0"
          id="stop24167" />
     </linearGradient>
@@ -88,7 +88,7 @@
        id="stone-midhue-4"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#b0adaa;stop-opacity:1;"
+         style="stop-color:#a85038;stop-opacity:1;"
          offset="0"
          id="stop22605" />
     </linearGradient>
@@ -96,7 +96,7 @@
        id="stone-midhue-3"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#b0aca7;stop-opacity:1;"
+         style="stop-color:#a44f37;stop-opacity:1;"
          offset="0"
          id="stop22563" />
     </linearGradient>
@@ -104,7 +104,7 @@
        id="stone-midhue-2"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#ada8a3;stop-opacity:1;"
+         style="stop-color:#a04d36;stop-opacity:1;"
          offset="0"
          id="stop22497" />
     </linearGradient>
@@ -112,7 +112,7 @@
        id="stone-midhue-1"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#ada9a5;stop-opacity:1;"
+         style="stop-color:#9d4b34;stop-opacity:1;"
          offset="0"
          id="stop20946" />
     </linearGradient>
@@ -120,7 +120,7 @@
        id="stone-crevice-righthue-4"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#68675f;stop-opacity:1;"
+         style="stop-color:#542d1c;stop-opacity:1;"
          offset="0"
          id="stop3776" />
     </linearGradient>
@@ -128,7 +128,7 @@
        id="stone-crevice-righthue-3"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#65635a;stop-opacity:1;"
+         style="stop-color:#502b1b;stop-opacity:1;"
          offset="0"
          id="stop3770" />
     </linearGradient>
@@ -136,7 +136,7 @@
        id="stone-crevice-righthue-2"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#595851;stop-opacity:1;"
+         style="stop-color:#492718;stop-opacity:1;"
          offset="0"
          id="stop3764" />
     </linearGradient>
@@ -144,7 +144,7 @@
        id="stone-crevice-righthue-1"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#54534c;stop-opacity:1;"
+         style="stop-color:#452517;stop-opacity:1;"
          offset="0"
          id="stop3758" />
     </linearGradient>
@@ -152,7 +152,7 @@
        id="stone-crevice-lefthue-4"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#68615f;stop-opacity:1;"
+         style="stop-color:#54241c;stop-opacity:1;"
          offset="0"
          id="stop3752" />
     </linearGradient>
@@ -160,7 +160,7 @@
        id="stone-crevice-lefthue-3"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#655c5a;stop-opacity:1;"
+         style="stop-color:#50221b;stop-opacity:1;"
          offset="0"
          id="stop3746" />
     </linearGradient>
@@ -168,7 +168,7 @@
        id="stone-crevice-lefthue-2"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#595251;stop-opacity:1;"
+         style="stop-color:#491f18;stop-opacity:1;"
          offset="0"
          id="stop3740" />
     </linearGradient>
@@ -176,7 +176,7 @@
        id="stone-crevice-lefthue-1"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#544d4c;stop-opacity:1;"
+         style="stop-color:#451d17;stop-opacity:1;"
          offset="0"
          id="stop3734" />
     </linearGradient>
@@ -184,7 +184,7 @@
        id="stone-crevice-midhue-4"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#68645f;stop-opacity:1;"
+         style="stop-color:#54281c;stop-opacity:1;"
          offset="0"
          id="stop3728" />
     </linearGradient>
@@ -192,7 +192,7 @@
        id="stone-crevice-midhue-3"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#65605a;stop-opacity:1;"
+         style="stop-color:#50271b;stop-opacity:1;"
          offset="0"
          id="stop3722" />
     </linearGradient>
@@ -200,7 +200,7 @@
        id="stone-crevice-midhue-2"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#595551;stop-opacity:1;"
+         style="stop-color:#492318;stop-opacity:1;"
          offset="0"
          id="stop3716" />
     </linearGradient>
@@ -208,7 +208,7 @@
        id="stone-crevice-midhue-1"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#54504c;stop-opacity:1;"
+         style="stop-color:#452117;stop-opacity:1;"
          offset="0"
          id="stop3710" />
     </linearGradient>
@@ -217,7 +217,7 @@
        gradientTransform="matrix(-2379522.8,0,0,2379522.8,-116996110,-327107360)"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#5e5954;stop-opacity:1;"
+         style="stop-color:#4c2419;stop-opacity:1;"
          offset="0"
          id="stop29140" />
     </linearGradient>
@@ -226,7 +226,7 @@
        gradientTransform="matrix(0.99889169,-0.04706792,-0.04706792,-0.99889169,5409.8501,-745.53357)"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#85827a;stop-opacity:1;"
+         style="stop-color:#683222;stop-opacity:1;"
          offset="0"
          id="stop29146" />
     </linearGradient>
@@ -235,7 +235,7 @@
        gradientTransform="matrix(0,0,0,0,-3.3188176e11,1.0329482e11)"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#a8a5a1;stop-opacity:1;"
+         style="stop-color:#984832;stop-opacity:1;"
          offset="0"
          id="stop32888" />
     </linearGradient>
@@ -244,7 +244,7 @@
        gradientTransform="matrix(0,0,0,0,26343422000,8269753100)"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#bdbab5;stop-opacity:1;"
+         style="stop-color:#b8583d;stop-opacity:1;"
          offset="0"
          id="stop29218" />
     </linearGradient>
@@ -445,7 +445,7 @@
        gradientTransform="matrix(0,0,0,0,-1.0297398e11,33498182000)"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#948f87;stop-opacity:1;"
+         style="stop-color:#7e3d2a;stop-opacity:1;"
          offset="0"
          id="stop29152" />
     </linearGradient>
@@ -460,7 +460,7 @@
        inkscape:swatch="solid"
        gradientTransform="matrix(2,0,0,2,105.832,-229.26718)">
       <stop
-         style="stop-color:#4d4a47;stop-opacity:1;"
+         style="stop-color:#3a1c13;stop-opacity:1;"
          offset="0"
          id="stop29252" />
     </linearGradient>
@@ -2111,11 +2111,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142135"
-     inkscape:cx="204.35386"
-     inkscape:cy="148.84598"
+     inkscape:zoom="7.9999996"
+     inkscape:cx="-118.87501"
+     inkscape:cy="-37.562502"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g1306"
      showgrid="false"
      units="px"
      inkscape:pagecheckerboard="false"

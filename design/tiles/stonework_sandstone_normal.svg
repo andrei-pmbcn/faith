@@ -64,7 +64,7 @@
        id="stone-lefthue-3"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#9b7c52;stop-opacity:1;"
+         style="stop-color:#9d7d53;stop-opacity:1;"
          offset="0"
          id="stop24251" />
     </linearGradient>
@@ -2111,11 +2111,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.70710678"
-     inkscape:cx="487.90368"
-     inkscape:cy="2.1213203"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="213.54625"
+     inkscape:cy="49.143921"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g1306"
      showgrid="false"
      units="px"
      inkscape:pagecheckerboard="false"
