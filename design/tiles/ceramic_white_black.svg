@@ -6,7 +6,7 @@
    version="1.1"
    id="svg2151"
    inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
-   sodipodi:docname="ceramic_white_blue.svg"
+   sodipodi:docname="ceramic_white_black.svg"
    inkscape:export-filename="/home/andrei/Code/personal/missionary/design/tiles/test.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
@@ -120,7 +120,7 @@
        id="ceramic-type2-righthue-4"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#627be9;stop-opacity:1;"
+         style="stop-color:#171717;stop-opacity:1;"
          offset="0"
          id="stop4063" />
     </linearGradient>
@@ -128,7 +128,7 @@
        id="ceramic-type2-righthue-3"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#637be9;stop-opacity:1;"
+         style="stop-color:#171717;stop-opacity:1;"
          offset="0"
          id="stop4021" />
     </linearGradient>
@@ -136,7 +136,7 @@
        id="ceramic-type2-righthue-2"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#5e78e8;stop-opacity:1;"
+         style="stop-color:#141414;stop-opacity:1;"
          offset="0"
          id="stop3979" />
     </linearGradient>
@@ -144,7 +144,7 @@
        id="ceramic-type2-righthue-1"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#5a74e7;stop-opacity:1;"
+         style="stop-color:#121212;stop-opacity:1;"
          offset="0"
          id="stop3937" />
     </linearGradient>
@@ -152,7 +152,7 @@
        id="ceramic-type2-lefthue-4"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#6292e9;stop-opacity:1;"
+         style="stop-color:#171717;stop-opacity:1;"
          offset="0"
          id="stop3895" />
     </linearGradient>
@@ -160,7 +160,7 @@
        id="ceramic-type2-lefthue-3"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#6392e9;stop-opacity:1;"
+         style="stop-color:#171717;stop-opacity:1;"
          offset="0"
          id="stop3853" />
     </linearGradient>
@@ -168,7 +168,7 @@
        id="ceramic-type2-lefthue-2"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#5e8ee8;stop-opacity:1;"
+         style="stop-color:#141414;stop-opacity:1;"
          offset="0"
          id="stop3811" />
     </linearGradient>
@@ -176,7 +176,7 @@
        id="ceramic-type2-lefthue-1"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#5a8be7;stop-opacity:1;"
+         style="stop-color:#121212;stop-opacity:1;"
          offset="0"
          id="stop3769" />
     </linearGradient>
@@ -184,7 +184,7 @@
        id="ceramic-type2-midhue-4"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#6287e9;stop-opacity:1;"
+         style="stop-color:#171717;stop-opacity:1;"
          offset="0"
          id="stop3727" />
     </linearGradient>
@@ -192,7 +192,7 @@
        id="ceramic-type2-midhue-3"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#6387e9;stop-opacity:1;"
+         style="stop-color:#171717;stop-opacity:1;"
          offset="0"
          id="stop3685" />
     </linearGradient>
@@ -200,7 +200,7 @@
        id="ceramic-type2-midhue-2"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#5e84e8;stop-opacity:1;"
+         style="stop-color:#141414;stop-opacity:1;"
          offset="0"
          id="stop3643" />
     </linearGradient>
@@ -208,7 +208,7 @@
        id="ceramic-type2-midhue-1"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#5982e8;stop-opacity:1;"
+         style="stop-color:#121212;stop-opacity:1;"
          offset="0"
          id="stop3601" />
     </linearGradient>
@@ -313,7 +313,7 @@
        inkscape:swatch="solid"
        gradientTransform="matrix(287.01174,0,0,287.01174,26890.565,-95140.469)">
       <stop
-         style="stop-color:#446cdf;stop-opacity:1;"
+         style="stop-color:#0a0a0a;stop-opacity:1;"
          offset="0"
          id="stop84313" />
     </linearGradient>
@@ -331,7 +331,7 @@
        inkscape:swatch="solid"
        gradientTransform="matrix(-11.660249,0,0,11.660249,-5016.5727,-7757.2784)">
       <stop
-         style="stop-color:#7795e9;stop-opacity:1;"
+         style="stop-color:#262626;stop-opacity:1;"
          offset="0"
          id="stop12972" />
     </linearGradient>
@@ -340,7 +340,7 @@
        inkscape:swatch="solid"
        gradientTransform="matrix(10.108138,0,0,10.108138,4567.0025,-7243.3808)">
       <stop
-         style="stop-color:#5e83e8;stop-opacity:1;"
+         style="stop-color:#141414;stop-opacity:1;"
          offset="0"
          id="stop12966" />
     </linearGradient>
@@ -349,7 +349,7 @@
        inkscape:swatch="solid"
        gradientTransform="matrix(22.799674,0,0,22.799674,9782.6729,-15676.671)">
       <stop
-         style="stop-color:#265ade;stop-opacity:1;"
+         style="stop-color:#0a0a0a;stop-opacity:1;"
          offset="0"
          id="stop12960" />
     </linearGradient>
@@ -358,7 +358,7 @@
        inkscape:swatch="solid"
        gradientTransform="matrix(0,0,0,0,-72.999532,274.04015)">
       <stop
-         style="stop-color:#1e45ae;stop-opacity:1;"
+         style="stop-color:#030303;stop-opacity:1;"
          offset="0"
          id="stop12954" />
     </linearGradient>
@@ -573,7 +573,7 @@
        gradientTransform="translate(-6.2786478,0.90735491)" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#ceramic-type1-main-1"
+       xlink:href="#ceramic-type2-lefthue-4"
        id="linearGradient14942"
        gradientUnits="userSpaceOnUse" />
     <linearGradient
@@ -929,11 +929,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="-142.83557"
-     inkscape:cy="69.650018"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="354.9676"
+     inkscape:cy="-82.731493"
      inkscape:document-units="px"
-     inkscape:current-layer="g192568"
+     inkscape:current-layer="layer1"
      showgrid="false"
      units="px"
      inkscape:pagecheckerboard="false"
