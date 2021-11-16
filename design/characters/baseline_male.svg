@@ -324,11 +324,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="142.5"
-     inkscape:cy="-37.5"
+     inkscape:zoom="2"
+     inkscape:cx="194.25"
+     inkscape:cy="172.25"
      inkscape:document-units="px"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="g23093"
      showgrid="false"
      units="px"
      inkscape:pagecheckerboard="false"
@@ -1108,6 +1108,27 @@
            id="path51689" />
       </g>
       <g
+         id="g57489"
+         inkscape:label="Male Crotch"
+         style="opacity:1"
+         transform="matrix(2,0,0,2,93.123349,-45.733776)">
+        <path
+           style="font-variation-settings:normal;vector-effect:none;fill:url(#skin-white-1);fill-opacity:1;stroke:none;stroke-width:0.380639px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000"
+           d="m -26.486293,14.07201 c 0.324743,0.733767 0.156945,1.306573 0.681574,1.420497 0.524628,0.113921 1.069544,-1.030579 1.001583,-1.014162 -0.972615,0.23494 -1.683157,-0.406335 -1.683157,-0.406335 z"
+           id="path56315"
+           sodipodi:nodetypes="ccsc" />
+        <path
+           style="font-variation-settings:normal;vector-effect:none;fill:url(#skin-white-2);fill-opacity:1;stroke:none;stroke-width:0.320687px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000"
+           d="m -26.286137,14.165597 c 0.119163,0.339629 0.150417,1.063644 0.44432,1.126471 0.293901,0.06282 0.767376,-0.686212 0.859213,-0.81558 0.09183,-0.129374 -0.924438,-0.103048 -1.303533,-0.310891 z"
+           id="path57147"
+           sodipodi:nodetypes="cscc" />
+        <path
+           style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:url(#skin-white-3);fill-opacity:1;stroke:none;stroke-width:0.26458px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000;stop-opacity:1"
+           d="m -25.857432,14.853356 c -0.09834,0.05593 -0.14712,0.132744 -0.124648,0.221126 0.02247,0.08838 0.02859,0.129238 0.113161,0.143169 0.08457,0.01393 0.144551,-0.05251 0.147063,-0.166715 0.0025,-0.114211 -0.06013,-0.240493 -0.135576,-0.19758 z"
+           id="path57642"
+           sodipodi:nodetypes="sssss" />
+      </g>
+      <g
          id="g15051"
          transform="matrix(2,0,0,2,93.123349,-45.733776)"
          inkscape:label="Torso Male DL"
@@ -1128,25 +1149,6 @@
            style="font-variation-settings:normal;vector-effect:none;fill:url(#skin-white-3);fill-opacity:1;stroke:none;stroke-width:0.253084px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000"
            d="m -24.482263,13.587765 c -0.184995,0.1447 -0.407437,0.186658 -0.571912,0.192904 -0.117662,0.0044 -0.192114,0.11975 0.03356,0.213088 0.225677,0.09334 0.395565,0.394685 0.395565,0.394685 0,0 0.33016,-0.150668 0.485235,-0.316515 -0.07225,-0.109741 -0.191963,-0.205937 -0.206845,-0.29787 -0.03556,-0.219684 -0.07177,-0.236221 -0.135603,-0.186292 z"
            sodipodi:nodetypes="scsccss" />
-        <g
-           id="g57489"
-           inkscape:label="Male Crotch">
-          <path
-             style="font-variation-settings:normal;vector-effect:none;fill:url(#skin-white-1);fill-opacity:1;stroke:none;stroke-width:0.380639px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000"
-             d="m -26.486293,14.07201 c 0.324743,0.733767 0.156945,1.306573 0.681574,1.420497 0.524628,0.113921 1.069544,-1.030579 1.001583,-1.014162 -0.972615,0.23494 -1.683157,-0.406335 -1.683157,-0.406335 z"
-             id="path56315"
-             sodipodi:nodetypes="ccsc" />
-          <path
-             style="font-variation-settings:normal;vector-effect:none;fill:url(#skin-white-2);fill-opacity:1;stroke:none;stroke-width:0.320687px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000"
-             d="m -26.286137,14.165597 c 0.119163,0.339629 0.150417,1.063644 0.44432,1.126471 0.293901,0.06282 0.767376,-0.686212 0.859213,-0.81558 0.09183,-0.129374 -0.924438,-0.103048 -1.303533,-0.310891 z"
-             id="path57147"
-             sodipodi:nodetypes="cscc" />
-          <path
-             style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:url(#skin-white-3);fill-opacity:1;stroke:none;stroke-width:0.26458px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000;stop-opacity:1"
-             d="m -25.857432,14.853356 c -0.09834,0.05593 -0.14712,0.132744 -0.124648,0.221126 0.02247,0.08838 0.02859,0.129238 0.113161,0.143169 0.08457,0.01393 0.144551,-0.05251 0.147063,-0.166715 0.0025,-0.114211 -0.06013,-0.240493 -0.135576,-0.19758 z"
-             id="path57642"
-             sodipodi:nodetypes="sssss" />
-        </g>
         <path
            style="font-variation-settings:normal;display:inline;opacity:1;vector-effect:none;fill:url(#skin-white-1);fill-opacity:1;stroke:none;stroke-width:0.26458px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000;stop-opacity:1"
            d="m -27.918142,273.75476 c 0.306064,0.34227 1.063267,1.16039 1.119698,0.20346 0.01592,-0.26997 0.07594,-0.59667 0.553925,-0.90907 -0.286762,0.36894 -0.351623,0.75874 -0.356255,1.03734 -0.0047,0.28038 0.03262,0.60482 0.393573,0.75363 0.708156,0.29193 1.343835,0.12521 1.558263,-0.58101 0.03193,-0.10516 0.05356,-0.19621 0.168266,-0.31713 0.04588,0.12576 0.04936,0.21726 0.02665,0.35204 -0.03561,0.21135 -0.07088,0.46588 -0.17665,0.59925 -0.331779,0.41838 -0.77137,0.44552 -1.196337,0.42007 -0.405151,-0.0243 -0.70926,-0.23648 -0.889041,-0.50887 -0.527307,-0.0879 -1.152014,-0.46842 -1.20209,-1.04971 z"
